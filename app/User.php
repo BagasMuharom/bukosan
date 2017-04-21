@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace Bukosan;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -20,6 +20,8 @@ class User extends Authenticatable
 
     public $timestamps = false;
 
+    // protected $table = 'user';
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -28,4 +30,5 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
 }

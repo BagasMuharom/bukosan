@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Bukosan\Http\Controllers\Auth;
 
-use App\User;
-use App\Http\Controllers\Controller;
+use Bukosan\User;
+use Bukosan\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
@@ -20,7 +20,7 @@ class RegisterController extends Controller
     |
     */
 
-    use RegistersUsers;
+//    use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -57,6 +57,21 @@ class RegisterController extends Controller
     }
 
     /**
+     * Proses pendaftaran user
+     *
+     * @param Request $request
+     */
+    public function Process(Request $request)
+    {
+        // Jika data yang dimasukkan valid
+        if ($this->validator($request->toArray())) {
+
+        } else {
+
+        }
+    }
+
+    /**
      * Create a new user instance after a valid registration.
      *
      * @param  array  $data
@@ -71,5 +86,10 @@ class RegisterController extends Controller
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
         ]);
+    }
+
+    public function RegisterPage()
+    {
+        return view('auth.register');
     }
 }

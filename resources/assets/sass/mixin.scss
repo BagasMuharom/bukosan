@@ -1,0 +1,63 @@
+@mixin mixin{
+    &:after{
+        content: '';
+        clear: both;
+        display: block;
+        visibility: hidden;
+    }
+}
+
+@mixin fontface($name,$weight,$url){
+    @font-face {
+        font:{
+            family : $name;
+            weight : $weight;
+        }
+        src : url("../fonts/" + $url);
+    }
+}
+
+@mixin AileronFont{
+    $name : "Aileron";
+    $path : "Aileron/Aileron-";
+    @include fontface($name,normal,$path + "Regular.otf");
+    @include fontface($name,Bold,$path + "Bold.otf");
+    @include fontface($name,300,$path + "Light.otf");
+    @include fontface($name,200,$path + "Thin.otf");
+    @include fontface($name,100,$path + "UltraLight.otf");
+}
+
+@mixin boxShadow($shadow){
+  -webkit-box-shadow: $shadow;
+  -moz-box-shadow: $shadow;
+  box-shadow: $shadow;
+}
+
+@mixin animation($keyframe) {
+  -webkit-animation-name: $keyframe;
+  -moz-animation-name: $keyframe;
+  -o-animation-name: $keyframe;
+  animation-name: $keyframe;
+}
+
+@mixin borderRadius($radius){
+    -webkit-border-radius:$radius;
+    -moz-border-radius:$radius;
+    border-radius:$radius;
+}
+
+@mixin animationClass($name){
+  .#{$name} {
+    @include animation($name);
+  }
+}
+
+@mixin getFontColor($background){
+    $total : red($background) + green($background) + blue($background);
+    @if( $total < 400 ) {
+        color: #fff;
+    }
+    @else {
+        color: darken($background, 30%);
+    }
+}

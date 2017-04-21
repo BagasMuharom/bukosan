@@ -1,0 +1,60 @@
+@import "mixin";
+@import "input";
+
+$wrapperBgColor: blue;
+$wrapperBgImage: '';
+
+// Landingwrapper
+$wrapperPadding: 20px;
+
+// Landing Header
+$headerPadding: 10px;
+$headerBgColor: white;
+
+#landing-wrapper {
+    width: 100%;
+    padding: $wrapperPadding;
+    > #landing-header {
+        background-color: transparent;
+        > #logo {
+            float: left;
+        }
+        > nav {
+            float: right;
+        }
+        @include mixin;
+    }
+
+    #landing-search {
+        margin: 15% auto 0;
+        float: none;
+        > #search-heading {
+            text-align: center;
+            margin: 10px;
+            font: {
+                size: 50px;
+                weight: 100;
+            }
+        }
+        #search-box {
+            display: table;
+            padding: 0;
+            width: 100%;
+            background-color: #ffffff;
+            @include InputBoxShadow;
+            > input[type="text"] {
+                display: table-column;
+                width: 90%;
+                border: none;
+                background-color: transparent;
+                padding: 10px;
+            }
+            > button[type="submit"] {
+                display: table-column;
+                width: 10%;
+                background-color: transparent;
+                border: none;
+            }
+        }
+    }
+}

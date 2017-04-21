@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers\Auth;
+namespace Bukosan\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use Bukosan\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
 class LoginController extends Controller
@@ -18,7 +18,7 @@ class LoginController extends Controller
     |
     */
 
-    use AuthenticatesUsers;
+//    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
@@ -36,4 +36,29 @@ class LoginController extends Controller
     {
         $this->middleware('guest',['except' => ['logout']]);
     }
+
+    public function LoginPage()
+    {
+        return view('auth..login');
+    }
+
+    /**
+     * Proses login user
+     *
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     */
+    public function Process(Request $request)
+    {
+        $this->validate($request, [
+            'username' => 'required|max:10|min:5',
+            'password' => 'required'
+        ]);
+        // Login menggunakan username dan password
+//        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+//            return redirect(route('userhomepage'));
+//        }
+//        return redirect()->back();
+    }
+
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Providers;
+namespace Bukosan\Providers;
 
 use Illuminate\Support\ServiceProvider;
 
