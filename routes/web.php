@@ -28,3 +28,7 @@ Route::get('/home', 'HomeController@index');
 Route::get('input', function(){
     return view('test.input');
 });
+
+Route::get('bla',function (){
+    return 'Hello !';
+});
