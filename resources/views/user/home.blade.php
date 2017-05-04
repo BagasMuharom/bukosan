@@ -1,9 +1,15 @@
-@extends('layout.user.page')
+@extends('layouts.user.page')
 
 @section('title')
-    Selamat Datang, User {{-- {{ Auth::user()->username }} --}} !
+    Beranda
 @endsection
 
-@section('content')
-    bla bla bla
+@section('contents')
+    <div class="panel panel-default">
+        <div class="panel-heading">Dashboard</div>
+
+        <div class="panel-body">
+            Anda telah masuk !
+        </div>
+    </div>
 @endsection

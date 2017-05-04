@@ -35,6 +35,10 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 300;
 }
 
+h2 {
+  font-size: 25px;
+}
+
 .box-center {
   margin: 0 auto;
   float: none;
@@ -70,19 +74,77 @@ button {
   box-shadow: none;
 }
 .form-control.neon-ui:focus {
-  border: 1px solid #2394c1;
-  -webkit-box-shadow: 0 0 0 3px rgba(31, 131, 171, 0.25);
-  -moz-box-shadow: 0 0 0 3px rgba(31, 131, 171, 0.25);
-  box-shadow: 0 0 0 3px rgba(31, 131, 171, 0.25);
+  border: 1px solid #8ac3f9;
+  -webkit-box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
+  -moz-box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
+  box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
 }
 
 .btn {
   -webkit-border-radius: 2px;
   -moz-border-radius: 2px;
   border-radius: 2px;
+  -webkit-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 .btn.btn-primary {
-  background-color: #1f83ab;
-  border-color: #176280;
+  background-color: #72b7f8;
+  border: none;
   color: #fff;
+}
+
+.panel-notif {
+  background-color: #fff;
+  padding: 20px 5px 20px;
+  margin-right: 0;
+  margin-left: 0;
+}
+.panel-notif > .notif-body > .notif-heading {
+  margin: 0 0 10px;
+}
+.panel-notif:after {
+  content: "";
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+
+.panel-thumb-list.panel {
+  background-color: transparent;
+  border: none;
+  box-shadow: none;
+}
+.panel-thumb-list > .panel-heading {
+  background-color: transparent;
+  border: none;
+  padding-left: 0;
+}
+.panel-thumb-list > .panel-heading > .panel-title {
+  float: left;
+  font-size: 20px;
+}
+.panel-thumb-list > .panel-heading > .panel-title + .panel-tool {
+  float: right;
+}
+.panel-thumb-list > .panel-heading:after {
+  content: "";
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+.panel-thumb-list .thumb-property {
+  background-color: #fff;
+}
+.panel-thumb-list .thumb-property .thumb-title {
+  margin-left: 0;
+  border-left: 4px solid #72b7f8;
+  padding-left: 20px;
+  font-weight: bold;
+}
+.panel-thumb-list .thumb-property *[class*="col-"] {
+  padding: 0;
+}
+.panel-thumb-list .thumb-property *[class*="col-"]:first-child {
+  padding-left: 15px;
 }

@@ -5,6 +5,7 @@ namespace Bukosan\Http\Controllers\Auth;
 use Bukosan\User;
 use Bukosan\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 
 class RegisterController extends Controller
@@ -20,7 +21,7 @@ class RegisterController extends Controller
     |
     */
 
-//    use RegistersUsers;
+    use RegistersUsers;
 
     /**
      * Where to redirect users after registration.
@@ -65,10 +66,11 @@ class RegisterController extends Controller
     {
         // Jika data yang dimasukkan valid
         if ($this->validator($request->toArray())) {
-
-        } else {
-
+            $this->create($request->toArray());
+            $login = new LoginController();
+            $login->Process($request);
         }
+        return back()->withInput()->withErrors($this->validator($request->toArray()));
     }
 
     /**

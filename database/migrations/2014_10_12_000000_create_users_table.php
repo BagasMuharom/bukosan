@@ -6,6 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreateUsersTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -26,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->boolean('perorangan')->default(0);
             $table->boolean('pelajar')->default(0);
             $table->boolean('keluarga')->default(0);
+            $table->string('remember_token');
         });
     }
 
@@ -38,4 +40,5 @@ class CreateUsersTable extends Migration
     {
         Schema::drop('user');
     }
+
 }

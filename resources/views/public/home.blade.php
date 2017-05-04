@@ -1,9 +1,9 @@
-@extends('layout.public.umum')
+@extends('layouts.app')
 
 @section('title')
-    {{ $title }}
+    Beranda
 @endsection
 
 @section('content')
-    <h1>{{ $content }}</h1>
+    Konten
 @endsection

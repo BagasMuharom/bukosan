@@ -15,7 +15,7 @@ class HomePageController extends Controller
      */
     public function HomePage()
     {
-        return !Auth::check() ? $this->UserHomePage() : view('public.home');
+        return Auth::check() ? $this->UserHomePage() : view('public.home');
     }
 
     /**
