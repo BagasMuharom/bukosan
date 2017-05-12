@@ -11,6 +11,12 @@ button{
   outline: none;
 }
 
+@media (min-width: 768px) {
+    .form-horizontal .control-label{
+        padding-top:10px;
+    }
+}
+
 .form-control{
   background-color: #fff;
   border:1px solid #d5d5d5;
@@ -35,4 +41,27 @@ button{
   -webkit-border-radius:3px;
   -moz-border-radius:3px;
   border-radius:3px;
+}
+
+.input-border{
+    position: relative;
+    min-width:100%;
+    > .bukosan.input-ui{
+        min-width: 100%;
+        border-top:none;
+        border-left:none;
+        border-right:none;
+        padding:10px;
+        border-bottom: 2px solid $mediumBase;
+        @include transition(border-bottom ease-in 0.2s);
+        &.ui-primary:focus{
+            border-bottom: 2px solid $primaryColor;
+        }
+    }
+    > .placeholder{
+        position: absolute;
+        left:0;
+        padding:10px;
+        color:rgba(0,0,0,.5);
+    }
 }

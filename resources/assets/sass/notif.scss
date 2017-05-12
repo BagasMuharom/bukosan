@@ -1,0 +1,19 @@
+@import "mixin";
+
+@import "config";
+
+.panel-notif{
+    background-color: #fff;
+    padding: 20px 5px 20px;
+    margin-right: 0;
+    margin-left: 0;
+    > .notif-body{
+        > .notif-heading{
+            margin: 0 0 10px;
+        }
+    }
+    &.notif-lg{
+
+    }
+    @include ClearFix;
+}

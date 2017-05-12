@@ -28,10 +28,10 @@ button {
   box-shadow: none;
 }
 .form-control.neon-ui:focus {
-  border: 1px solid #2394c1;
-  -webkit-box-shadow: 0 0 0 3px rgba(31, 131, 171, 0.25);
-  -moz-box-shadow: 0 0 0 3px rgba(31, 131, 171, 0.25);
-  box-shadow: 0 0 0 3px rgba(31, 131, 171, 0.25);
+  border: 1px solid #8ac3f9;
+  -webkit-box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
+  -moz-box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
+  box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
 }
 
 #landing-wrapper {

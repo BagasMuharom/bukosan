@@ -1,0 +1,56 @@
+@import "config";
+
+@import "mixin";
+
+.panel{
+    @include borderRadius(0);
+    @include boxShadow(0 1px 1px rgba(0,0,0,.1));
+    border:none;
+}
+
+.panel-thumb-list{
+    &.panel{
+        background-color: transparent;
+        border:none;
+        box-shadow: none;
+    }
+    > .panel-heading {
+        background-color: transparent;
+        border: none;
+        padding-left: 0;
+        > .panel-title {
+            float: left;
+            font-size: 20px;
+            + .panel-tool {
+                float: right;
+            }
+        }
+        @include ClearFix;
+    }
+
+    .thumb-property{
+        background-color: #fff;
+        .thumb-title{
+            margin-left:0;
+            border-left:4px solid $primaryColor;
+            padding-left:20px;
+            font-weight: bold;
+        }
+        *[class*="col-"]{
+            &:first-child{
+                padding-left:15px;
+            }
+            padding: 0;
+        }
+    }
+}
+
+.panel-body{
+    .panel-heading{
+        color:$darkBase;
+        margin-left:-15px;
+        margin-right:-15px;
+        background-color:$lightBase;
+        margin-bottom:15px;
+    }
+}

@@ -4,6 +4,8 @@ namespace Bukosan\Http\Controllers\Auth;
 
 use Bukosan\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
 class LoginController extends Controller
 {
@@ -18,14 +20,14 @@ class LoginController extends Controller
     |
     */
 
-//    use AuthenticatesUsers;
+    use AuthenticatesUsers;
 
     /**
      * Where to redirect users after login.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
      * Create a new controller instance.
@@ -37,9 +39,28 @@ class LoginController extends Controller
         $this->middleware('guest',['except' => ['logout']]);
     }
 
-    public function LoginPage()
+    public function username()
     {
-        return view('auth..login');
+        return 'username';
+    }
+
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
+    /**
+     * Melakukan proses validasi
+     *
+     * @param array $data
+     * @return mixed
+     */
+    private function Validator(array $data)
+    {
+        return Validator::make($data,[
+            'username' => 'required|max:10|min:5',
+            'password' => 'required'
+        ]);
     }
 
     /**
@@ -50,15 +71,13 @@ class LoginController extends Controller
      */
     public function Process(Request $request)
     {
-        $this->validate($request, [
-            'username' => 'required|max:10|min:5',
-            'password' => 'required'
-        ]);
-        // Login menggunakan username dan password
-//        if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-//            return redirect(route('userhomepage'));
-//        }
-//        return redirect()->back();
+        if($this->Validator($request->toArray())) {
+            // Login menggunakan username dan password
+            if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
+                return redirect(route('userhomepage'));
+            }
+        }
+        return back()->withInput()->withErrors($this->Validator($request->toArray()));
     }
 
 }

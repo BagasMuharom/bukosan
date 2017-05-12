@@ -54,10 +54,25 @@
 
 @mixin getFontColor($background){
     $total : red($background) + green($background) + blue($background);
-    @if( $total < 400 ) {
+    @if( $total < 600 ) {
         color: #fff;
     }
     @else {
         color: darken($background, 30%);
+    }
+}
+
+@mixin transition($option){
+    -webkit-transition:$option;
+    -moz-transition:$option;
+    transition:$option;
+}
+
+@mixin ClearFix(){
+    &:after{
+        content: "";
+        clear: both;
+        display: block;
+        visibility: hidden;
     }
 }

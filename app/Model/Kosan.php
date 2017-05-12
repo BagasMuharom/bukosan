@@ -1,13 +1,15 @@
 <?php
 
-namespace Bukosan;
+namespace Bukosan\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
 class Kosan extends Model
 {
 
-    protected $table = "kosan";
+    protected $table = 'kosan';
+
+    public $timestamps = false;
 
     /**
      * Melakukan pencarian kosan ke database
