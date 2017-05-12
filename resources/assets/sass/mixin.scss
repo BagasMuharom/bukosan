@@ -62,6 +62,12 @@
     }
 }
 
+@mixin transition($option){
+    -webkit-transition:$option;
+    -moz-transition:$option;
+    transition:$option;
+}
+
 @mixin ClearFix(){
     &:after{
         content: "";

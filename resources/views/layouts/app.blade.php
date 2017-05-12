@@ -10,6 +10,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/general.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"/>
     @yield('css')
 
 <!-- Scripts -->
@@ -85,6 +86,7 @@
 
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
+<script src="{{ asset('js/form.js') }}"></script>
 @yield('js')
 </body>
 </html>

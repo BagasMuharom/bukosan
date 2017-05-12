@@ -2,6 +2,12 @@
 
 @import "mixin";
 
+.panel{
+    @include borderRadius(0);
+    @include boxShadow(0 1px 1px rgba(0,0,0,.1));
+    border:none;
+}
+
 .panel-thumb-list{
     &.panel{
         background-color: transparent;
@@ -36,5 +42,15 @@
             }
             padding: 0;
         }
+    }
+}
+
+.panel-body{
+    .panel-heading{
+        color:$darkBase;
+        margin-left:-15px;
+        margin-right:-15px;
+        background-color:$lightBase;
+        margin-bottom:15px;
     }
 }

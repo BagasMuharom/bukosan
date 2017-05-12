@@ -17,7 +17,7 @@
                     <label for="name" class="col-md-3 control-label">Nama Lengkap</label>
                     <div class="col-md-6">
                         <input id="name" type="text" class="form-control" name="name"
-                               value="{{ Auth::user()->name }}" required autofocus>
+                               value="{{ Auth::user()->displayname }}" required autofocus>
 
                         @if ($errors->has('name'))
                             <span class="help-block">

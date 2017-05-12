@@ -16,6 +16,7 @@ class Kontakuser extends Migration
         Schema::create('kontak_user',function(Blueprint $table){
             $table->integer('id_user');
             $table->integer('id_kontak');
+            $table->string('isi');
         });
     }
 

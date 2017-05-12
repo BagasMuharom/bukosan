@@ -15,12 +15,13 @@ class KosanController extends Controller
      */
     public function store(Request $request)
     {
+        return $request->all();
         // $request->foto->storeAs('images','images.jpg');
-        foreach ($request->foto as $value) {
-            $value->storePubliclyAs('images',$value->getClientOriginalName());
-            print_r($value->getClientOriginalName());
-        }
-        return $request->foto;
+        // foreach ($request->foto as $value) {
+        //     $value->storePubliclyAs('images',$value->getClientOriginalName());
+        //     print_r($value->getClientOriginalName());
+        // }
+        // return $request->foto;
     }
 
     /**

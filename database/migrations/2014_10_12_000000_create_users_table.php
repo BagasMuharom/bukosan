@@ -17,7 +17,6 @@ class CreateUsersTable extends Migration
         Schema::create('user', function (Blueprint $table) {
             $table->increments('id');
             $table->string('nik',20)->unique();
-            $table->string('email',50)->unique();
             $table->string('username',15)->unique();
             $table->string('displayname',75);
             $table->string('password');
@@ -25,7 +24,6 @@ class CreateUsersTable extends Migration
             $table->char('jenis_kelamin',1)->default('L');
             $table->string('alamat',100);
             $table->boolean('perorangan')->default(0);
-            $table->boolean('pelajar')->default(0);
             $table->boolean('keluarga')->default(0);
             $table->string('remember_token');
         });

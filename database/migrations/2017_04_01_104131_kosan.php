@@ -22,6 +22,15 @@ class Kosan extends Migration
             $table->decimal('latitude');
             $table->boolean('terverifikasi');
             $table->integer('jumlah_lantai');
+            // Fasilitas
+            $table->boolean('wifi')->default(0);
+            $table->boolean('ac')->default(0);
+            $table->boolean('kmdalam')->default(0);
+            $table->boolean('dapur')->default(0);
+            $table->boolean('tempatparkir')->default(0);
+            $table->boolean('wifi')->default(0);
+            $table->boolean('wifi')->default(0);
+            $table->boolean('wifi')->default(0);
         });
     }
 

@@ -22,13 +22,10 @@
         <nav class="navbar navbar-user">
             <div class="container">
                 <ul id="stripped-menu">
-                    <li @if($isHomepage) class="active"
-                    @endif><a href="{{ url('') }}">Beranda</a></li>
-                    <li
-                    @if($isKosanPage) class="active"
-                    @endif
-                    ><a href="{{ route('kosansaya') }}">Kosan Saya</a></li>
+                    <li @if($isHomepage) class="active" @endif><a href="{{ url('') }}">Beranda</a></li>
+                    <li @if($isKosanPage) class="active" @endif><a href="{{ route('kosansaya') }}">Kosan Saya</a></li>
                     <li><a href="{{ route('riwayat.sewa') }}">Riwayat Sewa</a></li>
+                    <li><a href="#}">Notifikasi</a></li>
                 </ul>
             </div>
         </nav>
@@ -44,8 +41,8 @@
 
                     <nav id="side-menu">
                         <ul>
-                            <li class="active"><a href="#">Riwayat</a></li>
-                            <li @if($isSettingsPage) class="active" @endif><a href="{{ route('settings') }}">Pengaturan</a></li>
+                            <li><a href="#"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Riwayat</a></li>
+                            <li @if($isSettingsPage) class="active" @endif><a href="{{ route('settings') }}"><i class="fa fa-gear"></i>&nbsp;&nbsp;Pengaturan</a></li>
                         </ul>
                     </nav>
                 </aside>
@@ -60,7 +57,9 @@
 @if( Route::current()->getName() === 'tambah.kosan')
     @section('js')
         <script src="{{ asset('js/map.js') }}"></script>
+        <script src="{{ asset('js/jquery.form.js') }}"></script>
         <script src="{{ asset('js/user.js') }}"></script>
+        <script src="{{ asset('js/main.js') }}"></script>
         <script async defer
                      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&callback=AddKosanMap"></script>
         @if($route === 'tambah.kosan')

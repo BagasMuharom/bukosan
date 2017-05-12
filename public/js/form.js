@@ -7,6 +7,9 @@ var config = {
 $(config.inputSelector).each(function(){
 
     var elem = $(this);
+
+    var isAutofocus = elem.attr('autofocus');
+
     // Mendapatkan placeholder
     var placeholder = elem.attr('placeholder');
 
@@ -24,10 +27,10 @@ $(config.inputSelector).each(function(){
 
     // Membuat element baru
     var newParent = $('<div></div>');
-    newParent.addClass('bla');
+    newParent.addClass('input-border');
 
     // Membuat placeholder yang baru
-    var newPlaceholder = $('<span></span>');
+    var newPlaceholder = $('<span class="input-placeholder"></span>');
     newPlaceholder.text(placeholder);
     newPlaceholder.addClass('placeholder');
 
@@ -41,17 +44,27 @@ $(config.inputSelector).each(function(){
 
     // Menambahkan <input type=""> yang baru
     newParent.append(elem);
+
+    if(isAutofocus){
+        elem.focus();
+        elem.prev().fadeOut(100);
+    }
+
+    if(elem.val() != ""){
+        elem.prev().fadeOut(100);
+    }
 });
 
-$('.bla').find('.placeholder').click(function(){
+$('.input-border').find('.placeholder').click(function(){
+    $(this).fadeOut(100);
     $(this).parent().find('input').focus();
 });
 
-$('.bla').find('input').on('focus',function(){
+$('.input-border').find('input').on('focus',function(){
     $(this).parent().find('.placeholder').fadeOut(100);
 });
 
-$('.bla').find('input').on('blur',function(){
+$('.input-border').find('input').on('blur',function(){
     if($(this).val() == '')
         $(this).parent().find('.placeholder').fadeIn(100);
 });

@@ -28,6 +28,32 @@ Route::group(['middleware' => 'auth'], function () {
         return 'Riwayat sewa';
     })->name('riwayat.sewa');
 
+});
+
+Route::get('input', function () {
+    return view('test.input');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+//Route::get('/user/{username}','');
+
+// Halaman User
+
+Route::group(['prefix' => 'upload'],function () {
+    Route::post('images','ImageController@upload')->name('upload.images');
+});
+
+Route::group(['middleware' => 'auth'], function () {
+
+    Route::get('/kosansaya', 'UserPageController@KosanSayaPage')->name('kosansaya');
+
+    Route::get('/riwayatsewa', function () {
+        return 'Riwayat sewa';
+    })->name('riwayat.sewa');
+
     Route::get('/pengaturan','UserPageController@SettingsPage')->name('settings');
 
     Route::post('/pengaturan','SettingsController')->name('settings.process');
@@ -39,5 +65,9 @@ Route::group(['middleware' => 'auth'], function () {
             return 'Tambah kamar kosan pada id : ' . $idkosan;
         });
     });
+
+});
+
+Route::get('tes',function(){
 
 });
