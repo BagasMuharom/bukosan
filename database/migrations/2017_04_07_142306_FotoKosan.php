@@ -13,7 +13,10 @@ class FotoKosan extends Migration
      */
     public function up()
     {
-        //
+        Schema::create('fotokosan',function(Blueprint $table){
+            $table->integer('id_kosan');
+            $table->integer('id_foto');
+        });
     }
 
     /**

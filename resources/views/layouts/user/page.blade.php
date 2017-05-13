@@ -6,7 +6,7 @@
 
     $isHomepage = ($route === 'homepage');
 
-    $isKosanPage = ($route === 'tambah.kosan' || $route === 'kosansaya');
+    $isKosanPage = ($route === 'tambah.kosan' || $route === 'kosansaya' || $route === 'edit.kosan');
 
     $isSettingsPage = ($route === 'settings');
 
@@ -54,14 +54,13 @@
         </div>
 @endsection
 
-@if( Route::current()->getName() === 'tambah.kosan')
+@if($isKosanPage)
     @section('js')
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/jquery.form.js') }}"></script>
         <script src="{{ asset('js/user.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
-        <script async defer
-                     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&callback=AddKosanMap"></script>
+        <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&callback=AddKosanMap"></script>-->
         @if($route === 'tambah.kosan')
         <script src="{{ asset('tinymce/tinymce.min.js')}}"></script>
         <script>

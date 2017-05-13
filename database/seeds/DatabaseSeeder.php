@@ -21,7 +21,6 @@ class DatabaseSeeder extends Seeder
 			'jenis_kelamin' => 'L',
 			'alamat' => 'Jl. Karang Rejo III No. 9',
 			'perorangan' => 0,
-			'pelajar' => 1,
 			'keluarga' => 0,
 			'remember_token' => str_random(10)
 		]);

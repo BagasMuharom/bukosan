@@ -1,6 +1,6 @@
 <?php
 
-namespace Bukosan;
+namespace Bukosan\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
@@ -8,6 +8,8 @@ class KamarKosan extends Model
 {
 
     protected $table = 'kamar_kosan';
+
+    public $timestamps = false;
 
     /**
      * @param null $location

@@ -4,11 +4,13 @@ namespace Bukosan\Model;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Foto extends Model
+class FotoKosan extends Model
 {
 
-    protected $table = 'foto';
+    protected $table = 'foto_kosan';
 
     public $timestamps = false;
+
+    public $incrementing = false;
 
 }

@@ -15,6 +15,7 @@ class Kamarkosan extends Migration
     {
         Schema::create('kamar_kosan',function (Blueprint $table){
             $table->increments('id');
+            $table->integer('id_kosan');
             $table->string('nama',30);
             $table->longText('keterangan');
             $table->integer('harga');

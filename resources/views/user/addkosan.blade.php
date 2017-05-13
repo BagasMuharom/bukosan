@@ -6,14 +6,24 @@ Kosan Saya
 
 @section('contents')
 
+<?php
+
+$editPage = (Route::current()->getName() == 'edit.kosan');
+
+$nama = ($editPage) ? $kosan->nama : '';
+$alamat = ($editPage) ? $kosan->alamat : '';
+$jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
+
+?>
+
 <div class="panel panel-default panel-thumb">
     <div class="panel-heading">Daftar Kosan Baru</div>
 
     <div class="panel-body">
 
         <div class="alert alert-warning">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             <p>Ingat, pendaftaran ini adalah untuk pendaftaran kosan anda secara umum, bukan merupakan pendaftaran dari kamar yang ada pada kosan anda. Butuh bantuan ? Silahkan hubungi Customer Service kami</p>
-            <button type="button" class="btn btn-warning close" aria-label="Close"><span aria-hidden="true">Ya, saya mengerti !</span></button>
         </div>
 
         <form action="{{ route('tambah.kosan') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
@@ -23,7 +33,7 @@ Kosan Saya
             <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-3 control-label">Nama Kosan</label>
                 <div class="col-md-6">
-                    <input id="name" type="text" class="bukosan input-ui ui-primary" name="name" placeholder="Nama Kosan" required autofocus>
+                    <input id="name" type="text" value="{{ $nama }}" class="bukosan input-ui ui-primary" name="name" placeholder="Nama Kosan" required autofocus>
                     @if ($errors->has('name'))
                     <span class="help-block">
                         <strong>{{ $errors->first('name') }}</strong>
@@ -35,7 +45,7 @@ Kosan Saya
             <div class="form-group{{ $errors->has('alamat') ? ' has-error' : '' }}">
                 <label for="alamat" class="col-md-3 control-label">Alamat</label>
                 <div class="col-md-6">
-                    <input id="alamat" type="text" class="bukosan input-ui ui-primary" name="alamat" required>
+                    <input id="alamat" type="text" value="{{ $alamat }}" class="bukosan input-ui ui-primary" name="alamat" required>
                     @if ($errors->has('alamat'))
                     <span class="help-block">
                         <strong>{{ $errors->first('alamat') }}</strong>
@@ -47,7 +57,7 @@ Kosan Saya
             <div class="form-group{{ $errors->has('lantai') ? ' has-error' : '' }}">
                 <label for="lantai" class="col-md-3 control-label">Jumlah lantai</label>
                 <div class="col-md-6">
-                    <input placeholder="Jumlah lantai" id="lantai" type="number" min="1" class="bukosan input-ui ui-primary" value="1" name="lantai" required>
+                    <input placeholder="Jumlah lantai" id="lantai"  type="number" min="1" class="bukosan input-ui ui-primary" value="{{ $jumlahlantai }}" name="lantai" required>
                     @if ($errors->has('lantai'))
                     <span class="help-block">
                         <strong>{{ $errors->first('lantai') }}</strong>
@@ -136,7 +146,7 @@ Kosan Saya
                     <div class="form-group">
                         <label class="col-md-6 control-label">Lemari es</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="lmearies" id="lemaries" value="0"/>
+                            <input type="hidden" class="boolean-input" name="lemaries" id="lemaries" value="0"/>
                         </div>
                     </div>
                 </div>
@@ -151,37 +161,38 @@ Kosan Saya
             </div>
 
             <div class="panel-heading">
-                <h3 class="panel-title">Jenis Penyewa Kosan</h3>
+                <h3 class="panel-title">Jenis Kosan</h3>
             </div>
 
             <div class="form-group">
-                <label for="jeniskelamin" class="col-md-3 control-label">Jenis Kelamin Penyewa</label>
+                <label for="kategori" class="col-md-3 control-label">Kategori Kosan</label>
                 <div class="col-md-6">
-                    <input type="hidden" name="jeniskelamin" id="jeniskelamin"/>
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="jeniskelamin-drop" data-toggle="dropdown">
-                            Pilih Jenis Kelamin
+                    <input type="hidden" name="jenispenyewa" id="jeniskosan">
+                    <div class="dropdown" target="#jenispenyewa" id="jeniskosan-drop">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            Jenis Penyewa
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Laki-laki</a></li>
-                            <li><a href="#">Perempuan</a></li>
+                            <li><a href="#" data-value="perorangan">Perorangan/Pelajar</a></li>
+                            <li><a href="#" data-value="keluarga">Keluarga</a></li>
                         </ul>
                     </div>
                 </div>
             </div>
 
-            <div class="form-group">
-                <label for="kategori" class="col-md-3 control-label">Kategori Penyewa</label>
+            <div class="form-group" id="jeniskelamin-form">
+                <label for="jeniskelamin" class="col-md-3 control-label">Jenis Kelamin Penyewa</label>
                 <div class="col-md-6">
-                    <div class="dropdown">
-                        <button class="btn btn-default dropdown-toggle" type="button" id="jenispenyewa-drop" data-toggle="dropdown">
-                            Jenis Penyewa
+                    <input type="hidden" name="jeniskelamin" id="jeniskelamin"/>
+                    <div class="dropdown" target="#jeniskelamin" id="jeniskelamin-drop">
+                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            Pilih Jenis Kelamin
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
-                            <li><a href="#">Perorangan/Pelajar</a></li>
-                            <li><a href="#">Keluarga</a></li>
+                            <li><a href="#" data-value="L">Laki-laki</a></li>
+                            <li><a href="#" data-value="P">Perempuan</a></li>
                         </ul>
                     </div>
                 </div>

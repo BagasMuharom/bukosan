@@ -29,6 +29,7 @@
             </div>
         </div>
 
+        @foreach($DaftarKosan as $Kosan)
         <div class="panel-body row">
             <div class="thumb-property">
                 <div class="row">
@@ -36,11 +37,22 @@
                         <img src="{{ asset('images/ava.jpg') }}" class="img-responsive" alt=""/>
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                        <h3 class="thumb-title">Kosan Bu Aya</h3>
+                        <div class="thumb-heading">
+                            <h3 class="thumb-title">{{ $Kosan->nama }}</h3>
+                            @if($Kosan->terverifikasi)
+                            <span class="label label-success">Terverifikasi</span>
+                            @else
+                            <span class="label label-danger">Belum Terverifikasi</span>
+                            @endif
+                            <a href="{{ url('kosan') }}/{{ $Kosan->id }}/kamar">Lihat daftar kamar</a>
+                            <a href="{{ route('edit.kosan') }}/{{ $Kosan->id }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                            <a href="{{ url('hapus/kosan') }}/{{ $Kosan->id }}" class="btn btn-danger delete-kosan"><i class="fa fa-pencil"></i> Hapus</a>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+        @endforeach
     </div>
     @endif
 @endsection
