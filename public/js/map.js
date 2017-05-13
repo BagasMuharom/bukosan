@@ -9,10 +9,20 @@ function AddKosanMap() {
         streetViewControl :false
     });
 
-    navigator.geolocation.getCurrentPosition(function (pos) {
-        var position = {lat: pos.coords.latitude, lng: pos.coords.longitude};
-        Map.setCenter(position);
-    });
+    if(typeof definedLocation != 'object') {
+        navigator.geolocation.getCurrentPosition(function (pos) {
+            var position = {lat: pos.coords.latitude, lng: pos.coords.longitude};
+            Map.setCenter(position);
+        });
+    }
+    else{
+        marker = new google.maps.Marker({
+            position : definedLocation,
+            map : Map
+        });
+        markers.push(marker);
+        Map.setCenter(definedLocation);
+    }
 
     google.maps.event.addListener(Map, 'click', function (event) {
         for (var i = 0; i < markers.length; i++)

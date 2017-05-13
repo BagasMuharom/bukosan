@@ -71,7 +71,13 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                 <div class="col-md-6">
                     <input type="hidden" name="image" id="image"/>
                     <button class="btn btn-primary btn-chooser" data-input="#foto" type="button">Pilih Foto</button> Maksimal 4 Foto
-                    <div id="image-show"></div>
+                    <div id="image-show">
+                        @if(Route::current()->getName() == 'edit.kosan')
+                            @foreach($foto as $gambar)
+                        <img class="col-lg-3 img-responsive" src="{{ asset('storage/'.$gambar->nama) }}"/>
+                            @endforeach
+                        @endif
+                    </div>
                 </div>
             </div>
 
@@ -230,4 +236,14 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
         </form>
     </div>
 </div>
+
+@if(Route::current()->getname() == 'edit.kosan')
+    <script>
+        var definedLocation = {
+            lat : {{ $kosan->latitude }},
+            lng : {{ $kosan->longitude  }}
+        };
+    </script>
+@endif
+
 @endsection

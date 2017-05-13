@@ -60,8 +60,8 @@
         <script src="{{ asset('js/jquery.form.js') }}"></script>
         <script src="{{ asset('js/user.js') }}"></script>
         <script src="{{ asset('js/main.js') }}"></script>
-        <!--<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&callback=AddKosanMap"></script>-->
-        @if($route === 'tambah.kosan')
+        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&callback=AddKosanMap"></script>
+        @if($route === 'tambah.kosan' || $route === 'edit.kosan')
         <script src="{{ asset('tinymce/tinymce.min.js')}}"></script>
         <script>
             tinymce.init({
