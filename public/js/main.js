@@ -28,6 +28,11 @@ $('.btn-boolean').click(function(ev){
     $(this).toggleClass('active');
 });
 
-$(".dropdown-menu").find("a").click(function(e){
+$('.dropdown-menu').find('a').click(function(e){
     e.preventDefault();
+    var parent = $(this).parent().parent().parent();
+    var button = parent.find('button').eq(0);
+    var target = parent.attr('target');
+    $(target).val($(this).attr('data-value'));
+    button.html($(this).text() + '&nbsp;&nbsp;<span class="caret"></span>');
 });

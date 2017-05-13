@@ -3,6 +3,9 @@
 namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Bukosan\Model\FotoKosan;
+use Bukosan\Model\FotoKamarKosan;
+use Bukosan\Model\Foto;
 
 class ImageController extends Controller
 {
@@ -22,6 +25,10 @@ class ImageController extends Controller
         ];
         foreach ($request->images as $image){
             $imageName = time().''.$image->getClientOriginalName();
+            // Menyimpan ke database
+            $foto = new Foto();
+            $foto->nama = $imageName;
+            $foto->save();
             # Menyimpan gambar secara public
             $image->storePubliclyAs('public',$imageName);
             # Menyimpan url gambar secara penuh
@@ -30,6 +37,28 @@ class ImageController extends Controller
             array_push($images['name'],$imageName);
         }
         return json_encode($images);
+    }
+
+    public function SaveKosanImage($idKosan, array $ImageList){
+        foreach ($ImageList as $value) {
+            $idfoto = Foto::all()->where('nama',$value)->first()->id;
+            $fotokosan =  new FotoKosan();
+            $fotokosan->setKeyName('idfoto');
+            $fotokosan->idfoto = $idfoto;
+            $fotokosan->idkosan = $idKosan;
+            $fotokosan->save();
+        }
+    }
+
+    public function SaveKamarKosanImage($idKamarKosan, array $ImageList){
+        foreach ($ImagesList as $value) {
+            $idfoto = Foto::all()->where('nama',$value)->first()->id;
+            $fotokamarkosan =  new FotoKamarKosan();
+            $fotokamarkosan->setKeyName('idfoto');
+            $fotokamarkosan->idfoto = $idfoto;
+            $fotokamarkosan->idkosan = $idKosan;
+            $fotokamarkosan->save();
+        }
     }
 
 }

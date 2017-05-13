@@ -274,9 +274,6 @@ class ComposerStaticInitd55a5049ecf6f99b21162cc99d9451f9
     public static $classMap = array (
         'CreateUsersTable' => __DIR__ . '/../..' . '/database/migrations/2014_10_12_000000_create_users_table.php',
         'DatabaseSeeder' => __DIR__ . '/../..' . '/database/seeds/DatabaseSeeder.php',
-        'Fasilitas' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_131048_Fasilitas.php',
-        'FasilitasKamarKosan' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_132456_FasilitasKamarKosan.php',
-        'FasilitasKosan' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_132439_FasilitasKosan.php',
         'Favorit' => __DIR__ . '/../..' . '/database/migrations/2017_04_01_104230_favorit.php',
         'File_Iterator' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Iterator.php',
         'File_Iterator_Facade' => __DIR__ . '/..' . '/phpunit/php-file-iterator/src/Facade.php',
@@ -358,6 +355,7 @@ class ComposerStaticInitd55a5049ecf6f99b21162cc99d9451f9
         'Kontak' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_125500_kontak.php',
         'Kontakuser' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_125513_kontakuser.php',
         'Kosan' => __DIR__ . '/../..' . '/database/migrations/2017_04_01_104131_kosan.php',
+        'KosanSeeder' => __DIR__ . '/../..' . '/database/seeds/KosanSeeder.php',
         'Kotakab' => __DIR__ . '/../..' . '/database/migrations/2017_04_07_125814_kotakab.php',
         'PHPUnit\\Framework\\Assert' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
         'PHPUnit\\Framework\\BaseTestListener' => __DIR__ . '/..' . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
@@ -821,6 +819,7 @@ class ComposerStaticInitd55a5049ecf6f99b21162cc99d9451f9
         'SebastianBergmann\\ResourceOperations\\ResourceOperations' => __DIR__ . '/..' . '/sebastian/resource-operations/src/ResourceOperations.php',
         'SebastianBergmann\\Version' => __DIR__ . '/..' . '/sebastian/version/src/Version.php',
         'Text_Template' => __DIR__ . '/..' . '/phpunit/php-text-template/src/Template.php',
+        'UserSeeder' => __DIR__ . '/../..' . '/database/seeds/UserSeeder.php',
     );
 
     public static function getInitializer(ClassLoader $loader)

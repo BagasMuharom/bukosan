@@ -3,69 +3,87 @@
 namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Bukosan\Model\Kosan;
+use Illuminate\Support\Facades\Auth;
 
 class KosanController extends Controller
 {
 
     /**
-     * Store a newly created resource in storage.
+     * Menyimpan kosan ke dalam database
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        return $request->all();
-        // $request->foto->storeAs('images','images.jpg');
-        // foreach ($request->foto as $value) {
-        //     $value->storePubliclyAs('images',$value->getClientOriginalName());
-        //     print_r($value->getClientOriginalName());
-        // }
-        // return $request->foto;
+        $kosan = new \Bukosan\Model\Kosan();
+        $kosan->idpemilik = Auth::user()->id;
+        $kosan->nama = $request->name;
+        $kosan->alamat = $request->alamat;
+        $kosan->jumlahlantai = $request->lantai;
+        $kosan->latitude = $request->latitude;
+        $kosan->longitude = $request->longitude;
+        $kosan->keterangan = $request->deskripsi;
+        $kosan->terverifikasi = 0;
+
+        // Fasilitas
+        $kosan->wifi = $request->wifi;
+        $kosan->ac = $request->ac;
+        $kosan->dapur = $request->dapur;
+        $kosan->jammalam = $request->jammalam;
+        $kosan->kmdalam = $request->kmdalam;
+        $kosan->tempatparkir = $request->tempatparkir;
+        $kosan->lemaries = $request->lemaries;
+        $kosan->televisi = $request->televisi;
+
+        // Jenis kosan
+        if($request->jeniskosan == 'keluarga')
+            $kosan->keluarga = true;
+        else {
+            $kosan->keluarga = false;
+            $kosan->jeniskelamin = $request->jeniskelamin;
+        }
+
+        // simpan
+        $kosan->save();
+
+        // Menyimpan Gambar
+        $image = new ImageController();
+        $image->SaveKosanImage($kosan->id,explode(',',$request->image));
     }
 
     /**
-     * Display the specified resource.
+     * Mengambil data kosan dari database
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
     {
-        //
+        // $kosan = DB::table('kosan')->query('SELECT * FROM "public"."kosan" as kosan, "public"."foto"');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Menghapus kosan dari database
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
+     public function destroy($id)
+     {
+         if(count(Kosan::where('id',$id)->get()) > 0){
+             $kosan = Kosan::where('id',$id)->first();
+             if($kosan->idpemilik == Auth::user()->id){
+                 // Menghapus
+                 $kosan->delete();
+                 if(count(Kosan::where('id',$id)->get()) == 0){
+                     // Mengirim status bahwa berhasil dihapus
+                     return json_encode(['status' => 1]);
+                 }
+             }
+         }
+         // Mengirim status bahwa gagal dihapus
+         return json_encode(['status' => 0]);
+     }
 }

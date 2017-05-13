@@ -66,8 +66,19 @@ Route::group(['middleware' => 'auth'], function () {
         });
     });
 
+    Route::group(['prefix' => 'edit'],function(){
+        Route::get('kosan/{idkosan}','UserPageController@EditKosanPage')->name('edit.kosan');
+        Route::post('kosan','KosanController@edit')->name('edit.kosan');
+    });
+
+    Route::group(['prefix' => 'hapus'],function(){
+        Route::get('kosan/{idkosan}','KosanController@destroy')->name('hapus.kosan');
+    });
+
+    Route::get('kosan/{idkosan}/kamar','UserPageController@DaftarKamarKosan');
+
 });
 
 Route::get('tes',function(){
-
+    return \Bukosan\Model\Kosan::where('idpemilik',Auth::user()->id)->get();
 });

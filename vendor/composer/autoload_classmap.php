@@ -8,9 +8,6 @@ $baseDir = dirname($vendorDir);
 return array(
     'CreateUsersTable' => $baseDir . '/database/migrations/2014_10_12_000000_create_users_table.php',
     'DatabaseSeeder' => $baseDir . '/database/seeds/DatabaseSeeder.php',
-    'Fasilitas' => $baseDir . '/database/migrations/2017_04_07_131048_Fasilitas.php',
-    'FasilitasKamarKosan' => $baseDir . '/database/migrations/2017_04_07_132456_FasilitasKamarKosan.php',
-    'FasilitasKosan' => $baseDir . '/database/migrations/2017_04_07_132439_FasilitasKosan.php',
     'Favorit' => $baseDir . '/database/migrations/2017_04_01_104230_favorit.php',
     'File_Iterator' => $vendorDir . '/phpunit/php-file-iterator/src/Iterator.php',
     'File_Iterator_Facade' => $vendorDir . '/phpunit/php-file-iterator/src/Facade.php',
@@ -92,6 +89,7 @@ return array(
     'Kontak' => $baseDir . '/database/migrations/2017_04_07_125500_kontak.php',
     'Kontakuser' => $baseDir . '/database/migrations/2017_04_07_125513_kontakuser.php',
     'Kosan' => $baseDir . '/database/migrations/2017_04_01_104131_kosan.php',
+    'KosanSeeder' => $baseDir . '/database/seeds/KosanSeeder.php',
     'Kotakab' => $baseDir . '/database/migrations/2017_04_07_125814_kotakab.php',
     'PHPUnit\\Framework\\Assert' => $vendorDir . '/phpunit/phpunit/src/ForwardCompatibility/Assert.php',
     'PHPUnit\\Framework\\BaseTestListener' => $vendorDir . '/phpunit/phpunit/src/ForwardCompatibility/BaseTestListener.php',
@@ -555,4 +553,5 @@ return array(
     'SebastianBergmann\\ResourceOperations\\ResourceOperations' => $vendorDir . '/sebastian/resource-operations/src/ResourceOperations.php',
     'SebastianBergmann\\Version' => $vendorDir . '/sebastian/version/src/Version.php',
     'Text_Template' => $vendorDir . '/phpunit/php-text-template/src/Template.php',
+    'UserSeeder' => $baseDir . '/database/seeds/UserSeeder.php',
 );

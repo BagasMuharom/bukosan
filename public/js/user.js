@@ -42,3 +42,13 @@ $('.file-upload').ajaxForm({
         $("#image").val(name.join());
     }
 });
+
+$('#jeniskosan-drop').find('a').click(function(e){
+    e.preventDefault();
+    if($(this).attr('data-value') == 'keluarga'){
+        $('#jeniskelamin-form').hide();
+    }
+    else{
+        $('#jeniskelamin-form').show();
+    }
+});
