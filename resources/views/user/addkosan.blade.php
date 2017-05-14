@@ -14,6 +14,20 @@ $nama = ($editPage) ? $kosan->nama : '';
 $alamat = ($editPage) ? $kosan->alamat : '';
 $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
 
+// Fasilitas
+$wifi = ($editPage) ? $kosan->wifi : '';
+$dapur = ($editPage) ? $kosan->dapur : '';
+$lemaries = ($editPage) ? $kosan->lemaries : '';
+$tempatparkir = ($editPage) ? $kosan->tempatparkir : '';
+$kmdalam = ($editPage) ? $kosan->kmdalam : '';
+$jammalam = ($editPage) ? $kosan->jammalam : '';
+$televisi = ($editPage) ? $kosan->televisi : '';
+
+$keluarga = ($editPage) ? $kosan->keluarga : '';
+$kosanperempuan = ($editPage) ? $kosan->kosanperempuan : '';
+
+$keterangan = ($editPage) ? $kosan->deskripsi : '';
+
 ?>
 
 <div class="panel panel-default panel-thumb">
@@ -115,7 +129,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Wi-fi</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="wifi" id="wifi" value="{{ $kosan->wifi }}"/>
+                            <input type="hidden" class="boolean-input" name="wifi" id="wifi" value="{{ $wifi }}"/>
                         </div>
                     </div>
                 </div>
@@ -123,7 +137,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Kamar mandi dalam</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="kmdalam" id="kmdalam" value="{{ $kosan->kmdalam }}"/>
+                            <input type="hidden" class="boolean-input" name="kmdalam" id="kmdalam" value="{{ $kmdalam }}"/>
                         </div>
                     </div>
                 </div>
@@ -131,15 +145,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Akses 24 jam</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="jammalam" id="jammalam" value="{{ $kosan->jammalam }}"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-6 col-sm-6 col-xs-6">
-                    <div class="form-group">
-                        <label class="col-md-6 control-label">AC</label>
-                        <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="ac" id="ac" value="{{ $kosan->ac }}"/>
+                            <input type="hidden" class="boolean-input" name="jammalam" id="jammalam" value="{{ $jammalam }}"/>
                         </div>
                     </div>
                 </div>
@@ -147,7 +153,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Tempat Parkir</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="tempatparkir" id="tempatparkir" value="{{ $kosan->tempatparkir }}"/>
+                            <input type="hidden" class="boolean-input" name="tempatparkir" id="tempatparkir" value="{{ $tempatparkir }}"/>
                         </div>
                     </div>
                 </div>
@@ -155,7 +161,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Dapur</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="dapur" id="dapur" value="{{ $kosan->dapur }}"/>
+                            <input type="hidden" class="boolean-input" name="dapur" id="dapur" value="{{ $dapur }}"/>
                         </div>
                     </div>
                 </div>
@@ -163,7 +169,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Lemari es</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="lemaries" id="lemaries" value="{{ $kosan->lemaries }}"/>
+                            <input type="hidden" class="boolean-input" name="lemaries" id="lemaries" value="{{ $lemaries }}"/>
                         </div>
                     </div>
                 </div>
@@ -171,7 +177,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Televisi</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="televisi" id="televisi" value="{{ $kosan->televisi }}"/>
+                            <input type="hidden" class="boolean-input" name="televisi" id="televisi" value="{{ $televisi }}"/>
                         </div>
                     </div>
                 </div>
@@ -184,10 +190,10 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
             <div class="form-group">
                 <label for="kategori" class="col-md-3 control-label">Kategori Kosan</label>
                 <div class="col-md-6">
-                    <input type="hidden" name="jeniskosan" id="jeniskosan" value="@if($kosan->keluarga) keluarga @else perorangan @endif">
+                    <input type="hidden" name="jeniskosan" id="jeniskosan" value="@if($keluarga) keluarga @elseif(!$keluarga)) perorangan @endif">
                     <div class="dropdown" target="#jeniskosan" id="jeniskosan-drop">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                            @if(isset($kosan->keluarga)) Keluarga @else Perorangan/Pelajar @endif
+                            @if($keluarga == '') Pilih Jenis Penyewa @elseif($keluarga) Keluarga @else Perorangan/Pelajar @endif
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -198,13 +204,13 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                 </div>
             </div>
 
-            <div class="form-group" id="jeniskelamin-form" @if(Route::current()->getName() == 'edit.kosan' && $kosan->keluarga) style="display:none" @endif>
+            <div class="form-group" id="jeniskelamin-form" @if(Route::current()->getName() == 'edit.kosan' && $keluarga) style="display:none" @endif>
                 <label for="jeniskelamin" class="col-md-3 control-label">Jenis Kelamin Penyewa</label>
                 <div class="col-md-6">
-                    <input type="hidden" name="jeniskelamin" id="jeniskelamin" value="@if($kosan->kosanperempuan) P @else L @endif"/>
+                    <input type="hidden" name="jeniskelamin" id="jeniskelamin" value="@if($kosanperempuan) P @elseif(!$kosanperempuan)) L @endif"/>
                     <div class="dropdown" target="#jeniskelamin" id="jeniskelamin-drop">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                            @if($kosan->kosanperempuan) Perempuan @else Laki-laki @endif
+                            @if($kosanperempuan == '') Pilih Jenis Kelamin @elseif($kosanperempuan) Perempuan @else Laki-laki @endif
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -225,7 +231,7 @@ $jumlahlantai = ($editPage) ? $kosan->jumlahlantai : 1;
                 <p>Berikan penjelasan lebih tentang kosan anda, mungkin tentang peraturan kosan atau informasi tambahan lainnya tentang kosan anda.</p>
             </div>
 
-            <textarea id="deskripsi" name="deskripsi">{{ $kosan->keterangan }}</textarea>
+            <textarea id="deskripsi" name="deskripsi">{{ $keterangan }}</textarea>
             @if ($errors->has('deskripsi'))
             <span class="help-block">
                 <strong>{{ $errors->first('deskripsi') }}</strong>

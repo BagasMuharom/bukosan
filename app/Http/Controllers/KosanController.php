@@ -60,7 +60,6 @@ class KosanController extends Controller
 
         // Fasilitas
         $kosan->wifi = $request->wifi;
-        $kosan->ac = $request->ac;
         $kosan->dapur = $request->dapur;
         $kosan->jammalam = $request->jammalam;
         $kosan->kmdalam = $request->kmdalam;
