@@ -6,13 +6,17 @@ function MatchLocation() {
 
 $('.boolean-input').each(function(){
     elem = $(this);
-    newBtn = $('<button></button>');
+    newBtn = $('<button type="button"></button>');
     newBtn.addClass('btn btn-boolean');
     newBtn.attr('data-target',$(this).attr('id'));
     childMark = $('<div></div>');
     childMark.addClass('btn-mark');
     newBtn.append(childMark);
     elem.before(newBtn);
+    if($(this).val() == 1){
+        childMark.css('left','32px');
+        newBtn.addClass('active');
+    }
 });
 
 $('.btn-boolean').click(function(ev){

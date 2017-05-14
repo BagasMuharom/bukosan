@@ -33,6 +33,12 @@ class UserPageController extends Controller
         ]);
     }
 
+    public function TambahKamarKosan($idkosan){
+        return view('user.tambahkamar',[
+            'kosan' => Kosan::where('id',$idkosan)->first()
+        ]);
+    }
+
     public function CreateKosanPage()
     {
         return view('user.addkosan');
@@ -41,7 +47,7 @@ class UserPageController extends Controller
     public function EditKosanPage($idkosan){
         return view('user.addkosan',[
             'kosan' => Kosan::where('id',$idkosan)->first(),
-            'foto' => DB::select('SELECT foto.nama FROM kosan, foto, foto_kosan WHERE foto.id = foto_kosan.idfoto AND kosan.id = foto_kosan.idkosan')
+            'foto' => DB::select('SELECT foto.nama FROM kosan, foto, foto_kosan WHERE foto.id = foto_kosan.idfoto AND kosan.id = foto_kosan.idkosan AND kosan.idpemilik = '. Auth::user()->id)
         ]);
     }
 

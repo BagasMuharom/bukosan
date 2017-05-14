@@ -5,13 +5,13 @@
 @endsection
 
 @section('contents')
-    @if(count($kamar)) == 0)
+    @if(count($kamar) == 0)
     <div class="panel panel-notif notif-lg row">
         <div class="notif-body col-lg-9 col-md-9 col-sm-9 col-xs-12">
-            <h3 class="notif-heading">Tampaknya anda belum menambah kamar</h3>
+            <h3 class="notif-heading">Ups, Belum ada kamar dalam kosan ini</h3>
             <div class="notif-content">
                 <p>Tambahkan kamar kosan anda sekarang dan dapatkan berbagai kemudahan !</p>
-                <a href="{{ route('tambah.kosan') }}" class="btn btn-primary">Tambah Kamar Sekarang</a>
+                <a href="{{ url('tambah/kamar/'.$kosan->id) }}" class="btn btn-primary">Tambah Kamar Sekarang</a>
             </div>
         </div>
         <div class="notif-icon col-lg-3 col-md-3 col-sm-3 hidden-xs">

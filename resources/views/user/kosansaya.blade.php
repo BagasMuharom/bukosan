@@ -13,7 +13,7 @@
                 <p>Daftarkan kosan anda sekarang dan dapatkan berbagai kemudahan !</p>
                 <a href="{{ route('tambah.kosan') }}" class="btn btn-primary">Daftarkan Kosan Sekarang</a>
             </div>
-        </div>
+        </div>use
         <div class="notif-icon col-lg-3 col-md-3 col-sm-3 hidden-xs">
             <img class="img-responsive" src="{{ asset('images/ava.jpg') }}"/>
         </div>
@@ -45,7 +45,7 @@
                             <span class="label label-danger">Belum Terverifikasi</span>
                             @endif
                             <a href="{{ url('kosan') }}/{{ $Kosan->id }}/kamar">Lihat daftar kamar</a>
-                            <a href="{{ route('edit.kosan') }}/{{ $Kosan->id }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                            <a href="{{ route('edit.kosan',['idkosan' => $Kosan->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
                             <a href="{{ url('hapus/kosan') }}/{{ $Kosan->id }}" class="btn btn-danger delete-kosan"><i class="fa fa-pencil"></i> Hapus</a>
                         </div>
                     </div>

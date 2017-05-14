@@ -51,14 +51,22 @@ class ImageController extends Controller
     }
 
     public function SaveKamarKosanImage($idKamarKosan, array $ImageList){
-        foreach ($ImagesList as $value) {
+        foreach ($ImageList as $value) {
             $idfoto = Foto::all()->where('nama',$value)->first()->id;
             $fotokamarkosan =  new FotoKamarKosan();
             $fotokamarkosan->setKeyName('idfoto');
             $fotokamarkosan->idfoto = $idfoto;
-            $fotokamarkosan->idkosan = $idKosan;
+            $fotokamarkosan->idkamarkosan = $idKamarKosan;
             $fotokamarkosan->save();
         }
+    }
+
+    public function HapusFotoKosan($idkosan){
+        $hapus = FotoKosan::where('idkosan',$idkosan)->delete();
+    }
+
+    public function HapusFotoKamarKosan($idkamar){
+        $hapus = FotoKamarKosan::where('idkamarkosan',$idkamar)->delete();
     }
 
 }

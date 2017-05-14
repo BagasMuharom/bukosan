@@ -17,8 +17,39 @@ class KosanController extends Controller
      */
     public function store(Request $request)
     {
-        $kosan = new \Bukosan\Model\Kosan();
-        $kosan->idpemilik = Auth::user()->id;
+        $this->manage($request, new Kosan());
+    }
+
+    /**
+     * Mengambil data kosan dari database
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        // $kosan = DB::table('kosan')->query('SELECT * FROM "public"."kosan" as kosan, "public"."foto"');
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        $kosan = Kosan::where('id',$id)->first();
+        // Menghapus dulu gambar yang ada
+        $image = new ImageController();
+        $image->HapusFotoKosan($id);
+        $this->manage($request, $kosan);
+    }
+
+    public function manage(Request $request, Kosan $kosan){
+        if(is_null($kosan->id))
+            $kosan->idpemilik = Auth::user()->id;
         $kosan->nama = $request->name;
         $kosan->alamat = $request->alamat;
         $kosan->jumlahlantai = $request->lantai;
@@ -42,7 +73,7 @@ class KosanController extends Controller
             $kosan->keluarga = true;
         else {
             $kosan->keluarga = false;
-            $kosan->jeniskelamin = $request->jeniskelamin;
+            $kosan->kosanperempuan = ($request->jeniskelamin == 'L') ? false : true;
         }
 
         // simpan
@@ -51,17 +82,6 @@ class KosanController extends Controller
         // Menyimpan Gambar
         $image = new ImageController();
         $image->SaveKosanImage($kosan->id,explode(',',$request->image));
-    }
-
-    /**
-     * Mengambil data kosan dari database
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        // $kosan = DB::table('kosan')->query('SELECT * FROM "public"."kosan" as kosan, "public"."foto"');
     }
 
     /**

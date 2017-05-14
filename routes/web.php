@@ -61,14 +61,13 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'tambah'], function () {
         Route::get('kosan','UserPageController@CreateKosanPage')->name('tambah.kosan');
         Route::post('kosan','KosanController@store')->name('tambah.kosan');
-        Route::get('kamar/{idkosan}', function ($idkosan) {
-            return 'Tambah kamar kosan pada id : ' . $idkosan;
-        });
+        Route::get('kamar/{idkosan}', 'UserPageController@TambahKamarKosan')->name('tambah.kamar');
+        Route::post('kamar','KamarKosanController@store')->name('tambah.kamar');
     });
 
     Route::group(['prefix' => 'edit'],function(){
         Route::get('kosan/{idkosan}','UserPageController@EditKosanPage')->name('edit.kosan');
-        Route::post('kosan','KosanController@edit')->name('edit.kosan');
+        Route::post('kosan/{idkosan}','KosanController@update')->name('edit.kosan');
     });
 
     Route::group(['prefix' => 'hapus'],function(){
