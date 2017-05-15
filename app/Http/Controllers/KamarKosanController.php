@@ -31,8 +31,7 @@ class KamarKosanController extends Controller
         $kamar->save();
 
         // Menambah Gambar
-        $image = new ImageController();
-        $image->SaveKamarKosanImage($kamar->id,explode(',',$request->image));
+        ImageController::SaveKamarKosanImage($kamar->id,explode(',',$request->image));
     }
 
     /**

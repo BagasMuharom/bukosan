@@ -3,8 +3,10 @@
 namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Controllers\ImageController;
 use Bukosan\Model\Kosan;
 use Illuminate\Support\Facades\Auth;
+use DB;
 
 class KosanController extends Controller
 {
@@ -41,9 +43,8 @@ class KosanController extends Controller
     public function update(Request $request, $id)
     {
         $kosan = Kosan::where('id',$id)->first();
-        // Menghapus dulu gambar yang ada
-        $image = new ImageController();
-        $image->HapusFotoKosan($id);
+        # Menghapus dulu gambar yang ada
+        ImageController::HapusFotoKosan($id)
         $this->manage($request, $kosan);
     }
 
@@ -58,7 +59,7 @@ class KosanController extends Controller
         $kosan->keterangan = $request->deskripsi;
         $kosan->terverifikasi = 0;
 
-        // Fasilitas
+        # Fasilitas
         $kosan->wifi = $request->wifi;
         $kosan->dapur = $request->dapur;
         $kosan->jammalam = $request->jammalam;
@@ -67,7 +68,7 @@ class KosanController extends Controller
         $kosan->lemaries = $request->lemaries;
         $kosan->televisi = $request->televisi;
 
-        // Jenis kosan
+        # Jenis kosan
         if($request->jeniskosan == 'keluarga')
             $kosan->keluarga = true;
         else {
@@ -75,12 +76,11 @@ class KosanController extends Controller
             $kosan->kosanperempuan = ($request->jeniskelamin == 'L') ? false : true;
         }
 
-        // simpan
+        # simpan
         $kosan->save();
 
-        // Menyimpan Gambar
-        $image = new ImageController();
-        $image->SaveKosanImage($kosan->id,explode(',',$request->image));
+        # Menyimpan Gambar
+        ImageController::SaveKosanImage($kosan->id,explode(',',$request->image));
     }
 
     /**
@@ -94,15 +94,23 @@ class KosanController extends Controller
          if(count(Kosan::where('id',$id)->get()) > 0){
              $kosan = Kosan::where('id',$id)->first();
              if($kosan->idpemilik == Auth::user()->id){
-                 // Menghapus
+                 # Menghapus
                  $kosan->delete();
                  if(count(Kosan::where('id',$id)->get()) == 0){
-                     // Mengirim status bahwa berhasil dihapus
-                     return json_encode(['status' => 1]);
+                    ImageController::HapusFotoKosan($id);
+                    # Mengirim status bahwa berhasil dihapus
+                    return json_encode(['status' => 1]);
                  }
              }
          }
-         // Mengirim status bahwa gagal dihapus
+         # Mengirim status bahwa gagal dihapus
          return json_encode(['status' => 0]);
+     }
+
+     public static function GetFotoKosan($id){
+        return DB::table('kosan')
+                ->join('foto_kosan','foto_kosan.idkosan','=','kosan.id')
+                ->join('foto','foto.id','=','foto_kosan.idfoto')
+                ->where('kosan.id',$id);
      }
 }

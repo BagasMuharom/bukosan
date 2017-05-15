@@ -18,7 +18,7 @@ class UserPageController extends Controller
     }
 
     public function KosanSayaPage(){
-        $DaftarKosan = Kosan::where('idpemilik',Auth::user()->id)->get();
+        $DaftarKosan = Kosan::where('idpemilik',Auth::user()->id)->orderBy('id')->get();
         $KosanCount = count($DaftarKosan);
         return view('user.kosansaya',[
             'DaftarKosan' => $DaftarKosan,

@@ -25,7 +25,7 @@ class ImageController extends Controller
         ];
         foreach ($request->images as $image){
             $imageName = time().''.$image->getClientOriginalName();
-            // Menyimpan ke database
+            # Menyimpan ke database
             $foto = new Foto();
             $foto->nama = $imageName;
             $foto->save();
@@ -39,7 +39,7 @@ class ImageController extends Controller
         return json_encode($images);
     }
 
-    public function SaveKosanImage($idKosan, array $ImageList){
+    public static function SaveKosanImage($idKosan, array $ImageList){
         foreach ($ImageList as $value) {
             $idfoto = Foto::all()->where('nama',$value)->first()->id;
             $fotokosan =  new FotoKosan();
@@ -61,12 +61,36 @@ class ImageController extends Controller
         }
     }
 
-    public function HapusFotoKosan($idkosan){
-        $hapus = FotoKosan::where('idkosan',$idkosan)->delete();
+    public static function HapusFotoKosan($idkosan){
+        # Mendapatkan foto kosan
+        $fotokosan = DB::table('foto_kosan')
+                        ->join('foto','foto.id','=','foto_kosan.idfoto')
+                        ->join('kosan','kosan.id','=','foto_kosan.idkosan')
+                        ->select('foto.nama');
+        foreach($fotokosan as $foto){
+            # Menghapus dari storage
+            Storage::delete('public/'.$foto->nama);
+            # Menghapus foto dari database
+            Foto::where('nama',$foto->nama)->delete();
+        }
+        # Menghapus dari tabel foto_kosan
+        FotoKosan::where('idkosan',$idkosan)->delete();
     }
 
-    public function HapusFotoKamarKosan($idkamar){
-        $hapus = FotoKamarKosan::where('idkamarkosan',$idkamar)->delete();
+    public static function HapusFotoKamarKosan($idkamar){
+        # Mendapatkan foto kamar kosan
+        $fotokamar = DB::table('foto_kamar_kosan')
+                        ->join('foto','foto.id','=','foto_kosan.idfoto')
+                        ->join('kamar_kosan','kamar_kosan.id','=','foto_kosan.idkamarkosan')
+                        ->select('foto.nama');
+        foreach($fotokamar as $foto){
+            # Menghapus dari storage
+            Storage::delete('public/'.$foto->nama);
+            # Menghapus foto dari database
+            Foto::where('nama',$foto->nama)->delete();
+        }
+        # Menghapus foto dari tabel foto_kamar_kosan
+        FotoKamarKosan::where('idkamarkosan',$idkamar)->delete();
     }
 
 }

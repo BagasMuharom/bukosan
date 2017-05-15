@@ -52,3 +52,30 @@ $('#jeniskosan-drop').find('a').click(function(e){
         $('#jeniskelamin-form').show();
     }
 });
+
+$('a.delete-kosan').click(function(e){
+    e.preventDefault();
+    var action = $(this).attr('href');
+    var elem = $('.kosan-'+$(this).attr('data-id'));
+    $.ajax({
+        url : action,
+        type : 'get',
+        success : function(result){
+            response = JSON.parse(result);
+            if(typeof response != 'undefined'){
+                if(response.status = 1){
+                    alert('Berhasil menghapus !');
+                    elem.slideUp(150,function(){
+                        $(this).remove();
+                    })
+                }
+                else {
+                    alert('Gagal menghapus !')
+                }
+            }
+            else {
+                alert('Gagal menghapus !');
+            }
+        }
+    });
+});

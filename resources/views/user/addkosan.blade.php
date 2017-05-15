@@ -24,14 +24,21 @@ $jammalam = ($editPage) ? $kosan->jammalam : '';
 $televisi = ($editPage) ? $kosan->televisi : '';
 
 $keluarga = ($editPage) ? $kosan->keluarga : '';
+$keluargaValue = ($editPage) ? ($kosan->keluarga) ? 'keluarga' : 'perorangan' : '';
 $kosanperempuan = ($editPage) ? $kosan->kosanperempuan : '';
+$jeniskelamin = ($editPage) ? ($kosan->kosanperempuan) ? 'P' : 'L' : '';
+
 
 $keterangan = ($editPage) ? $kosan->deskripsi : '';
 
 ?>
 
 <div class="panel panel-default panel-thumb">
+    @if($editPage)
+    <div class="panel-heading">Edit Kosan</div>
+    @else
     <div class="panel-heading">Daftar Kosan Baru</div>
+    @endif
 
     <div class="panel-body">
 
@@ -190,10 +197,10 @@ $keterangan = ($editPage) ? $kosan->deskripsi : '';
             <div class="form-group">
                 <label for="kategori" class="col-md-3 control-label">Kategori Kosan</label>
                 <div class="col-md-6">
-                    <input type="hidden" name="jeniskosan" id="jeniskosan" value="@if($keluarga) keluarga @elseif(!$keluarga)) perorangan @endif">
+                    <input type="hidden" name="jeniskosan" id="jeniskosan" value="{{ $keluargaValue }}">
                     <div class="dropdown" target="#jeniskosan" id="jeniskosan-drop">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                            @if($keluarga == '') Pilih Jenis Penyewa @elseif($keluarga) Keluarga @else Perorangan/Pelajar @endif
+                            @if($keluarga === '') Pilih Jenis Penyewa @elseif($keluarga) Keluarga @else Perorangan/Pelajar @endif
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -207,10 +214,10 @@ $keterangan = ($editPage) ? $kosan->deskripsi : '';
             <div class="form-group" id="jeniskelamin-form" @if(Route::current()->getName() == 'edit.kosan' && $keluarga) style="display:none" @endif>
                 <label for="jeniskelamin" class="col-md-3 control-label">Jenis Kelamin Penyewa</label>
                 <div class="col-md-6">
-                    <input type="hidden" name="jeniskelamin" id="jeniskelamin" value="@if($kosanperempuan) P @elseif(!$kosanperempuan)) L @endif"/>
+                    <input type="hidden" name="jeniskelamin" id="jeniskelamin" value="{{ $jeniskelamin }}"/>
                     <div class="dropdown" target="#jeniskelamin" id="jeniskelamin-drop">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                            @if($kosanperempuan == '') Pilih Jenis Kelamin @elseif($kosanperempuan) Perempuan @else Laki-laki @endif
+                            @if($kosanperempuan === '') Pilih Jenis Kelamin @elseif($kosanperempuan) Perempuan @else Laki-laki @endif
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
