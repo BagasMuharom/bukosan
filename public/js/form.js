@@ -13,6 +13,8 @@ $(config.inputSelector).each(function(){
     // Mendapatkan placeholder
     var placeholder = elem.attr('placeholder');
 
+    var value = elem.attr('value');
+
     // Mengosongkan placeholder
     elem.attr('placeholder','');
 

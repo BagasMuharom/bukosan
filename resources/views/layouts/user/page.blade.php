@@ -33,7 +33,7 @@
         </nav>
         <div class="container">
             <div class="row">
-                <aside class="col-lg-3" id="leftbar">
+                <aside class="col-lg-3 col-md-3 col-sm-4 col-xs-6" id="leftbar">
                     <div class="panel panel-default panel-avatar">
                         <div class="panel-body">
                             <img class="img-responsive img-circle img-ava" src="{{ asset('images/ava.jpg') }}"/>
@@ -49,7 +49,7 @@
                     </nav>
                 </aside>
 
-                <div class="col-lg-9 col-md-8">
+                <div class="col-lg-9 col-md-9 col-sm-8">
                     @yield('contents')
                 </div>
             </div>
@@ -61,7 +61,6 @@
         <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/jquery.form.js') }}"></script>
         <script src="{{ asset('js/user.js') }}"></script>
-        <script src="{{ asset('js/main.js') }}"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&callback=AddKosanMap"></script>
         @if($route === 'tambah.kosan' || $route === 'edit.kosan' || $route === 'tambah.kamar' || $route === 'edit.kamar')
         <script src="{{ asset('tinymce/tinymce.min.js')}}"></script>

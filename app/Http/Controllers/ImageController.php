@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use Bukosan\Model\FotoKosan;
 use Bukosan\Model\FotoKamarKosan;
 use Bukosan\Model\Foto;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\DB;
 
 class ImageController extends Controller
 {
@@ -41,7 +43,7 @@ class ImageController extends Controller
 
     public static function SaveKosanImage($idKosan, array $ImageList){
         foreach ($ImageList as $value) {
-            $idfoto = Foto::all()->where('nama',$value)->first()->id;
+            $idfoto = Foto::where('nama',$value)->first()->id;
             $fotokosan =  new FotoKosan();
             $fotokosan->setKeyName('idfoto');
             $fotokosan->idfoto = $idfoto;
@@ -50,7 +52,7 @@ class ImageController extends Controller
         }
     }
 
-    public function SaveKamarKosanImage($idKamarKosan, array $ImageList){
+    public static function SaveKamarKosanImage($idKamarKosan, array $ImageList){
         foreach ($ImageList as $value) {
             $idfoto = Foto::all()->where('nama',$value)->first()->id;
             $fotokamarkosan =  new FotoKamarKosan();
@@ -61,23 +63,25 @@ class ImageController extends Controller
         }
     }
 
-    public static function HapusFotoKosan($idkosan){
+    public static function HapusFotoKosan($idkosan,$deletefile = true){
         # Mendapatkan foto kosan
         $fotokosan = DB::table('foto_kosan')
                         ->join('foto','foto.id','=','foto_kosan.idfoto')
                         ->join('kosan','kosan.id','=','foto_kosan.idkosan')
                         ->select('foto.nama');
-        foreach($fotokosan as $foto){
+        foreach($fotokosan->get() as $foto){
             # Menghapus dari storage
-            Storage::delete('public/'.$foto->nama);
-            # Menghapus foto dari database
-            Foto::where('nama',$foto->nama)->delete();
+            if($deletefile){
+                Storage::delete('public/'.$foto->nama);
+                # Menghapus foto dari database
+                Foto::where('nama',$foto->nama)->delete();
+            }
         }
         # Menghapus dari tabel foto_kosan
         FotoKosan::where('idkosan',$idkosan)->delete();
     }
 
-    public static function HapusFotoKamarKosan($idkamar){
+    public static function HapusFotoKamarKosan($idkamar,$deletefile = true){
         # Mendapatkan foto kamar kosan
         $fotokamar = DB::table('foto_kamar_kosan')
                         ->join('foto','foto.id','=','foto_kosan.idfoto')
@@ -85,12 +89,37 @@ class ImageController extends Controller
                         ->select('foto.nama');
         foreach($fotokamar as $foto){
             # Menghapus dari storage
-            Storage::delete('public/'.$foto->nama);
-            # Menghapus foto dari database
-            Foto::where('nama',$foto->nama)->delete();
+            if($deletefile){
+                Storage::delete('public/'.$foto->nama);
+                # Menghapus foto dari database
+                Foto::where('nama',$foto->nama)->delete();
+            }
         }
         # Menghapus foto dari tabel foto_kamar_kosan
         FotoKamarKosan::where('idkamarkosan',$idkamar)->delete();
+    }
+
+    public function HapusFoto(Request $request){
+        # Mendapatkan instance FotoKosan
+        $foto = Foto::where('nama',$request->foto)->first();
+        # Mengecek foto pada tabel
+        if(FotoKosan::where('idfoto',$foto->id)->count() == 1){
+            FotoKosan::where('idfoto',$foto->id)->delete();
+            Storage::delete('public/' . $foto->nama);
+            $foto->delete();
+            return json_encode(['status' => 1]);
+        }
+        else if(FotoKamarKosan::where('idfoto',$foto->id)->count() == 1){
+            FotoKamarKosan::where('idfoto',$foto->id)->delete();
+            Storage::delete('public/' . $foto->nama);
+            $foto->delete();
+            return json_encode(['status' => 1]);
+        }
+        else{
+            $foto->delete();
+            return json_encode(['status' => 1]);
+        }
+        return json_encode(['status' => 0]);
     }
 
 }

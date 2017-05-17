@@ -75,3 +75,16 @@
 #leftbar > #side-menu > ul > li.active > a {
   color: #72b7f8;
 }
+
+@media screen and (max-width: 568px) {
+  #leftbar {
+    position: fixed;
+    left: 0;
+    float: none;
+  }
+}
+#image-show {
+  margin-top: 10px;
+}
+
+/*# sourceMappingURL=user.css.map */

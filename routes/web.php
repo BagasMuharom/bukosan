@@ -68,16 +68,26 @@ Route::group(['middleware' => 'auth'], function () {
     Route::group(['prefix' => 'edit'],function(){
         Route::get('kosan/{idkosan}','UserPageController@EditKosanPage')->name('edit.kosan');
         Route::post('kosan/{idkosan}','KosanController@update')->name('edit.kosan');
+        Route::get('kamar/{idkamar}','UserPageController@EditKamar')->name('edit.kamar');
+        Route::post('kamar/{idkamar}','KamarKosanController@update')->name('edit.kamar');
     });
 
     Route::group(['prefix' => 'hapus'],function(){
         Route::get('kosan/{idkosan}','KosanController@destroy')->name('hapus.kosan');
+        Route::get('kamar/{idkamar}','KamarKosanController@destroy')->name('hapus.kamar');
+        Route::post('foto','ImageController@HapusFoto')->name('hapus.foto');
     });
 
-    Route::get('kosan/{idkosan}/kamar','UserPageController@DaftarKamarKosan');
+    Route::get('kosan/{idkosan}/kamar','UserPageController@DaftarKamarKosan')->name('daftar.kamar');
 
 });
 
 Route::get('tes',function(){
     return \Bukosan\Model\Kosan::where('idpemilik',Auth::user()->id)->get();
+});
+
+Route::group(['prefix' => 'daftar'],function(){
+    Route::get('kotakab/{namaprovinsi}','LocationController@DaftarKotaKab');
+    Route::get('kecamatan/{namakotakab}','LocationController@DaftarKecamatan');
+    Route::get('kelurahan/{namakecamatan}','LocationController@DaftarKelurahan');
 });

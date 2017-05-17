@@ -13,7 +13,7 @@
                 <p>Daftarkan kosan anda sekarang dan dapatkan berbagai kemudahan !</p>
                 <a href="{{ route('tambah.kosan') }}" class="btn btn-primary">Daftarkan Kosan Sekarang</a>
             </div>
-        </div>use
+        </div>
         <div class="notif-icon col-lg-3 col-md-3 col-sm-3 hidden-xs">
             <img class="img-responsive" src="{{ asset('images/ava.jpg') }}"/>
         </div>

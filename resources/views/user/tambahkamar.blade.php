@@ -1,29 +1,49 @@
+<?php
+
+$editPage = (Route::currentRouteName() == 'edit.kamar');
+$errorPage = (count($errors) > 0);
+
+if($errorPage && !$errors->has('image')){
+    $fototemp   = explode(',',old('image'));
+    $foto       = \Bukosan\Model\Foto::whereIn('nama',$fototemp)->get();
+}
+
+$image = '';
+if($editPage){
+    foreach ($foto as $key => $value) {
+        $image .= $value->nama;
+        if($key < count($foto) - 1){
+            $image .= ',';
+        }
+    }
+}
+
+?>
 @extends('layouts.user.page')
 
 @section('title')
-Kosan Saya
+    @if($editPage)
+        Edit Kamar
+    @else
+        Tambah Kamar
+    @endif
 @endsection
 
 @section('contents')
 
-<?php
 
-$editPage = (Route::current()->getName() == 'edit.kamar');
-
-$nama = ($editPage) ? $kamar->nama : '';
-$alamat = ($editPage) ? $kamar->alamat : '';
-$lantai = ($editPage) ? $kamar->lantai : 1;
-$harga = 0;
-
-?>
 
 <div class="panel panel-default panel-thumb">
 
+    @if($editPage)
+    <div class="panel-heading">Edit Kamar</div>
+    @else
     <div class="panel-heading">Tambah Kamar Baru</div>
+    @endif
 
     <div class="panel-body">
 
-        <form action="{{ route('tambah.kamar') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <form action="{{ $editPage ? route('edit.kamar',['idkamar' => $kamar->id ]) : route('tambah.kamar') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
 
             {{ csrf_field() }}
 
@@ -32,7 +52,7 @@ $harga = 0;
             <div class="form-group{{ $errors->has('nama') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-3 control-label">Nama Kamar</label>
                 <div class="col-md-6">
-                    <input id="name" type="text" value="{{ $nama }}" class="bukosan input-ui ui-primary" name="nama" placeholder="Nama Kamar" required autofocus>
+                    <input id="name" type="text" value="{{ $errorPage ? old('nama') : $kamar->nama }}" class="bukosan input-ui ui-primary" name="nama" placeholder="Nama Kamar" required autofocus>
                     @if ($errors->has('nama'))
                     <span class="help-block">
                         <strong>{{ $errors->first('nama') }}</strong>
@@ -44,7 +64,7 @@ $harga = 0;
             <div class="form-group{{ $errors->has('harga') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-3 control-label">Harga Kamar</label>
                 <div class="col-md-6">
-                    <input id="name" type="number" value="{{ $harga }}" class="bukosan input-ui ui-primary" name="harga" min="0" placeholder="Harga Kamar" required>
+                    <input id="name" type="number" value="{{ $errorPage ? old('harga') : $kamar->harga }}" class="bukosan input-ui ui-primary" name="harga" min="0" placeholder="Harga Kamar" required>
                     @if ($errors->has('harga'))
                     <span class="help-block">
                         <strong>{{ $errors->first('harga') }}</strong>
@@ -56,10 +76,16 @@ $harga = 0;
             <div class="form-group{{ $errors->has('lantai') ? ' has-error' : '' }}">
                 <label for="lantai" class="col-md-3 control-label">Terletak pada lantai</label>
                 <div class="col-md-6">
-                    <input type="hidden" name="lantai" id="lantai"/>
+                    <input type="hidden" name="lantai" id="lantai" value="{{ $errorPage ? old('lantai') : $kamar->letaklantai }}"/>
                     <div class="dropdown" target="#lantai" id="letaklantai-drop">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                            @if(!$editPage && !$errorPage)
                             Pilih Lantai
+                            @elseif($errorPage)
+                            Lantai {{ old('lantai') }}
+                            @elseif($editPage)
+                            Lantai {{ $kamar->letaklantai }}
+                            @endif
                             <span class="caret"></span>
                         </button>
                         <ul class="dropdown-menu">
@@ -83,12 +109,19 @@ $harga = 0;
             <div class="form-group">
                 <label for="foto" class="col-md-3 control-label">Foto</label>
                 <div class="col-md-6">
-                    <input type="hidden" name="image" id="image"/>
+                    <input type="hidden" name="image" id="image" value="{{ $errorPage ? old('image') : $image }}"/>
                     <button class="btn btn-primary btn-chooser" data-input="#foto" type="button">Pilih Foto</button> Maksimal 4 Foto
-                    <div id="image-show">
-                        @if(Route::current()->getName() == 'edit.kosan')
+                    <div id="image-show" class="row">
+                        @if(Route::currentRouteName() == 'edit.kamar' || ((count($errors) > 0 && !$errors->has('image'))))
                             @foreach($foto as $gambar)
-                        <img class="col-lg-3 img-responsive" src="{{ asset('storage/'.$gambar->nama) }}"/>
+                            <div class="col-lg-6">
+                            <div class="thumbnail">
+                                <img style="height:150px" class="img-responsive" src="{{ asset('storage/'.$gambar->nama) }}"/>
+                                <div class="caption">
+                                    <a href="{{ route('hapus.foto') }}" class="btn btn-danger delete-foto" data-img="{{ $gambar->nama }}" role="button">Hapus</a>
+                                </div>
+                            </div>
+                        </div>
                             @endforeach
                         @endif
                     </div>
@@ -104,7 +137,7 @@ $harga = 0;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Lemari</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="lemari" id="lemari" value="0"/>
+                            <input type="hidden" class="boolean-input" name="lemari" id="lemari" value="{{ $errorPage ? old('lemari') : $editPage ? $kamar->lemari : 0 }}"/>
                         </div>
                     </div>
                 </div>
@@ -113,7 +146,7 @@ $harga = 0;
                     <div class="form-group">
                         <label class="col-md-6 control-label">Kipas Angin</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="kipas" id="kipas" value="0"/>
+                            <input type="hidden" class="boolean-input" name="kipas" id="kipas" value="{{ $errorPage ? old('kipas') : $editPage ? $kamar->kipasangin : 0 }}"/>
                         </div>
                     </div>
                 </div>
@@ -122,7 +155,7 @@ $harga = 0;
                     <div class="form-group">
                         <label class="col-md-6 control-label">AC</label>
                         <div class="col-md-6">
-                            <input type="hidden" class="boolean-input" name="ac" id="ac" value="0"/>
+                            <input type="hidden" class="boolean-input" name="ac" id="ac" value="{{ $errorPage ? old('ac') : $editPage ? $kamar->ac : 0 }}"/>
                         </div>
                     </div>
                 </div>
@@ -138,7 +171,7 @@ $harga = 0;
                 <p>Berikan penjelasan lebih tentang kamar anda, mungkin tentang fasilitas tambahan atau informasi tambahan lainnya tentang kamar kosan anda.</p>
             </div>
 
-            <textarea id="deskripsi" name="deskripsi"></textarea>
+            <textarea id="deskripsi" name="deskripsi">{{ $errorPage ? old('deskripsi') : $kamar->keterangan }}</textarea>
             @if ($errors->has('deskripsi'))
             <span class="help-block">
                 <strong>{{ $errors->first('deskripsi') }}</strong>

@@ -17,12 +17,13 @@
     <script>
         window.Bukosan = {!! json_encode([
             'csrfToken' => csrf_token(),
+            'baseUrl' => url('')
         ]) !!};
     </script>
 </head>
 <body>
 <div id="app">
-    <nav class="navbar navbar-default navbar-static-top">
+    <nav class="navbar navbar-default navbar-static-top navbar-main">
         <div class="container">
             <div class="navbar-header">
 
@@ -40,6 +41,13 @@
                     {{ config('app.name', 'Laravel') }}
                 </a>
             </div>
+
+            <form class="navbar-form navbar-left">
+                <div class="form-group">
+                    <input type="text" class="form-control" placeholder="Search">
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
                 <!-- Left Side Of Navbar -->
@@ -87,6 +95,7 @@
 <!-- Scripts -->
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/form.js') }}"></script>
+<script src="{{ asset('js/main.js') }}"></script>
 @yield('js')
 </body>
 </html>

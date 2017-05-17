@@ -3,10 +3,12 @@
 namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Controllers\ImageController;
+use Bukosan\Http\Controllers\ImageController;
 use Bukosan\Model\Kosan;
 use Illuminate\Support\Facades\Auth;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+use Bukosan\Model\Lokasi\Kelurahan;
 
 class KosanController extends Controller
 {
@@ -19,7 +21,42 @@ class KosanController extends Controller
      */
     public function store(Request $request)
     {
-        $this->manage($request, new Kosan());
+        if(!$this->ValidasiKosan($request)->fails()){
+            $this->manage($request, new Kosan());
+            return redirect()->route('kosansaya');
+        }
+        else{
+            return redirect()->back()->withError()->withInput();
+        }
+    }
+
+    private function ValidasiKosan(Request $request){
+        if($request->jeniskosan == 'keluarga'){
+            $validate = Validator::make($request->toArray(),[
+                'nama' => 'required|min:5',
+                'alamat' => 'required|min:10',
+                'lantai' => 'required|numeric',
+                'longitude' => 'required|numeric',
+                'latitude' => 'required|numeric',
+                'deskripsi' => 'required|min:100',
+                'kelurahan' => 'required',
+                'image' => 'required',
+            ]);
+        }
+        else{
+            $validate = Validator::make($request->toArray(),[
+                'nama' => 'required|min:5',
+                'alamat' => 'required|min:10',
+                'lantai' => 'required|numeric',
+                'longitude' => 'required|numeric',
+                'latitude' => 'required|numeric',
+                'deskripsi' => 'required|min:100',
+                'jeniskelamin' => 'required',
+                'kelurahan' => 'required',
+                'image' => 'required',
+            ]);
+        }
+        return $validate;
     }
 
     /**
@@ -42,21 +79,28 @@ class KosanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $kosan = Kosan::where('id',$id)->first();
-        # Menghapus dulu gambar yang ada
-        ImageController::HapusFotoKosan($id)
-        $this->manage($request, $kosan);
+        if(!$this->ValidasiKosan($request)->fails()){
+            $kosan = Kosan::where('id',$id)->first();
+            # Menghapus dulu gambar yang ada
+            ImageController::HapusFotoKosan($id,false);
+            $this->manage($request, $kosan);
+            return redirect()->route('kosansaya');
+        }
+        else{
+            return redirect()->back()->withError()->withInput();
+        }
     }
 
     public function manage(Request $request, Kosan $kosan){
         if(is_null($kosan->id))
             $kosan->idpemilik = Auth::user()->id;
-        $kosan->nama = $request->name;
+        $kosan->nama = $request->nama;
         $kosan->alamat = $request->alamat;
         $kosan->jumlahlantai = $request->lantai;
         $kosan->latitude = $request->latitude;
         $kosan->longitude = $request->longitude;
         $kosan->keterangan = $request->deskripsi;
+        $kosan->kelurahan = Kelurahan::where('nama',$request->kelurahan)->first()->id;
         $kosan->terverifikasi = 0;
 
         # Fasilitas

@@ -30,16 +30,19 @@
         </div>
 
         @foreach($kamar as $kamardetail)
+        <?php
+            $foto = \Bukosan\Http\Controllers\KamarKosanController::GetFotoKamarKosan($kamardetail->id)->first();
+        ?>
         <div class="panel-body row">
             <div class="thumb-property">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="{{ asset('images/ava.jpg') }}" class="img-responsive" alt=""/>
+                        <img src="{{ asset('storage/' . $foto->nama) }}" class="img-responsive" alt=""/>
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                         <div class="thumb-heading">
                             <h3 class="thumb-title">{{ $kamardetail->nama }}</h3>
-                            <a href="#" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                            <a href="{{ route('edit.kamar',['idkamar' => $kamardetail->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
                             <a href="#" class="btn btn-danger delete-kosan"><i class="fa fa-pencil"></i> Hapus</a>
                         </div>
                     </div>

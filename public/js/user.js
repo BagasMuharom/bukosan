@@ -21,6 +21,36 @@ $('.file-upload').find('input[type="file"]').change(function () {
 });
 
 /**
+ * Ajax untuk mengahpus foto
+ */
+function AjaxHapusFoto(elem){
+    var action = elem.attr('href');
+    var parent = elem.parent().parent().parent();
+    $.ajax({
+        url : action,
+        type : 'post',
+        data : 'foto=' + elem.attr('data-img'),
+        success : function(result){
+            response = JSON.parse(result);
+            if(typeof response != 'undefined'){
+                if(response.status = 1){
+                    // alert('Berhasil menghapus !');
+                    parent.slideUp(150,function(){
+                        $(this).remove();
+                    })
+                }
+                else {
+                    alert('Gagal menghapus !')
+                }
+            }
+            else {
+                alert('Gagal menghapus !');
+            }
+        }
+    });
+}
+
+/**
  * Melakukan Ajax untuk mengunggah file
  */
 $('.file-upload').ajaxForm({
@@ -35,9 +65,24 @@ $('.file-upload').ajaxForm({
         var fullurl = result.fullurl;
         var name = result.name;
         for(image in fullurl){
-            var newimage = $('<img class="img-responsive col-lg-3"/>');
+            var col = $('<div class="col-lg-6"></div>');
+            var thumb = $('<div class="thumbnail"></div>');
+            var newimage = $('<img style="height:150px" class="img-responsive"/>');
+            var capt = $('<div class="caption"></div>');
+            var btn = $('<a class="btn btn-danger delete-foto">Hapus</a>');
             newimage.attr('src',fullurl[image]);
-            $("#image-show").append(newimage);
+            btn.attr('data-img',name[image]);
+            btn.attr('href',url('hapus/foto'));
+            btn.click(function(e){
+                e.preventDefault();
+                AjaxHapusFoto($(this));
+            });
+            capt.append(btn);
+            thumb.append(newimage);
+            thumb.append(capt);
+            col.append(thumb);
+            capt.append();
+            $("#image-show").append(col);
         }
         $("#image").val(name.join());
     }
@@ -78,4 +123,9 @@ $('a.delete-kosan').click(function(e){
             }
         }
     });
+});
+
+$('a.delete-foto').click(function(e){
+    e.preventDefault();
+    AjaxHapusFoto($(this));
 });
