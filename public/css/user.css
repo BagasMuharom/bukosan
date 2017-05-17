@@ -17,13 +17,13 @@
   border-bottom: 4px solid transparent;
 }
 .navbar.navbar-user #stripped-menu > li.active {
-  border-bottom: 4px solid #72b7f8;
+  border-bottom: 4px solid #3654f9;
 }
 .navbar.navbar-user #stripped-menu > li.active > a {
-  color: #72b7f8;
+  color: #3654f9;
 }
 .navbar.navbar-user #stripped-menu > li.active > a:hover {
-  color: #72b7f8;
+  color: #3654f9;
 }
 .navbar.navbar-user #stripped-menu > li > a {
   display: block;
@@ -70,10 +70,10 @@
   text-decoration: none;
 }
 #leftbar > #side-menu > ul > li.active {
-  border-left: 4px solid #72b7f8;
+  border-left: 4px solid #3654f9;
 }
 #leftbar > #side-menu > ul > li.active > a {
-  color: #72b7f8;
+  color: #3654f9;
 }
 
 @media screen and (max-width: 568px) {

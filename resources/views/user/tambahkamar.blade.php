@@ -43,7 +43,7 @@ if($editPage){
 
     <div class="panel-body">
 
-        <form action="{{ $editPage ? route('edit.kamar',['idkamar' => $kamar->id ]) : route('tambah.kamar') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <form action="{{ $editPage ? route('edit.kamar',['idkamar' => $kamar->id ]) : route('proses.tambah.kamar') }}" method="post" class="form-horizontal" enctype="multipart/form-data">
 
             {{ csrf_field() }}
 

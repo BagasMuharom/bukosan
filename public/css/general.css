@@ -79,10 +79,10 @@ button {
   box-shadow: none;
 }
 .form-control.neon-ui:focus {
-  border: 1px solid #8ac3f9;
-  -webkit-box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
-  -moz-box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
-  box-shadow: 0 0 0 3px rgba(114, 183, 248, 0.25);
+  border: 1px solid #4f69fa;
+  -webkit-box-shadow: 0 0 0 3px rgba(54, 84, 249, 0.25);
+  -moz-box-shadow: 0 0 0 3px rgba(54, 84, 249, 0.25);
+  box-shadow: 0 0 0 3px rgba(54, 84, 249, 0.25);
 }
 
 .input-border {
@@ -101,7 +101,7 @@ button {
   transition: border-bottom ease-in 0.2s;
 }
 .input-border > .bukosan.input-ui.ui-primary:focus {
-  border-bottom: 2px solid #72b7f8;
+  border-bottom: 2px solid #3654f9;
 }
 .input-border > .placeholder {
   position: absolute;
@@ -120,7 +120,7 @@ button {
   outline: none !important;
 }
 .btn.btn-primary {
-  background-color: #72b7f8;
+  background-color: #3654f9;
   border: none;
   color: #fff;
 }
@@ -136,7 +136,7 @@ button {
   background-color: #ddd;
 }
 .btn.btn-boolean.active {
-  background-color: #72b7f8;
+  background-color: #3654f9;
 }
 .btn.btn-boolean > .btn-mark {
   -webkit-border-radius: 50%;
@@ -202,7 +202,7 @@ button {
 }
 .panel-thumb-list .thumb-property .thumb-title {
   margin-left: 0;
-  border-left: 4px solid #72b7f8;
+  border-left: 4px solid #3654f9;
   padding-left: 20px;
   font-weight: bold;
 }

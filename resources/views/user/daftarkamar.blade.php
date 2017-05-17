@@ -25,7 +25,7 @@
         <div class="panel-heading">
             <h2 class="panel-title">Kamar pada Kosan {{ $kosan->nama }}</h2>
             <div class="panel-tool">
-                <a href="{{ route('tambah.kosan') }}" class="btn btn-primary">Tambah Kamar Baru</a>
+                <a href="{{ route('tambah.kamar',['idkosan' => $kosan->id]) }}" class="btn btn-primary">Tambah Kamar Baru</a>
             </div>
         </div>
 
