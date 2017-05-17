@@ -28,6 +28,57 @@ h2{
     }
 }
 
+.navbar-main{
+    background-color: $primaryColor;
+    border-bottom-color: darken($primaryColor,30%);
+    .navbar-brand{
+        color:#FFFFFF;
+    }
+}
+
+.form-search{
+    background-color:rgba(255,255,255,.15);
+    @include borderRadius(3px);
+    padding:0;
+    > input,
+    button{
+        @include boxShadow(none);
+        background-color:transparent;
+        border:none;
+    }
+    > input {
+        color:#fff;
+        &:focus{
+            @include boxShadow(none);
+        }
+        @include setPlaceholderColor(#ffffff);
+    }
+    > button{
+        &:hover,
+        &:active{
+            background-color: transparent;
+            border: none;
+        }
+        > svg{
+            transform: translateY(3px);
+        }
+    }
+}
+
+.pac-container{
+    width:500px !important;
+    > .pac-item{
+        padding:10px;
+    }
+    &.pac-logo{
+        &:after{
+            content:"";
+            background-image: none;
+            height:0;
+        }
+    }
+}
+
 @import "input";
 
 @import "box";

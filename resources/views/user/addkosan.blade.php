@@ -120,7 +120,7 @@ if($editPage){
                         <strong>Pilih lokasi kosan anda !</strong>
                     </span>
                     @endif
-                    <div id="map" style="width:100%;height:250px"></div>
+                    <div id="map" style="width:100%;height:350px"></div>
 
             <div class="form-group">
                 <div class="col-lg-3">

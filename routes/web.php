@@ -2,19 +2,13 @@
 
 Route::get('/', 'HomePageController@HomePage')->name('homepage');
 
-Route::get('/cari/{lokasi}', function ($lokasi) {
-    return 'Anda mencari kosan di daerah : ' . $lokasi;
-});
+Route::get('cari/{latitude}/{longitude}/{namalokasi}', 'PublicPageController@CariKosan');
 
-Route::get('/home', 'HomeController@index');
+Route::get('home', 'HomeController@index')->name('home');
 
-Route::get('input', function () {
-    return view('test.input');
-});
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::get('/user/{username}','');
 

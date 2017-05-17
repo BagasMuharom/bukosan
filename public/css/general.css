@@ -44,6 +44,73 @@ h2 {
   float: none;
 }
 
+.navbar-main {
+  background-color: #348fd6;
+  border-bottom-color: #133d5e;
+}
+.navbar-main .navbar-brand {
+  color: #FFFFFF;
+}
+
+.form-search {
+  background-color: rgba(255, 255, 255, 0.15);
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 0;
+}
+.form-search > input,
+.form-search button {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  background-color: transparent;
+  border: none;
+}
+.form-search > input {
+  color: #fff;
+}
+.form-search > input:focus {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+.form-search > input::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #ffffff;
+}
+.form-search > input::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #ffffff;
+}
+.form-search > input:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #ffffff;
+}
+.form-search > input:-moz-placeholder {
+  /* Firefox 18- */
+  color: #ffffff;
+}
+.form-search > button:hover, .form-search > button:active {
+  background-color: transparent;
+  border: none;
+}
+.form-search > button > svg {
+  transform: translateY(3px);
+}
+
+.pac-container {
+  width: 500px !important;
+}
+.pac-container > .pac-item {
+  padding: 10px;
+}
+.pac-container.pac-logo:after {
+  content: "";
+  background-image: none;
+  height: 0;
+}
+
 input,
 button {
   outline: none;
@@ -79,10 +146,10 @@ button {
   box-shadow: none;
 }
 .form-control.neon-ui:focus {
-  border: 1px solid #4f69fa;
-  -webkit-box-shadow: 0 0 0 3px rgba(54, 84, 249, 0.25);
-  -moz-box-shadow: 0 0 0 3px rgba(54, 84, 249, 0.25);
-  box-shadow: 0 0 0 3px rgba(54, 84, 249, 0.25);
+  border: 1px solid #499bda;
+  -webkit-box-shadow: 0 0 0 3px rgba(52, 143, 214, 0.25);
+  -moz-box-shadow: 0 0 0 3px rgba(52, 143, 214, 0.25);
+  box-shadow: 0 0 0 3px rgba(52, 143, 214, 0.25);
 }
 
 .input-border {
@@ -101,7 +168,7 @@ button {
   transition: border-bottom ease-in 0.2s;
 }
 .input-border > .bukosan.input-ui.ui-primary:focus {
-  border-bottom: 2px solid #3654f9;
+  border-bottom: 2px solid #348fd6;
 }
 .input-border > .placeholder {
   position: absolute;
@@ -120,7 +187,12 @@ button {
   outline: none !important;
 }
 .btn.btn-primary {
-  background-color: #3654f9;
+  background-color: #348fd6;
+  border: none;
+  color: #fff;
+}
+.btn.btn-danger {
+  background-color: #d74c3b;
   border: none;
   color: #fff;
 }
@@ -136,7 +208,7 @@ button {
   background-color: #ddd;
 }
 .btn.btn-boolean.active {
-  background-color: #3654f9;
+  background-color: #348fd6;
 }
 .btn.btn-boolean > .btn-mark {
   -webkit-border-radius: 50%;
@@ -202,7 +274,7 @@ button {
 }
 .panel-thumb-list .thumb-property .thumb-title {
   margin-left: 0;
-  border-left: 4px solid #3654f9;
+  border-left: 4px solid #348fd6;
   padding-left: 20px;
   font-weight: bold;
 }
@@ -214,7 +286,7 @@ button {
 }
 
 .panel-body .panel-heading {
-  color: #555555;
+  color: #5d6977;
   margin-left: -15px;
   margin-right: -15px;
   background-color: #f5f5f5;

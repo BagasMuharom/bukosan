@@ -58,10 +58,8 @@
 
 @if($isKosanPage || $isKamarPage)
     @section('js')
-        <script src="{{ asset('js/map.js') }}"></script>
         <script src="{{ asset('js/jquery.form.js') }}"></script>
         <script src="{{ asset('js/user.js') }}"></script>
-        <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&callback=AddKosanMap"></script>
         @if($route === 'tambah.kosan' || $route === 'edit.kosan' || $route === 'tambah.kamar' || $route === 'edit.kamar')
         <script src="{{ asset('tinymce/tinymce.min.js')}}"></script>
         <script>

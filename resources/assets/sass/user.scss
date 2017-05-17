@@ -6,8 +6,9 @@
     margin-bottom: 0;
     border-bottom: 0;
     &.navbar-user {
+        @include borderRadius(0);
         min-height:10px;
-        background-color: $mediumBase;
+        background-color: #FFFFFF;
         margin-bottom: 20px;
         #stripped-menu {
             list-style: none;
@@ -28,10 +29,10 @@
                 > a{
                     display: block;
                     padding:12px 17px;
-                    color:darken($mediumBase,40%);
+                    color : darken($mediumBase,40%);
                     &:hover{
                         text-decoration: none;
-                        color:darken($mediumBase,65%);
+                        color : darken($mediumBase,60%);
                     }
                 }
             }
@@ -80,11 +81,12 @@
     }
 }
 
-@media screen and (max-width:568px){
+@media screen and (max-width:768px){
     #leftbar{
         position:fixed;
-        left:0;
+        background-color: red;
         float: none;
+        left:999px;
     }
 }
 

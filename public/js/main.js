@@ -148,3 +148,9 @@ $('#provinsi-drop').find('a').click(function(e){
         }
     });
 });
+
+
+$('.form-search').submit(function (e) {
+    e.preventDefault();
+});
+
