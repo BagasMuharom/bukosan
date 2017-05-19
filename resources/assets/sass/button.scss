@@ -33,3 +33,14 @@
         }
     }
 }
+
+.btn-circle{
+    background-color:transparent;
+    border:1px solid rgba(0,0,0,.4);
+    @include borderRadius(50%);
+    color:rgba(0,0,0,.4);
+    &:hover{
+        border:1px solid rgba(0,0,0,.6);
+        color:rgba(0,0,0,.6);
+    }
+}

@@ -17,3 +17,18 @@
     }
     @include ClearFix;
 }
+
+.alert{
+    &.alert{
+        &-info{
+            background-color: lighten($primaryColor, 42%);
+            border-color:$primaryColor;
+            color:darken($primaryColor,20%);
+        }
+        &-warning{
+            background-color: lighten($warningColor, 50%);
+            border-color:$warningColor;
+            color:darken($warningColor,10%);
+        }
+    }
+}

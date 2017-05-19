@@ -3,10 +3,12 @@
 return [
 
     'custom' => [
-        'email' => [
+        // isi adalah pengganti dari email
+        'isi' => [
             'required' => 'Email tidak boleh kosong !',
+            'unique' => 'Alamat email telah dipakai !'
         ],
-        'fullname' => [
+        'displayname' => [
             'required' => 'Nama lengkap tidak boleh kosong !'
         ],
         'username' => [

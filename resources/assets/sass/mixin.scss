@@ -1,11 +1,3 @@
-@mixin mixin{
-    &:after{
-        content: '';
-        clear: both;
-        display: block;
-        visibility: hidden;
-    }
-}
 
 @mixin fontface($name,$weight,$url){
     @font-face {

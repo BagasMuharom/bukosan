@@ -30,9 +30,9 @@ if($editPage){
 
 <div class="panel panel-default panel-thumb">
     @if($editPage)
-    <div class="panel-heading">Edit Kosan </div>
+    <div class="panel-heading"><h3 class="panel-title">Edit Kosan</h3></div>
     @else
-    <div class="panel-heading">Daftar Kosan Baru</div>
+    <div class="panel-heading"><h3 class="panel-title">Daftar Kosan Baru</h3></div>
     @endif
 
     <div class="panel-body">

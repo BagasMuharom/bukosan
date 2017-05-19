@@ -4,11 +4,13 @@ Route::get('/', 'HomePageController@HomePage')->name('homepage');
 
 Route::get('cari/{latitude}/{longitude}/{namalokasi}', 'PublicPageController@CariKosan');
 
-Route::get('home', 'HomeController@index')->name('home');
-
+Route::get('kosan/{id}','PublicPageController@LihatKosan')->name('lihat.kosan');
 
 Auth::routes();
 
+Route::get('tes',function(){
+    return \Bukosan\Model\Kosan::complete(1,2);
+});
 
 //Route::get('/user/{username}','');
 
@@ -74,10 +76,6 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('kosan/{idkosan}/kamar','UserPageController@DaftarKamarKosan')->name('daftar.kamar');
 
-});
-
-Route::get('tes',function(){
-    return \Bukosan\Model\Kosan::where('idpemilik',Auth::user()->id)->get();
 });
 
 Route::group(['prefix' => 'daftar'],function(){

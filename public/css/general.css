@@ -25,6 +25,7 @@
 }
 html,
 body {
+  background-color: #d1d8dd;
   font-family: "Aileron", sans-serif;
   font-size: 15px;
   font-weight: normal;
@@ -39,17 +40,31 @@ h2 {
   font-size: 25px;
 }
 
+p {
+  margin: 0;
+}
+
 .box-center {
   margin: 0 auto;
   float: none;
 }
 
 .navbar-main {
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: #348fd6;
-  border-bottom-color: #133d5e;
+  border: none;
 }
 .navbar-main .navbar-brand {
+  padding-top: 17px;
   color: #FFFFFF;
+}
+.navbar-main .navbar-nav a:visited, .navbar-main .navbar-nav a:link, .navbar-main .navbar-nav a:hover {
+  color: #fff !important;
+}
+.navbar-main .navbar-nav a:hover {
+  background-color: rgba(255, 255, 255, 0.1) !important;
+  border-radius: 30px;
 }
 
 .form-search {
@@ -59,7 +74,7 @@ h2 {
   border-radius: 3px;
   padding: 0;
 }
-.form-search > input,
+.form-search input,
 .form-search button {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
@@ -67,35 +82,37 @@ h2 {
   background-color: transparent;
   border: none;
 }
-.form-search > input {
+.form-search input {
   color: #fff;
+  font-size: 14px;
+  padding: 10px;
 }
-.form-search > input:focus {
+.form-search input:focus {
   -webkit-box-shadow: none;
   -moz-box-shadow: none;
   box-shadow: none;
 }
-.form-search > input::-webkit-input-placeholder {
+.form-search input::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
   color: #ffffff;
 }
-.form-search > input::-moz-placeholder {
+.form-search input::-moz-placeholder {
   /* Firefox 19+ */
   color: #ffffff;
 }
-.form-search > input:-ms-input-placeholder {
+.form-search input:-ms-input-placeholder {
   /* IE 10+ */
   color: #ffffff;
 }
-.form-search > input:-moz-placeholder {
+.form-search input:-moz-placeholder {
   /* Firefox 18- */
   color: #ffffff;
 }
-.form-search > button:hover, .form-search > button:active {
+.form-search button:hover, .form-search button:active {
   background-color: transparent;
   border: none;
 }
-.form-search > button > svg {
+.form-search button > svg {
   transform: translateY(3px);
 }
 
@@ -123,13 +140,22 @@ button {
 }
 .form-control {
   background-color: #fff;
-  border: 1px solid #d5d5d5;
+  border: 2px solid #d5d5d5;
   color: #333333;
   padding: 10px;
   font-size: 16px;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   border-radius: 3px;
+}
+.form-control:hover {
+  border-color: #348fd6;
+}
+.form-control:focus {
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border-color: #348fd6;
 }
 .form-control.shadow-ui {
   -webkit-box-shadow: 0 1px 2px 1px rgba(0, 0, 0, 0.1);
@@ -220,6 +246,19 @@ button {
   position: relative;
 }
 
+.btn-circle {
+  background-color: transparent;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+  -webkit-border-radius: 50%;
+  -moz-border-radius: 50%;
+  border-radius: 50%;
+  color: rgba(0, 0, 0, 0.4);
+}
+.btn-circle:hover {
+  border: 1px solid rgba(0, 0, 0, 0.6);
+  color: rgba(0, 0, 0, 0.6);
+}
+
 .panel-notif {
   background-color: #fff;
   padding: 20px 5px 20px;
@@ -236,6 +275,17 @@ button {
   visibility: hidden;
 }
 
+.alert.alert-info {
+  background-color: #e6f1fa;
+  border-color: #348fd6;
+  color: #1c5988;
+}
+.alert.alert-warning {
+  background-color: #fffdf3;
+  border-color: #f3c700;
+  color: #c09d00;
+}
+
 .panel {
   -webkit-border-radius: 0;
   -moz-border-radius: 0;
@@ -244,6 +294,17 @@ button {
   -moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
   border: none;
+}
+.panel.panel-default > .panel-heading {
+  border: none;
+  background-color: #5d6977;
+  color: #fff;
+}
+.panel.panel-default > .panel-heading > .panel-title {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-size: 25px;
+  font-weight: thin;
 }
 
 .panel-thumb-list.panel {
@@ -286,11 +347,105 @@ button {
 }
 
 .panel-body .panel-heading {
-  color: #5d6977;
+  color: #2e521a;
   margin-left: -15px;
   margin-right: -15px;
-  background-color: #f5f5f5;
+  background-color: #d7eeca;
   margin-bottom: 15px;
+}
+
+#searchresult .thumbnail {
+  border: 0;
+  background-color: #FFFFFF;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  padding: 0;
+}
+#searchresult .thumbnail > .image {
+  width: 100%;
+  height: 175px;
+  background-size: 100%;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#searchresult .thumbnail > .name {
+  background-color: #348fd6;
+  padding: 10px;
+  color: #fff;
+}
+#searchresult .thumbnail > .name > h3 {
+  font-size: 17px;
+  margin: 0;
+  padding: 5px 0;
+  font-weight: bold;
+}
+#searchresult .thumbnail > .name > .price {
+  padding: 5px 0;
+  color: #f3c700;
+}
+#searchresult .thumbnail > .detail > .top {
+  margin-top: 10px;
+}
+#searchresult .thumbnail > .detail > .top > .detail-item {
+  float: left;
+  width: 50%;
+  padding: 5px 10px 10px;
+  text-align: center;
+}
+#searchresult .thumbnail > .detail > .top > .detail-item:first-child {
+  border-right: 1px solid rgba(0, 0, 0, 0.25);
+}
+#searchresult .thumbnail > .detail > .top:after {
+  content: "";
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+#searchresult .thumbnail > .detail > .bottom {
+  padding: 10px;
+}
+#searchresult .thumbnail > .detail > .bottom > .detail-item {
+  padding: 5px 10px;
+}
+#searchresult .thumbnail > .detail > .bottom > .detail-item > span:first-child {
+  float: left;
+}
+#searchresult .thumbnail > .detail > .bottom > .detail-item > span:last-child {
+  float: right;
+  font-weight: bold;
+}
+#searchresult .thumbnail > .detail > .bottom > .detail-item > span.green {
+  color: #7fc956;
+}
+#searchresult .thumbnail > .detail > .bottom > .detail-item > span.red {
+  color: #d74c3b;
+}
+#searchresult .thumbnail > .detail > .bottom > .detail-item:after {
+  content: "";
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+#searchresult .thumbnail > .action {
+  padding: 10px 10px 10px;
+  background-color: #dddddd;
+}
+#searchresult .thumbnail > .action > .dropup {
+  float: left;
+}
+#searchresult .thumbnail > .action > a {
+  float: right;
+}
+#searchresult .thumbnail > .action > a:visited, #searchresult .thumbnail > .action > a:link, #searchresult .thumbnail > .action > a:hover {
+  color: #348fd6;
+  font-weight: bold;
+}
+#searchresult .thumbnail > .action:after {
+  content: "";
+  clear: both;
+  display: block;
+  visibility: hidden;
 }
 
 /*# sourceMappingURL=general.css.map */

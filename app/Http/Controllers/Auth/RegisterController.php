@@ -7,6 +7,8 @@ use Bukosan\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Bukosan\Model\KontakUser;
+use Bukosan\Model\Kontak;
 
 class RegisterController extends Controller
 {
@@ -28,7 +30,7 @@ class RegisterController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '';
 
     /**
      * Create a new controller instance.
@@ -48,29 +50,13 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => 'required|max:255',
-            'nik' => 'required|unique:users',
-            'username' => 'required|max:25|unique:users',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|min:6|confirmed',
+        $validator = Validator::make($data, [
+            'nama' => 'required|max:255',
+            'username' => 'required|max:25|unique:user',
+            'isi' => 'required|unique:kontak_user|email|max:255',
+            'password' => 'required|min:8|confirmed'
         ]);
-    }
-
-    /**
-     * Proses pendaftaran user
-     *
-     * @param Request $request
-     */
-    public function Process(Request $request)
-    {
-        // Jika data yang dimasukkan valid
-        if ($this->validator($request->toArray())) {
-            $this->create($request->toArray());
-            $login = new LoginController();
-            $login->Process($request);
-        }
-        return back()->withInput()->withErrors($this->validator($request->toArray()));
+        return $validator;
     }
 
     /**
@@ -82,16 +68,22 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            'nik' => $data['nik'],
+            // 'nik' => $data['nik'],
             'username' => $data['username'],
-            'name' => $data['name'],
-            'email' => $data['email'],
+            'displayname' => $data['nama'],
+            // 'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'remember_token' => str_random(10)
         ]);
     }
 
-    public function RegisterPage()
-    {
-        return view('auth.register');
+    protected function registered(Request $request, $user){
+        KontakUser::create([
+            'id_kontak' => Kontak::where('nama','email')->first()->id,
+            'id_user' => $user->id,
+            'isi' => $request->isi
+        ]);
+        return redirect()->route('homepage');
     }
+
 }

@@ -6,6 +6,19 @@
     @include borderRadius(0);
     @include boxShadow(0 1px 1px rgba(0,0,0,.1));
     border:none;
+    &.panel-default{
+        > .panel-heading{
+            border:none;
+            background-color:$darkBase;
+            color:#fff;
+            > .panel-title{
+                padding-top:10px;
+                padding-bottom: 10px;
+                font-size:25px;
+                font-weight:thin;
+            }
+        }
+    }
 }
 
 .panel-thumb-list{
@@ -47,10 +60,97 @@
 
 .panel-body{
     .panel-heading{
-        color:$darkBase;
+        color:darken($successColor,35%);
         margin-left:-15px;
         margin-right:-15px;
-        background-color:$lightBase;
+        background-color:lighten($successColor,30%);
         margin-bottom:15px;
+    }
+}
+
+#searchresult{
+    .thumbnail{
+        border:0;
+        background-color: #FFFFFF;
+        @include borderRadius(0);
+        padding:0;
+        > .image{
+            width:100%;
+            height: 175px;
+            background-size:100%;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+        > .name{
+            background-color: $primaryColor;
+            padding:10px;
+            @include getFontColor($darkBase);
+            > h3{
+                font-size: 17px;
+                margin:0;
+                padding: 5px 0;
+                font-weight:bold;
+            }
+            > .price{
+                padding:5px 0;
+                //color:rgba(255,255,255,.65);
+                color:$warningColor;
+            }
+        }
+        > .detail{
+            > .top{
+                margin-top:10px;
+                > .detail-item{
+                    float:left;
+                    width:50%;
+                    padding:5px 10px 10px;
+                    text-align: center;
+                    &:first-child{
+                        border-right:1px solid rgba(0,0,0,.25);
+                    }
+                }
+                @include ClearFix();
+            }
+            > .bottom{
+                padding: 10px;
+                > .detail-item{
+                    padding:5px 10px;
+                    //border-top:1px solid rgba(0,0,0,.25);
+                    > span{
+                        &:first-child{
+                            float: left;
+                        }
+                        &:last-child{
+                            float: right;
+                            font-weight: bold;
+                        }
+                        &.green{
+                            color:$successColor;
+                        }
+                        &.red{
+                            color:$dangerColor;
+                        }
+                    }
+                    @include ClearFix;
+                }
+            }
+        }
+        > .action{
+            padding:10px 10px 10px;
+            background-color: $mediumBase;
+            > .dropup{
+                float:left;
+            }
+            > a{
+                float:right;
+                &:visited,
+                &:link,
+                &:hover{
+                    color:$primaryColor;
+                    font-weight: bold;
+                }
+            }
+            @include ClearFix;
+        }
     }
 }

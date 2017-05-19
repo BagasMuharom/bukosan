@@ -4,6 +4,7 @@ namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Bukosan\Model\Kosan;
+use Bukosan\Http\Controllers\KosanController;
 
 class PublicPageController extends Controller
 {
@@ -11,7 +12,14 @@ class PublicPageController extends Controller
     public function CariKosan($latitude, $longitude, $lokasi)
     {
         return view('public.cari',[
-            'kosan' => Kosan::where('latitude','<=',($latitude+5))->where('longitude','<=',($longitude+5))->get()
+            'kosan' => Kosan::AllFull($latitude,$longitude),
+        ]);
+    }
+
+    public function LihatKosan($idkosan){
+        return view('public.kosan',[
+            'kosan' => Kosan::find($idkosan),
+            'foto' => KosanController::GetFotoKosan($idkosan)
         ]);
     }
 

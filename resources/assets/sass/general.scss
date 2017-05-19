@@ -3,6 +3,7 @@
 
 html,
 body {
+    background-color: #d1d8dd;
     font: {
         family: $fontfamily;
         size: 15px;
@@ -21,6 +22,10 @@ h2{
     font-size:25px;
 }
 
+p{
+    margin:0;
+}
+
 .box {
     &-center {
         margin: 0 auto;
@@ -29,10 +34,24 @@ h2{
 }
 
 .navbar-main{
+    padding-top:10px;
+    padding-bottom: 10px;
     background-color: $primaryColor;
-    border-bottom-color: darken($primaryColor,30%);
+    border:none;
     .navbar-brand{
+        padding-top: 17px;
         color:#FFFFFF;
+    }
+    .navbar-nav {
+        a{
+            &:visited,&:link,&:hover{
+                color:#fff !important;
+            }
+            &:hover{
+                background-color:rgba(255,255,255,.1) !important;
+                border-radius:30px;
+            }
+        }
     }
 }
 
@@ -40,20 +59,22 @@ h2{
     background-color:rgba(255,255,255,.15);
     @include borderRadius(3px);
     padding:0;
-    > input,
+    input,
     button{
         @include boxShadow(none);
         background-color:transparent;
         border:none;
     }
-    > input {
+    input {
         color:#fff;
+        font-size:14px;
+        padding:10px;
         &:focus{
             @include boxShadow(none);
         }
         @include setPlaceholderColor(#ffffff);
     }
-    > button{
+    button{
         &:hover,
         &:active{
             background-color: transparent;
