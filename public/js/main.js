@@ -154,3 +154,4 @@ $('.form-search').submit(function (e) {
     e.preventDefault();
 });
 
+$(".zoom-image").ZooMove();

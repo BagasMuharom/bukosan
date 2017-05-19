@@ -12,7 +12,7 @@ class PublicPageController extends Controller
     public function CariKosan($latitude, $longitude, $lokasi)
     {
         return view('public.cari',[
-            'kosan' => Kosan::AllFull($latitude,$longitude),
+            'kosan' => Kosan::complete($latitude,$longitude),
         ]);
     }
 

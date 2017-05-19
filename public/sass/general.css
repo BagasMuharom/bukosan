@@ -25,7 +25,7 @@
 }
 html,
 body {
-  background-color: #eaf0f5;
+  background-color: #d1d8dd;
   font-family: "Aileron", sans-serif;
   font-size: 15px;
   font-weight: normal;
@@ -59,17 +59,12 @@ p {
   padding-top: 17px;
   color: #FFFFFF;
 }
-.navbar-main .navbar-nav > .dropdown:not(.open) > a:visited, .navbar-main .navbar-nav > .dropdown:not(.open) > a:link, .navbar-main .navbar-nav > .dropdown:not(.open) > a:hover {
+.navbar-main .navbar-nav > a:visited, .navbar-main .navbar-nav > a:link, .navbar-main .navbar-nav > a:hover {
   color: #fff !important;
 }
-.navbar-main .navbar-nav > .dropdown:not(.open) > a:hover {
+.navbar-main .navbar-nav > a:hover {
   background-color: rgba(255, 255, 255, 0.1) !important;
   border-radius: 30px;
-}
-.navbar-main .navbar-nav > .dropdown.open > a:visited, .navbar-main .navbar-nav > .dropdown.open > a:link, .navbar-main .navbar-nav > .dropdown.open > a:hover {
-  border-radius: 30px;
-  color: #fff !important;
-  background-color: rgba(0, 0, 0, 0.15);
 }
 
 .form-search {

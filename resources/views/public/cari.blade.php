@@ -14,7 +14,7 @@ Cari Kosan
             </div>
         </div>
 
-        <div class="container">
+        <div class="container-fluid">
         <div class="bigtron" id="searchresult">
             <div class="row">
                 @foreach($kosan as $hasil)
@@ -42,8 +42,8 @@ Cari Kosan
                                     <span class="{{ $hasil->jammalam ? 'green' : 'red' }}">{{ $hasil->jammalam ? 'Ya' : 'Tidak' }}</span>
                                 </p>
                                 <p class="detail-item">
-                                    <span>Wifi</span>
-                                    <span class="{{ $hasil->wifi ? 'green' : 'red' }}">{{ $hasil->wifi ? 'Ya' : 'Tidak' }}</span>
+                                    <span>Kamar mandi dalam</span>
+                                    <span class="{{ $hasil->kmdalam ? 'green' : 'red' }}">{{ $hasil->kmdalam ? 'Ya' : 'Tidak' }}</span>
                                 </p>
                                 <p class="detail-item">
                                     <span>Tempat Parkir</span>

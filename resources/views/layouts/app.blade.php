@@ -112,7 +112,8 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/form.js') }}"></script>
 <script src="{{ asset('js/map.js') }}"></script>
+    @yield('js')
 <script src="{{ asset('js/main.js') }}"></script>
-@yield('js')
+
 </body>
 </html>

@@ -9,7 +9,7 @@ Route::get('kosan/{id}','PublicPageController@LihatKosan')->name('lihat.kosan');
 Auth::routes();
 
 Route::get('tes',function(){
-    return \Bukosan\Model\Kosan::complete(1,2);
+    return \Bukosan\Model\Kosan::complete(5,5);
 });
 
 //Route::get('/user/{username}','');

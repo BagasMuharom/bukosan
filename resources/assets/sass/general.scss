@@ -3,7 +3,7 @@
 
 html,
 body {
-    background-color: #d1d8dd;
+    background-color: #eaf0f5;
     font: {
         family: $fontfamily;
         size: 15px;
@@ -18,12 +18,12 @@ h1, h2, h3, h4, h5, h6 {
     }
 }
 
-h2{
-    font-size:25px;
+h2 {
+    font-size: 25px;
 }
 
-p{
-    margin:0;
+p {
+    margin: 0;
 }
 
 .box {
@@ -33,69 +33,84 @@ p{
     }
 }
 
-.navbar-main{
-    padding-top:10px;
+.navbar-main {
+    padding-top: 10px;
     padding-bottom: 10px;
     background-color: $primaryColor;
-    border:none;
-    .navbar-brand{
+    border: none;
+    .navbar-brand {
         padding-top: 17px;
-        color:#FFFFFF;
+        color: #FFFFFF;
     }
     .navbar-nav {
-        a{
-            &:visited,&:link,&:hover{
-                color:#fff !important;
+        > .dropdown {
+            &:not(.open) {
+                > a {
+                    &:visited, &:link, &:hover {
+                        color: #fff !important;
+                    }
+                    &:hover {
+                        background-color: rgba(255, 255, 255, .1) !important;
+                        border-radius: 30px;
+                    }
+                }
             }
-            &:hover{
-                background-color:rgba(255,255,255,.1) !important;
-                border-radius:30px;
+            &.open{
+
+                > a {
+                    &:visited, &:link, &:hover {
+                        border-radius: 30px;
+                        color: #fff !important;
+                        background-color: rgba(0,0,0,.15);
+                    }
+                }
             }
         }
+
     }
 }
 
-.form-search{
-    background-color:rgba(255,255,255,.15);
+.form-search {
+    background-color: rgba(255, 255, 255, .15);
     @include borderRadius(3px);
-    padding:0;
+    padding: 0;
     input,
-    button{
+    button {
         @include boxShadow(none);
-        background-color:transparent;
-        border:none;
+        background-color: transparent;
+        border: none;
     }
     input {
-        color:#fff;
-        font-size:14px;
-        padding:10px;
-        &:focus{
+        color: #fff;
+        font-size: 14px;
+        padding: 10px;
+        &:focus {
             @include boxShadow(none);
         }
         @include setPlaceholderColor(#ffffff);
     }
-    button{
+    button {
         &:hover,
-        &:active{
+        &:active {
             background-color: transparent;
             border: none;
         }
-        > svg{
+        > svg {
             transform: translateY(3px);
         }
     }
 }
 
-.pac-container{
-    width:500px !important;
-    > .pac-item{
-        padding:10px;
+.pac-container {
+    width: 500px !important;
+    > .pac-item {
+        padding: 10px;
     }
-    &.pac-logo{
-        &:after{
-            content:"";
+    &.pac-logo {
+        &:after {
+            content: "";
             background-image: none;
-            height:0;
+            height: 0;
         }
     }
 }

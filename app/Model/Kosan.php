@@ -13,57 +13,29 @@ class Kosan extends Model
     public $timestamps = false;
 
     public static function complete($latitude,$longitude){
-        $kosan = DB::table(DB::raw('"kosan" as "k", "kamar_kosan" as "kk"'))
-                    ->where('k.terverifikasi',true)
+        $kosan = DB::table(DB::raw('"kosan" as "k",
+                                    "kamar_kosan" as "kk",( '.
+                                    DB::table('kamar_kosan')
+                                        ->select(DB::raw('max(harga) as max,min(harga) as min, idkosan'))
+                                        ->groupBy('idkosan')->toSql() .') as harga , (' .
+                                    DB::table(DB::raw('kosan, foto_kosan, foto'))
+                                        ->whereRaw('foto.id = foto_kosan.idfoto')
+                                        ->whereRaw('kosan.id = foto_kosan.idkosan')
+                                        ->select(DB::raw('max(foto.nama) as nama'))
+                                        ->toSql()
+                                    . ') as foto'
+                                    ))
+                    ->where('k.terverifikasi',false)
                     ->whereRaw('"kk"."idkosan" = "k"."id"')
-                    ->where('k.latitude','<=',$latitude+5)
-                    ->where('k.longitude','<=',$longitude+5)
-                    ->groupBy('k.id')
-                    ->select('k.*',DB::raw('count("kk"."id") as "jumlahkamar"'))->get();
+                    ->where('k.latitude','<=',$latitude + 5)
+                    ->where('k.latitude','>=',$latitude - 5)
+                    ->where('k.longitude','<=',$longitude + 5)
+                    ->where('k.longitude','>=',$longitude - 5)
+                    ->select('k.*',DB::raw('count("kk"."id") as "jumlahkamar", harga.min as hargamin, harga.max as hargamax, foto.nama as foto'))
+                    ->distinct()
+                    ->groupBy(DB::raw('k.id, harga.max, harga.min, foto.nama'))
+                    ->get();
 
-        return $kosan;
-    }
-
-    public static function AllFull($latitude,$longitude){
-        $kosan = DB::select('SELECT
-                            DISTINCT
-                            	k.*,
-                            	harga.min as hargamin,
-                            	harga.max as hargamax,
-                            	count(kk.id) as jumlahkamar,
-                            	foto.nama as foto
-                            FROM
-                            	public.kosan as k,
-                            	public.kamar_kosan as kk,
-                            	(select
-                            		max(harga) as max,
-                            		min(harga) as min,
-                            		idkosan
-                            	from
-                            		public.kamar_kosan
-                            	group by
-                            		idkosan) as harga,
-                            	(select
-                            		max(foto.nama) as nama
-                            	from
-                            		public.foto,
-                            		public.foto_kosan,
-                            		public.kosan
-                            	where
-                            		foto_kosan.idfoto = foto.id AND
-                            		kosan.id = foto_kosan.idkosan
-                            	GROUP BY
-                            		kosan.id) as foto
-                            WHERE
-                            	k.terverifikasi = false AND
-                            	kk.idkosan = k.id AND
-                                k.latitude <= ' . ($latitude + 5) . ' AND
-                                k.longitude <= ' . ($longitude + 5) . '
-                            GROUP BY
-                            	k.id,
-                            	harga.max,
-                            	harga.min,
-                            	foto.nama');
         return $kosan;
     }
 
