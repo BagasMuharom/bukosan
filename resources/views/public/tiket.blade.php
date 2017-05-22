@@ -72,8 +72,9 @@
                             @endif
                         </div>
                         @if(Auth::user()->id == $pemilik->id)
-                        <a href="{{ route('verifikasi.tiket',['kodetiket' => $kode ])}}" class="btn btn-success">Verifikasi Kedatangan Penyewa Kosan</a>
-                        <form action="{{ route('verifikasi.tiket') }}" method="post">
+                        <a href="{{ route('verifikasi.tiket')}}" class="btn btn-success" onclick="event.preventDefault();
+                    document.getElementById('verifikasi-tiket').submit();">Verifikasi Kedatangan Penyewa Kosan</a>
+                        <form id="verifikasi-tiket" action="{{ route('verifikasi.tiket') }}" method="post">
                             <input type="hidden" name="kode" value="{{ $kode }}"/>
                             {{ csrf_field() }}
                         </form>

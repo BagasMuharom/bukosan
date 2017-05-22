@@ -157,12 +157,32 @@ class KosanController extends Controller
         return json_encode(['status' => 0]);
     }
 
+    /**
+     * Mendapatkan foto dari sebuah kosan
+     *
+     * @param $id
+     * @return mixed
+     */
      public static function GetFotoKosan($id){
         return DB::select('SELECT foto.nama FROM foto, foto_kosan WHERE foto.id = foto_kosan.idfoto AND foto_kosan.idkosan = ' . $id);
      }
 
+    /**
+     * Mendapatkan jumlah dari kamar kosan yang difavoritkan
+     *
+     * @param $id
+     * @return mixed
+     */
      public static function GetFavorit($id){
          return DB::select('SELECT k.id, sum(fav.jumlah) as jumlah FROM kosan k,(SELECT kk.idkosan, kk.id, count(f) as jumlah FROM kamar_kosan as kk, favorit as f where f.idkamarkosan = kk.id GROUP BY kk.id ) as fav WHERE fav.idkosan = ' . $id . ' GROUP BY k.id')[0];
+     }
+
+    /**
+     * Melakukan penangguhan terhadap sebuah kosan
+     * @param $id
+     */
+     public function suspend($id){
+
      }
 
 }

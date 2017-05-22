@@ -24,15 +24,15 @@ Auth::routes();
 
 // Halaman User
 
-Route::group(['middleware' => 'auth'], function () {
-
-    Route::get('/kosansaya', 'UserPageController@KosanSayaPage')->name('kosansaya');
-
-    Route::get('/riwayatsewa', function () {
-        return 'Riwayat sewa';
-    })->name('riwayat.sewa');
-
-});
+//Route::group(['middleware' => 'auth'], function () {
+//
+//    Route::get('/kosansaya', 'UserPageController@KosanSayaPage')->name('kosansaya');
+//
+//    Route::get('/riwayatsewa', function () {
+//        return 'Riwayat sewa';
+//    })->name('riwayat.sewa');
+//
+//});
 
 Route::get('tes', function () {
     return \Bukosan\Model\RiwayatSewa::where('idkamar',10)->where('status','<>','SL')->count();

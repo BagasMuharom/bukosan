@@ -10,14 +10,14 @@
 
         <div class="panel-body">
             @if (count($errors) > 0)
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-        @endif
+                <div class="alert alert-danger">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <form id="settings-form" class="form-horizontal" action="{{ route('settings.process') }}" method="post">
 
                 {{ csrf_field() }}
@@ -26,7 +26,8 @@
                     <label for="displayname" class="col-md-3 control-label">Nama Lengkap</label>
                     <div class="col-md-6">
                         <input id="displayname" type="text" class="form-control" name="displayname"
-                               value="{{ count($errors) > 0 ? old('displayname') : Auth::user()->displayname }}" required autofocus>
+                               value="{{ count($errors) > 0 ? old('displayname') : Auth::user()->displayname }}"
+                               required autofocus>
 
                         @if ($errors->has('displayname'))
                             <span class="help-block">
@@ -40,7 +41,7 @@
                     <label for="nik" class="col-md-3 control-label">NIK</label>
                     <div class="col-md-6">
                         <input id="nik" type="text" class="form-control" name="nik"
-                               value="{{ count($errors) > 0 ? old('nik') : Auth::user()->nik }}" required autofocus>
+                               value="{{ count($errors) > 0 ? old('nik') : Auth::user()->nik }}" required>
 
                         @if ($errors->has('nik'))
                             <span class="help-block">
@@ -50,11 +51,25 @@
                     </div>
                 </div>
 
+                <div class="form-group{{ $errors->has('alamat') ? ' has-error' : '' }}">
+                    <label for="alamat" class="col-md-3 control-label">Alamat</label>
+                    <div class="col-md-6">
+                        <input id="alamat" type="text" class="form-control" name="nik"
+                               value="{{ count($errors) > 0 ? old('alamat') : Auth::user()->alamat }}" required>
+
+                        @if ($errors->has('alamat'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('alamat') }}</strong>
+                                    </span>
+                        @endif
+                    </div>
+                </div>
+
                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                     <label for="username" class="col-md-3 control-label">Username</label>
                     <div class="col-md-6">
                         <input id="username" type="text" class="form-control" name="username"
-                               value="{{ count($errors) > 0 ? old('username') : Auth::user()->username }}" required autofocus>
+                               value="{{ count($errors) > 0 ? old('username') : Auth::user()->username }}" required>
 
                         @if ($errors->has('username'))
                             <span class="help-block">
@@ -68,7 +83,8 @@
                     <label for="tanggallahir" class="col-md-3 control-label">Tanggal Lahir</label>
                     <div class="col-md-6">
                         <input id="tanggallahir" type="date" class="form-control" name="tanggallahir"
-                               value="{{ count($errors) > 0 ? old('tanggallahir') :  Auth::user()->tgl_lahir }}" required autofocus>
+                               value="{{ count($errors) > 0 ? old('tanggallahir') :  Auth::user()->tgl_lahir }}"
+                               required autofocus>
 
                         @if ($errors->has('tanggallahir'))
                             <span class="help-block">
@@ -82,25 +98,26 @@
                     <label for="jeniskelamin" class="col-md-3 control-label">Jenis Kelamin</label>
                     <div class="col-md-6">
                         <input id="jeniskelamin" type="hidden" class="form-control" name="jeniskelamin"
-                               value="{{ count($errors) > 0 ? old('jeniskelamin') :  Auth::user()->jenis_kelamin }}" required autofocus>
-                               <div class="dropdown" target="#jeniskelamin" id="jeniskelamin-drop">
-                                   <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
-                                       @if((count($errors) > 0 && old('jeniskelamin') == 'L') ||
-                                            Auth::user()->jenis_kelamin == 'L')
-                                            Laki-Laki
-                                        @elseif((count($errors) > 0 && old('jeniskelamin') == 'P') ||
-                                             Auth::user()->jenis_kelamin == 'P')
-                                             Perempuan
-                                        @else
-                                        Pilih Jenis kelamin
-                                        @endif
-                                       <span class="caret"></span>
-                                   </button>
-                                   <ul class="dropdown-menu">
-                                       <li><a href="#" data-value="L">Laki-Laki</a></li>
-                                       <li><a href="#" data-value="P">Perempuan</a></li>
-                                   </ul>
-                               </div>
+                               value="{{ count($errors) > 0 ? old('jeniskelamin') :  Auth::user()->jenis_kelamin }}"
+                               required autofocus>
+                        <div class="dropdown" target="#jeniskelamin" id="jeniskelamin-drop">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                @if((count($errors) > 0 && old('jeniskelamin') == 'L') ||
+                                     Auth::user()->jenis_kelamin == 'L')
+                                    Laki-Laki
+                                @elseif((count($errors) > 0 && old('jeniskelamin') == 'P') ||
+                                     Auth::user()->jenis_kelamin == 'P')
+                                    Perempuan
+                                @else
+                                    Pilih Jenis kelamin
+                                @endif
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-value="L">Laki-Laki</a></li>
+                                <li><a href="#" data-value="P">Perempuan</a></li>
+                            </ul>
+                        </div>
                         @if ($errors->has('jenis_kelamin'))
                             <span class="help-block">
                                         <strong>{{ $errors->first('jenis_kelamin') }}</strong>
@@ -113,9 +130,12 @@
                     <h3 class="panel-title">Foto Profil</h3>
                 </div>
 
-                <img src="{{ asset('storage/' . (count($errors) > 0 ? old('ava') : Auth::user()->avatar)) }}" class="img-circle img-ava" style="width:100px;height:100px" id="avatar"/>
-                <button class="btn btn-primary" type="button" id="ava-chooser"><i class="fa fa-image"></i> Pilih foto</button>
-                <input type="hidden" name="ava" id="ava" value="{{ count($errors) > 0 ? old('ava') : Auth::user()->avatar }}"/>
+                <img src="{{ asset('storage/' . (count($errors) > 0 ? old('ava') : Auth::user()->avatar)) }}"
+                     class="img-circle img-ava" style="width:100px;height:100px" id="avatar"/>
+                <button class="btn btn-primary" type="button" id="ava-chooser"><i class="fa fa-image"></i> Pilih foto
+                </button>
+                <input type="hidden" name="ava" id="ava"
+                       value="{{ count($errors) > 0 ? old('ava') : Auth::user()->avatar }}"/>
                 <div class="panel-heading" style="margin-top:10px">
                     <h3 class="panel-title">Kontak</h3>
                 </div>
@@ -150,12 +170,14 @@
 
                 <div class="form-group">
                     <div class="col-lg-6 col-lg-offset-3">
-                        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Simpan</button>
+                        <button type="submit" class="btn btn-primary"><i class="glyphicon glyphicon-save"></i> Simpan
+                        </button>
                     </div>
                 </div>
             </form>
 
-            <form action="{{ route('upload.image') }}" method="post" id="form-ava" style="display:none" enctype="multipart/form-data">
+            <form action="{{ route('upload.image') }}" method="post" id="form-ava" style="display:none"
+                  enctype="multipart/form-data">
                 <input type="file" name="image" id="file-ava"/>
             </form>
         </div>

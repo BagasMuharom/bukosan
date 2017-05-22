@@ -2,7 +2,7 @@
 
 <?php
 
-    $route = Route::current()->getName();
+    $route = Route::currentRouteName();
 
     $isHomepage = ($route === 'homepage');
 
@@ -26,7 +26,7 @@
                 <ul id="stripped-menu">
                     <li @if($isHomepage) class="active" @endif><a href="{{ url('') }}">Beranda</a></li>
                     <li @if($isKosanPage) class="active" @endif><a href="{{ route('kosansaya') }}">Kosan Saya</a></li>
-                    <li><a href="{{ route('riwayat.sewa') }}">Riwayat Sewa</a></li>
+                    <li {{ Route::currentRouteName() == 'riwayat.sewa' ? 'class=active' : '' }}><a href="{{ route('riwayat.sewa') }}">Riwayat Sewa</a></li>
                     <li><a href="#">Notifikasi</a></li>
                 </ul>
             </div>
