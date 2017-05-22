@@ -21,9 +21,9 @@
 
     @else
 
-    <div class="panel panel-default panel-thumb-list">
+    <div class="pane panel-thumb-list">
         <div class="panel-heading">
-            <h2 class="panel-title">Kosan Saya</h2>
+            <h2 class="panel-title" style="font-size:25px">Kosan Saya</h2>
             <div class="panel-tool">
                 <a href="{{ route('tambah.kosan') }}" class="btn btn-primary">Daftarkan Kosan Baru</a>
             </div>
@@ -31,13 +31,13 @@
 
         @foreach($DaftarKosan as $kosan)
         <?php
-            $foto = \Bukosan\Http\Controllers\KosanController::GetFotoKosan($kosan->id)->first();
+            $foto = \Bukosan\Http\Controllers\KosanController::GetFotoKosan($kosan->id)[0];
         ?>
         <div class="panel-body row kosan-{{ $kosan->id }}">
             <div class="thumb-property">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="{{ asset('storage/'.$foto->nama) }}" class="img-responsive" alt="" style="max-height:150px"/>
+                        <img src="{{ asset('storage/' . $foto->nama) }}" class="img-responsive" alt="" style="max-height:150px"/>
                     </div>
                     <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
                         <div class="thumb-heading">

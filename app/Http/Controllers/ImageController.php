@@ -19,7 +19,7 @@ class ImageController extends Controller
      * @param Request $request
      * @return string
      */
-    public function upload(Request $request)
+    public function uploads(Request $request)
     {
         $images = [
             'fullurl' => [],
@@ -39,6 +39,21 @@ class ImageController extends Controller
             array_push($images['name'],$imageName);
         }
         return json_encode($images);
+    }
+
+    public function upload(Request $request){
+        $image = $request->image;
+        $imageName = time().''.$image->getClientOriginalName();
+        # Menyimpan ke database
+        $foto = new Foto();
+        $foto->nama = $imageName;
+        $foto->save();
+        # Menyimpan gambar secara public
+        $image->storePubliclyAs('public',$imageName);
+        return json_encode([
+            'fullUrl' => asset('storage/'.$imageName),
+            'name' => $imageName
+        ]);
     }
 
     public static function SaveKosanImage($idKosan, array $ImageList){
@@ -83,10 +98,9 @@ class ImageController extends Controller
 
     public static function HapusFotoKamarKosan($idkamar,$deletefile = true){
         # Mendapatkan foto kamar kosan
-        $fotokamar = DB::table('foto_kamar_kosan')
-                        ->join('foto','foto.id','=','foto_kosan.idfoto')
-                        ->join('kamar_kosan','kamar_kosan.id','=','foto_kosan.idkamarkosan')
-                        ->select('foto.nama');
+        $fotokamar = DB::select('SELECT foto.nama FROM foto, foto_kamar_kosan WHERE foto.id = foto_kamar_kosan.idfoto AND foto_kamar_kosan.idkamarkosan = ' . $idkamar);
+        # Menghapus foto dari tabel foto_kamar_kosan
+        FotoKamarKosan::where('idkamarkosan',$idkamar)->delete();
         foreach($fotokamar as $foto){
             # Menghapus dari storage
             if($deletefile){
@@ -95,8 +109,6 @@ class ImageController extends Controller
                 Foto::where('nama',$foto->nama)->delete();
             }
         }
-        # Menghapus foto dari tabel foto_kamar_kosan
-        FotoKamarKosan::where('idkamarkosan',$idkamar)->delete();
     }
 
     public function HapusFoto(Request $request){

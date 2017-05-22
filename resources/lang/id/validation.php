@@ -20,6 +20,15 @@ return [
         ],
         'deskripsi' => [
             'min' => 'Deskripsi minimal mengandung 100 karakter'
+        ],
+        'jeniskelamin' => [
+            'required' => 'Jenis kelamin tidak boleh kosong !'
+        ],
+        'email' => [
+            'required' => 'Email harus diisi !'
+        ],
+        'ava' => [
+            'required' => 'Foto tidak boleh kosong !'
         ]
     ]
 

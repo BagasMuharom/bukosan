@@ -5,9 +5,14 @@ namespace Bukosan\Http\Controllers;
 use Illuminate\Http\Request;
 use Bukosan\Model\KamarKosan;
 use Bukosan\Model\Kosan;
+use Bukosan\Model\Foto;
+use Bukosan\Model\FotoKamarKosan;
 use Illuminate\Support\Facades\Validator;
 use Bukosan\Http\Controllers\ImageController;
-use DB;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Bukosan\User;
+use Bukosan\Model\RiwayatSewa;
 
 class KamarKosanController extends Controller
 {
@@ -88,12 +93,14 @@ class KamarKosanController extends Controller
     {
         $kamarkosan = KamarKosan::find($id);
         if(!is_null($kamarkosan)){
-            $kosan = Kosan::where('id',KamarKosan::find($id)->id)->first();
+            $kosan = Kosan::where('id',$kamarkosan->idkosan)->first();
             if($kosan->idpemilik == Auth::user()->id){
                 # Menghapus
-                $kamarkosan->delete();
-                if(is_null(KamarKosan::find($id))){
-                    ImageController::HapusFotoKosan($id);
+                if(RiwayatSewa::where('idkamar',$id)->where('status','<>','SL')->count() > 0)
+                    return json_encode(['status' => 0]);
+                else{
+                    ImageController::HapusFotoKamarKosan($id);
+                    $kamarkosan->delete();
                     # Mengirim status bahwa berhasil dihapus
                     return json_encode(['status' => 1]);
                 }
@@ -110,4 +117,19 @@ class KamarKosanController extends Controller
         ->where('kamar_kosan.id',$id)
         ->where('kamar_kosan.id',$id);
     }
+
+    public static function sewa(Request $request){
+        $kamar = KamarKosan::find($request->id);
+        $kosan = Kosan::withAddress($kamar->idkosan)->first();
+        return RiwayatSewa::create([
+            'tanggal' => date('Y-m-d'),
+            'idkamar' => $kamar->id,
+            'harga' => $kamar->harga,
+            'idpenyewa' => Auth::user()->id,
+            'status' => 'MP',
+            'tersedia' => false,
+            'kode' => str_random(8)
+        ]);
+    }
+
 }

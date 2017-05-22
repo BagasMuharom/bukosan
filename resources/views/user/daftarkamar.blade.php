@@ -21,9 +21,9 @@
 
     @else
 
-    <div class="panel panel-default panel-thumb-list">
+    <div class="panel panel-thumb-list">
         <div class="panel-heading">
-            <h2 class="panel-title">Kamar pada Kosan {{ $kosan->nama }}</h2>
+            <h2 class="panel-title" style="font-size:25px">Kamar pada {{ $kosan->nama }}</h2>
             <div class="panel-tool">
                 <a href="{{ route('tambah.kamar',['idkosan' => $kosan->id]) }}" class="btn btn-primary">Tambah Kamar Baru</a>
             </div>
@@ -33,7 +33,7 @@
         <?php
             $foto = \Bukosan\Http\Controllers\KamarKosanController::GetFotoKamarKosan($kamardetail->id)->first();
         ?>
-        <div class="panel-body row">
+        <div class="panel-body row kamar-{{ $kamardetail->id }}">
             <div class="thumb-property">
                 <div class="row">
                     <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
@@ -43,7 +43,7 @@
                         <div class="thumb-heading">
                             <h3 class="thumb-title">{{ $kamardetail->nama }}</h3>
                             <a href="{{ route('edit.kamar',['idkamar' => $kamardetail->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                            <a href="#" class="btn btn-danger delete-kosan"><i class="fa fa-pencil"></i> Hapus</a>
+                            <a href="{{ route('hapus.kamar',['idkamar' => $kamardetail->id]) }}" class="btn btn-danger delete-kamar" data-id="{{ $kamardetail->id }}"><i class="fa fa-pencil"></i> Hapus</a>
                         </div>
                     </div>
                 </div>

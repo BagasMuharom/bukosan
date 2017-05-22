@@ -108,7 +108,7 @@ $('a.delete-kosan').click(function(e){
         success : function(result){
             response = JSON.parse(result);
             if(typeof response != 'undefined'){
-                if(response.status = 1){
+                if(response.status == 1){
                     alert('Berhasil menghapus !');
                     elem.slideUp(150,function(){
                         $(this).remove();
@@ -125,7 +125,61 @@ $('a.delete-kosan').click(function(e){
     });
 });
 
+/*
+$('a.delete-kamar').click(function(e){
+    e.preventDefault();
+    var action = $(this).attr('href');
+    var elem = $('.kamar-'+$(this).attr('data-id'));
+    $.ajax({
+        url : action,
+        type : 'get',
+        success : function(result){
+            response = JSON.parse(result);
+            if(typeof response != 'undefined'){
+                if(response.status == 1){
+                    alert('Berhasil menghapus !');
+                    elem.slideUp(150,function(){
+                        $(this).remove();
+                    })
+                }
+                else {
+                    alert('Gagal menghapus !')
+                }
+            }
+            else {
+                alert('Gagal menghapus !');
+            }
+        }
+    });
+});*/
+
 $('a.delete-foto').click(function(e){
     e.preventDefault();
     AjaxHapusFoto($(this));
+});
+
+$('#file-ava').change(function(){
+    if($(this)[0].files.length == 1) {
+        $(this).parent().submit();
+    }
+});
+
+$('#ava-chooser').click(function(){
+    $('#file-ava').click();
+});
+
+$('#form-ava').ajaxForm({
+    beforeSend: function () {
+
+    },
+    uploadProgress: function (event, position, total, percentComplete) {
+
+    },
+    success: function (response) {
+        result = JSON.parse(response);
+        var url = result.fullUrl;
+        var val = result.name;
+        $('#ava').val(val);
+        $('#avatar').attr('src',url);
+    }
 });

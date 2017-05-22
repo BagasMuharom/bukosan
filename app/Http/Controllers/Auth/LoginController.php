@@ -74,7 +74,7 @@ class LoginController extends Controller
         if($this->Validator($request->toArray())) {
             // Login menggunakan username dan password
             if (Auth::attempt(['username' => $request->username, 'password' => $request->password])) {
-                return redirect(route('userhomepage'));
+                return redirect(route('homepage'));
             }
         }
         return back()->withInput()->withErrors($this->Validator($request->toArray()));

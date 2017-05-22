@@ -4,7 +4,15 @@ namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Bukosan\Model\Kosan;
+use Bukosan\Model\KamarKosan;
+use Bukosan\Model\Favorit;
 use Bukosan\Http\Controllers\KosanController;
+use Bukosan\Http\Controllers\KamarKosanController;
+use Bukosan\User;
+use Bukosan\Model\Foto;
+use Bukosan\Model\FotoKamarKosan;
+use Illuminate\Support\Facades\Auth;
+use Bukosan\Model\RiwayatSewa;
 
 class PublicPageController extends Controller
 {
@@ -12,15 +20,95 @@ class PublicPageController extends Controller
     public function CariKosan($latitude, $longitude, $lokasi)
     {
         return view('public.cari',[
-            'kosan' => Kosan::complete($latitude,$longitude),
+            'kosan' => Kosan::fromLocation($latitude,$longitude),
         ]);
     }
 
     public function LihatKosan($idkosan){
+        $kosan = Kosan::find($idkosan);
+        $kamar = KamarKosan::fromKosanId($idkosan);
         return view('public.kosan',[
-            'kosan' => Kosan::find($idkosan),
-            'foto' => KosanController::GetFotoKosan($idkosan)
+            'kosan' => $kosan,
+            'hargamax' => $kamar->max('harga'),
+            'hargamin' => $kamar->min('harga'),
+            'ac' => $kamar->count('ac'),
+            'kipasangin' => $kamar->count('kipasangin'),
+            'foto' => KosanController::GetFotoKosan($idkosan),
+            'kamar' => $kamar,
+            'pemilik' => User::find($kosan->idpemilik),
+            'favorit' => KosanController::GetFavorit($idkosan)->jumlah
         ]);
+    }
+
+    public function LihatKamar($idkamar){
+        $kamar = KamarKosan::find($idkamar);
+        $kosan = Kosan::find($kamar->idkosan);
+        return view('public.kamar',[
+            'kamar' => $kamar,
+            'kosan' => $kosan,
+            'foto' => KamarKosanController::GetFotoKamarKosan($idkamar),
+            'pemilik' => User::find($kosan->idpemilik),
+            'favorit' => Favorit::where('idkamarkosan',$idkamar)->count(),
+            'favorited' => Auth::check() ? Favorit::where('iduser',Auth::user()->id)->where('idkamarkosan',$idkamar)->count() : false
+        ]);
+    }
+
+    public function sewa(Request $request){
+        $kamar = KamarKosan::find($request->id);
+        $kosan = Kosan::withAddress($kamar->idkosan)->first();
+        return view('public.sewa',[
+            'kamar' => $kamar,
+            'kosan' => $kosan,
+            'foto' => Foto::where('id',FotoKamarKosan::where('idkamarkosan',$kamar->id)->first()->idfoto)->first(),
+            'user' => Auth::user(),
+            'pemilik' => User::where('id',$kosan->idpemilik)->first()
+        ]);
+    }
+
+    public function lihatTiket($kodetiket){
+        $tiket = RiwayatSewa::where('kode',$kodetiket)->first();
+        $kamar = KamarKosan::where('id',$tiket->idkamar)->first();
+        $kosan = Kosan::where('id',$kamar->idkosan)->first();
+        if(Auth::user()->id != $tiket->idpenyewa && Auth::user()->id != $kosan->idpemilik){
+            return view('error',[
+                'message' => 'Tiket ini tidak bisa anda lihat !',
+                'info' => 'Pastikan tiket yang akan anda lihat adalah tiket milik anda atau tiket milik calon penyewa kosan anda !'
+            ]);
+        }
+        $tanggal = explode('-',$tiket->tanggal);
+        switch($tanggal[1]){
+            case '01': $tanggal[1] = 'Januari';break;
+            case '02': $tanggal[1] = 'Februari';break;
+            case '03': $tanggal[1] = 'Maret';break;
+            case '04': $tanggal[1] = 'April';break;
+            case '05': $tanggal[1] = 'Mei';break;
+            case '06': $tanggal[1] = 'Juni';break;
+            case '07': $tanggal[1] = 'Juli';break;
+            case '08': $tanggal[1] = 'Agustus';break;
+            case '09': $tanggal[1] = 'September';break;
+            case '10': $tanggal[1] = 'Oktober';break;
+            case '11': $tanggal[1] = 'November';break;
+            case '12': $tanggal[1] = 'Desember';break;
+        }
+        return view('public.tiket',[
+            'kamar' => $kamar,
+            'kosan' => Kosan::withAddress($kamar->idkosan)->first(),
+            'foto' => Foto::where('id',FotoKamarKosan::where('idkamarkosan',$kamar->id)->first()->idfoto)->first(),
+            'penyewa' => User::where('id',$tiket->idpenyewa)->first(),
+            'user' => Auth::user(),
+            'pemilik' => User::where('id',$kosan->idpemilik)->first(),
+            'kode' => $tiket->kode,
+            'tanggal' => [
+                'tanggal' => $tanggal[2],
+                'bulan' => $tanggal[1],
+                'tahun' => $tanggal[0]
+            ]
+        ]);
+    }
+
+    public function createTiket(Request $request){
+        $tiket = KamarKosanController::sewa($request);
+        return redirect()->route('lihat.tiket',['kodetiket' => $tiket->kode]);
     }
 
 }

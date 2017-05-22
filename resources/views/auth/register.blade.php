@@ -7,11 +7,6 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Daftar</div>
                 <div class="panel-body">
-                    @if(count($errors) > 0)
-                        @foreach($errors->all() as $error)
-                            <p>{{ $error }}</p>
-                        @endforeach
-                    @endif
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
 
@@ -43,15 +38,15 @@
                             </div>
                         </div>
 
-                        <div class="form-group{{ $errors->has('isi') ? ' has-error' : '' }}">
+                        <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                             <label for="email" class="col-md-4 control-label">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="isi" value="{{ old('isi') }}" required>
+                                <input id="email" type="email" class="form-control" name="email" value="{{ old('isi') }}" required>
 
-                                @if ($errors->has('isi'))
+                                @if ($errors->has('email'))
                                     <span class="help-block">
-                                        <strong>{{ $errors->first('isi') }}</strong>
+                                        <strong>{{ $errors->first('email') }}</strong>
                                     </span>
                                 @endif
                             </div>

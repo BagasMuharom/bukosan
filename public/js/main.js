@@ -154,4 +154,21 @@ $('.form-search').submit(function (e) {
     e.preventDefault();
 });
 
-$(".zoom-image").ZooMove();
+$('.favorit').click(function(){
+    var id = $(this).attr('data-fav');
+    var elem = $(this);
+    $.ajax({
+        url : url('favorit'),
+        type : 'post',
+        data : 'id=' + id,
+        success : function(result){
+            var response = JSON.parse(result);
+            if(response.status == 'deleted'){
+                elem.removeClass('fa-star favorited').addClass('fa-star-o');
+            }
+            else if(response.status == 'saved'){
+                elem.addClass('fa-star favorited').removeClass('fa-star-o');
+            }
+        }
+    });
+});

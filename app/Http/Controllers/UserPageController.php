@@ -12,6 +12,7 @@ use Bukosan\Model\Lokasi\Provinsi;
 use Bukosan\Model\Lokasi\Kotakab;
 use Bukosan\Model\Lokasi\Kecamatan;
 use Bukosan\Model\Lokasi\Kelurahan;
+use Bukosan\Model\RiwayatSewa;
 
 class UserPageController extends Controller
 {
@@ -81,6 +82,15 @@ class UserPageController extends Controller
             'kecamatan' => kecamatan::where('idkotakab',$kosan->idkotakab)->get(),
             'kelurahan' => Kelurahan::where('idkecamatan',$kosan->idkecamatan)->get(),
             'foto' => DB::select('SELECT foto.nama FROM kosan, foto, foto_kosan WHERE foto.id = foto_kosan.idfoto AND kosan.id = foto_kosan.idkosan AND kosan.id = ' . $idkosan)
+        ]);
+    }
+
+    public function RiwayatSewaPage(){
+        $daftarKosan = Kosan::where('idpemilik',Auth::user()->idpemilik)->pluck('id');
+        $daftarKamar = KamarKosan::whereIn('idkosan',$daftarKosan)->pluck('id');
+        return view('user.riwayatsewa',[
+            'sewa' => RiwayatSewa::whereIDPenyewa(Auth::user()->id)->get(),
+            'disewakan' => RiwayatSewa::whereIDPemilik(Auth::user()->id)->get()
         ]);
     }
 

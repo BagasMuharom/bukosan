@@ -5,6 +5,8 @@ namespace Bukosan\Http\Controllers;
 use Illuminate\Http\Request;
 use Bukosan\Http\Controllers\ImageController;
 use Bukosan\Model\Kosan;
+use Bukosan\Model\KamarKosan;
+use Bukosan\Model\RiwayatSewa;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -26,7 +28,7 @@ class KosanController extends Controller
             return redirect()->route('kosansaya');
         }
         else{
-            return redirect()->back()->withError()->withInput();
+            return redirect()->back()->withErrors($this->ValidasiKosan($request))->withInput();
         }
     }
 
@@ -87,7 +89,7 @@ class KosanController extends Controller
             return redirect()->route('kosansaya');
         }
         else{
-            return redirect()->back()->withError()->withInput();
+            return redirect()->back()->withErrors($this->ValidasiKosan($request))->withInput();
         }
     }
 
@@ -128,33 +130,39 @@ class KosanController extends Controller
     }
 
     /**
-     * Menghapus kosan dari database
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-     public function destroy($id)
-     {
-         if(count(Kosan::where('id',$id)->get()) > 0){
-             $kosan = Kosan::where('id',$id)->first();
-             if($kosan->idpemilik == Auth::user()->id){
-                 # Menghapus
-                 $kosan->delete();
-                 if(count(Kosan::where('id',$id)->get()) == 0){
+    * Menghapus kosan dari database
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
+    public function destroy($id)
+    {
+        if(count(Kosan::where('id',$id)->get()) > 0){
+            $kosan = Kosan::where('id',$id)->first();
+            if($kosan->idpemilik == Auth::user()->id){
+                # Menghapus
+                $daftarKamar = KamarKosan::where('idkosan',$id)->pluck('id');
+                if(count(RiwayatSewa::whereIn('idkamar',$daftarKamar)->where('status','<>','SL')) > 0)
+                    return json_encode(['status' => 0]);
+                else
+                    $kosan->delete();
+                if(count(Kosan::where('id',$id)->get()) == 0){
                     ImageController::HapusFotoKosan($id);
                     # Mengirim status bahwa berhasil dihapus
                     return json_encode(['status' => 1]);
-                 }
-             }
-         }
-         # Mengirim status bahwa gagal dihapus
-         return json_encode(['status' => 0]);
-     }
+                }
+            }
+        }
+        # Mengirim status bahwa gagal dihapus
+        return json_encode(['status' => 0]);
+    }
 
      public static function GetFotoKosan($id){
-        return DB::table('kosan')
-                ->join('foto_kosan','foto_kosan.idkosan','=','kosan.id')
-                ->join('foto','foto.id','=','foto_kosan.idfoto')
-                ->where('kosan.id',$id);
+        return DB::select('SELECT foto.nama FROM foto, foto_kosan WHERE foto.id = foto_kosan.idfoto AND foto_kosan.idkosan = ' . $id);
      }
+
+     public static function GetFavorit($id){
+         return DB::select('SELECT k.id, sum(fav.jumlah) as jumlah FROM kosan k,(SELECT kk.idkosan, kk.id, count(f) as jumlah FROM kamar_kosan as kk, favorit as f where f.idkamarkosan = kk.id GROUP BY kk.id ) as fav WHERE fav.idkosan = ' . $id . ' GROUP BY k.id')[0];
+     }
+
 }

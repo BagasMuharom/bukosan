@@ -53,7 +53,7 @@ class RegisterController extends Controller
         $validator = Validator::make($data, [
             'nama' => 'required|max:255',
             'username' => 'required|max:25|unique:user',
-            'isi' => 'required|unique:kontak_user|email|max:255',
+            'email' => 'required|unique:user|email|max:255',
             'password' => 'required|min:8|confirmed'
         ]);
         return $validator;
@@ -68,21 +68,15 @@ class RegisterController extends Controller
     protected function create(array $data)
     {
         return User::create([
-            // 'nik' => $data['nik'],
             'username' => $data['username'],
             'displayname' => $data['nama'],
-            // 'email' => $data['email'],
+            'email' => $data['email'],
             'password' => bcrypt($data['password']),
             'remember_token' => str_random(10)
         ]);
     }
 
     protected function registered(Request $request, $user){
-        KontakUser::create([
-            'id_kontak' => Kontak::where('nama','email')->first()->id,
-            'id_user' => $user->id,
-            'isi' => $request->isi
-        ]);
         return redirect()->route('homepage');
     }
 

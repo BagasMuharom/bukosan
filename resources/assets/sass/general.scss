@@ -115,6 +115,48 @@ p {
     }
 }
 
+.line-round{
+    @include borderRadius(10px);
+    height:3px;
+    &.primary{
+        background-color: $primaryColor;
+    }
+}
+
+.panel-tiket{
+    > ul{
+        margin:0;
+        padding:0;
+        > li{
+            display: table;
+            width:100%;
+            padding:10px;
+            border-bottom: 1px solid rgba(0,0,0,.07);
+            &:first-child{
+                border-top: 1px solid rgba(0,0,0,.07);
+            }
+            &:last-child{
+                > span{
+                    &:last-child{
+                        color:$warningColor;
+                    }
+                }
+            }
+            > span{
+                display: table-cell;
+                &:first-child{
+                    width:30%;
+                    text-align:left;
+                }
+                &:last-child{
+                    text-align:right;
+                    font-weight:bold;
+                }
+            }
+        }
+    }
+}
+
 @import "input";
 
 @import "box";

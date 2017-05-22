@@ -27,7 +27,7 @@
                     <li @if($isHomepage) class="active" @endif><a href="{{ url('') }}">Beranda</a></li>
                     <li @if($isKosanPage) class="active" @endif><a href="{{ route('kosansaya') }}">Kosan Saya</a></li>
                     <li><a href="{{ route('riwayat.sewa') }}">Riwayat Sewa</a></li>
-                    <li><a href="#}">Notifikasi</a></li>
+                    <li><a href="#">Notifikasi</a></li>
                 </ul>
             </div>
         </nav>
@@ -36,7 +36,7 @@
                 <aside class="col-lg-3 col-md-3 col-sm-4 col-xs-6" id="leftbar">
                     <div class="panel panel-default panel-avatar">
                         <div class="panel-body">
-                            <img class="img-responsive img-circle img-ava" src="{{ asset('images/ava.jpg') }}"/>
+                            <img class="img-responsive img-circle img-ava" src="{{ asset('storage/' . Auth::user()->avatar) }}"/>
                             <h3>{{ Auth::user()->username }}</h3>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
         </div>
 @endsection
 
-@if($isKosanPage || $isKamarPage)
+@if(Auth::check())
     @section('js')
         <script src="{{ asset('js/jquery.form.js') }}"></script>
         <script src="{{ asset('js/user.js') }}"></script>

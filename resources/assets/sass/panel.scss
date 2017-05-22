@@ -19,6 +19,65 @@
             }
         }
     }
+
+    &.panel-fasilitas,
+    &.panel-profile{
+        @include borderRadius(0);
+        @include boxShadow(none);
+        background-color: transparent;
+        > .panel-heading{
+            background-color: transparent;
+            color:$darkBase;
+            padding: 0;
+            > .panel-title{
+                float: left;
+                margin-bottom: 10px;
+                font-size: 20px;
+                + i.fa{
+                    float:right;
+                    cursor: pointer;
+                    &:hover,
+                    &.favorited{
+                        color:$warningColor;
+                    }
+                }
+            }
+            @include ClearFix;
+        }
+        > .panel-body{
+            background-color: #fff;
+            padding: 0;
+            > ul{
+                padding: 0;
+                margin: 0;
+                list-style: none;
+                > li{
+                    padding: 10px;
+                    display: table;
+                    width: 100%;
+                    &:nth-child(even){
+                        background-color:rgba(0,0,0,.03);
+                    }
+                    > span{
+                        display: table-cell;
+                        &:first-child{
+                            text-align: left;
+                        }
+                        &:last-child{
+                            text-align:right;
+                            font-weight:bold;
+                            &.green{
+                                color:$successColor;
+                            }
+                            &.red{
+                                color:$dangerColor;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
 
 .panel-thumb-list{
