@@ -8,7 +8,7 @@ Route::get('kosan/{id}','PublicPageController@LihatKosan')->name('lihat.kosan');
 
 Route::get('kamar/{id}','PublicPageController@LihatKamar')->name('lihat.kamar');
 
-Route::post('sewa/kamar','PublicPageController@sewa')->name('sewa.kamar')->middleware('user');
+Route::post('sewa/kamar','PublicPageController@sewa')->name('sewa.kamar')->middleware(['auth','user']);
 
 Route::post('sewa/tiket','PublicPageController@createTiket')->name('sewa.tiket');
 
@@ -52,12 +52,13 @@ Route::group(['prefix' => 'upload'],function () {
 });
 
 Route::group(['middleware' => 'auth'], function () {
-    Route::get('/pengaturan','UserPageController@SettingsPage')->name('settings');
-    Route::post('/pengaturan','SettingsController@process')->name('settings.process');
+    Route::get('pengaturan','UserPageController@SettingsPage')->name('settings');
+    Route::post('pengaturan','SettingsController@process')->name('settings.process');
+    Route::get('favorit','UserPageController@FavoritPage')->name('daftar.favorit');
     Route::group(['middleware' => 'user'], function(){
-        Route::get('/kosansaya', 'UserPageController@KosanSayaPage')->name('kosansaya');
+        Route::get('kosansaya', 'UserPageController@KosanSayaPage')->name('kosansaya');
 
-        Route::get('/riwayatsewa', 'UserPageController@RiwayatSewaPage')->name('riwayat.sewa');
+        Route::get('riwayatsewa', 'UserPageController@RiwayatSewaPage')->name('riwayat.sewa');
 
         Route::group(['prefix' => 'tambah'], function () {
             Route::get('kosan','UserPageController@CreateKosanPage')->name('tambah.kosan');

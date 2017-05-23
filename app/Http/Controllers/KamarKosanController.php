@@ -118,6 +118,14 @@ class KamarKosanController extends Controller
         ->where('kamar_kosan.id',$id);
     }
 
+    public static function GetJumlahSewa($id){
+        return DB::table(DB::raw('kamar_kosan as kk, riwayat_Sewa as rs'))
+                ->select(DB::raw('count(rs.kode) as jumlah'))
+                ->whereRaw('kk.id = rs.idkamar')
+                ->groupBy(DB::raw('rs.kode'))
+                ->first();
+    }
+
     public static function sewa(Request $request){
         $kamar = KamarKosan::find($request->id);
         $kosan = Kosan::withAddress($kamar->idkosan)->first();

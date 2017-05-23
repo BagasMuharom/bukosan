@@ -30,8 +30,12 @@
                         <i class="fa fa-tag fa-2x"></i>
                     </div>
                     <p>
-                        <span>Kisaran Harga</span>
+                        <span>{{ $hargamax - $hargamin > 0 ? 'Kisaran' : '' }} Harga</span>
+                        @if($hargamax - $hargamin > 0)
                         <span>Rp {{ $hargamin }} - Rp {{ $hargamax }}</span>
+                        @else
+                        <span>Rp {{ $hargamax }}</span>
+                        @endif
                     </p>
                 </div>
             </div>
@@ -62,7 +66,7 @@
         <div class="row">
             <div class="col-lg-8">
                 <div id="foto-kosan">
-                    <img class="img-responsive" src="{{ asset('storage/'.$foto->first()->nama) }}"/>
+                    <img class="img-responsive" src="{{ asset('storage/'.$foto[0]->nama) }}"/>
                 </div>
             </div>
 

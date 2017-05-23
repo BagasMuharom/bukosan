@@ -13,6 +13,7 @@ use Bukosan\Model\Lokasi\Kotakab;
 use Bukosan\Model\Lokasi\Kecamatan;
 use Bukosan\Model\Lokasi\Kelurahan;
 use Bukosan\Model\RiwayatSewa;
+use Bukosan\Http\Controllers\FavoritController;
 
 class UserPageController extends Controller
 {
@@ -91,6 +92,12 @@ class UserPageController extends Controller
         return view('user.riwayatsewa',[
             'sewa' => RiwayatSewa::whereIDPenyewa(Auth::user()->id)->get(),
             'disewakan' => RiwayatSewa::whereIDPemilik(Auth::user()->id)->get()
+        ]);
+    }
+
+    public function FavoritPage(){
+        return view('user.favorit',[
+            'favorit' => FavoritController::GetDaftarFavorit()
         ]);
     }
 

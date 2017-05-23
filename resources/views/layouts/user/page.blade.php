@@ -43,7 +43,7 @@
 
                     <nav id="side-menu">
                         <ul>
-                            <li><a href="#"><i class="fa fa-calendar"></i>&nbsp;&nbsp;Riwayat</a></li>
+                            <li><a href="{{ route('daftar.favorit') }}"><i class="fa fa-star"></i>&nbsp;&nbsp;Favorit Saya</a></li>
                             <li @if($isSettingsPage) class="active" @endif><a href="{{ route('settings') }}"><i class="fa fa-gear"></i>&nbsp;&nbsp;Pengaturan</a></li>
                         </ul>
                     </nav>

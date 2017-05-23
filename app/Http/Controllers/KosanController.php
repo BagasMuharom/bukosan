@@ -16,11 +16,11 @@ class KosanController extends Controller
 {
 
     /**
-     * Menyimpan kosan ke dalam database
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    * Menyimpan kosan ke dalam database
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @return \Illuminate\Http\Response
+    */
     public function store(Request $request)
     {
         if(!$this->ValidasiKosan($request)->fails()){
@@ -62,23 +62,23 @@ class KosanController extends Controller
     }
 
     /**
-     * Mengambil data kosan dari database
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Mengambil data kosan dari database
+    *
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function show($id)
     {
         // $kosan = DB::table('kosan')->query('SELECT * FROM "public"."kosan" as kosan, "public"."foto"');
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    * Update the specified resource in storage.
+    *
+    * @param  \Illuminate\Http\Request  $request
+    * @param  int  $id
+    * @return \Illuminate\Http\Response
+    */
     public function update(Request $request, $id)
     {
         if(!$this->ValidasiKosan($request)->fails()){
@@ -95,7 +95,7 @@ class KosanController extends Controller
 
     public function manage(Request $request, Kosan $kosan){
         if(is_null($kosan->id))
-            $kosan->idpemilik = Auth::user()->id;
+        $kosan->idpemilik = Auth::user()->id;
         $kosan->nama = $request->nama;
         $kosan->alamat = $request->alamat;
         $kosan->jumlahlantai = $request->lantai;
@@ -116,7 +116,7 @@ class KosanController extends Controller
 
         # Jenis kosan
         if($request->jeniskosan == 'keluarga')
-            $kosan->keluarga = true;
+        $kosan->keluarga = true;
         else {
             $kosan->keluarga = false;
             $kosan->kosanperempuan = ($request->jeniskelamin == 'L') ? false : true;
@@ -143,9 +143,9 @@ class KosanController extends Controller
                 # Menghapus
                 $daftarKamar = KamarKosan::where('idkosan',$id)->pluck('id');
                 if(count(RiwayatSewa::whereIn('idkamar',$daftarKamar)->where('status','<>','SL')) > 0)
-                    return json_encode(['status' => 0]);
+                return json_encode(['status' => 0]);
                 else
-                    $kosan->delete();
+                $kosan->delete();
                 if(count(Kosan::where('id',$id)->get()) == 0){
                     ImageController::HapusFotoKosan($id);
                     # Mengirim status bahwa berhasil dihapus
@@ -158,31 +158,35 @@ class KosanController extends Controller
     }
 
     /**
-     * Mendapatkan foto dari sebuah kosan
-     *
-     * @param $id
-     * @return mixed
-     */
-     public static function GetFotoKosan($id){
+    * Mendapatkan foto dari sebuah kosan
+    *
+    * @param $id
+    * @return mixed
+    */
+    public static function GetFotoKosan($id){
         return DB::select('SELECT foto.nama FROM foto, foto_kosan WHERE foto.id = foto_kosan.idfoto AND foto_kosan.idkosan = ' . $id);
-     }
+    }
 
     /**
-     * Mendapatkan jumlah dari kamar kosan yang difavoritkan
-     *
-     * @param $id
-     * @return mixed
-     */
-     public static function GetFavorit($id){
-         return DB::select('SELECT k.id, sum(fav.jumlah) as jumlah FROM kosan k,(SELECT kk.idkosan, kk.id, count(f) as jumlah FROM kamar_kosan as kk, favorit as f where f.idkamarkosan = kk.id GROUP BY kk.id ) as fav WHERE fav.idkosan = ' . $id . ' GROUP BY k.id')[0];
-     }
+    * Mendapatkan jumlah dari kamar kosan yang difavoritkan
+    *
+    * @param $id
+    * @return mixed
+    */
+    public static function GetFavorit($id){
+        return DB::select('SELECT k.id, sum(fav.jumlah) as jumlah FROM kosan k,(SELECT kk.idkosan, kk.id, count(f) as jumlah FROM kamar_kosan as kk, favorit as f where f.idkamarkosan = kk.id GROUP BY kk.id ) as fav WHERE fav.idkosan = ' . $id . ' GROUP BY k.id')[0];
+    }
+
+    public static function GetJumlahSewa($id){
+        
+    }
 
     /**
-     * Melakukan penangguhan terhadap sebuah kosan
-     * @param $id
-     */
-     public function suspend($id){
+    * Melakukan penangguhan terhadap sebuah kosan
+    * @param $id
+    */
+    public function suspend($id){
 
-     }
+    }
 
 }

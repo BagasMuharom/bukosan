@@ -54,7 +54,7 @@
                 <div class="form-group{{ $errors->has('alamat') ? ' has-error' : '' }}">
                     <label for="alamat" class="col-md-3 control-label">Alamat</label>
                     <div class="col-md-6">
-                        <input id="alamat" type="text" class="form-control" name="nik"
+                        <input id="alamat" type="text" class="form-control" name="alamat"
                                value="{{ count($errors) > 0 ? old('alamat') : Auth::user()->alamat }}" required>
 
                         @if ($errors->has('alamat'))

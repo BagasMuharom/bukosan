@@ -43,12 +43,22 @@ class PublicPageController extends Controller
     public function LihatKamar($idkamar){
         $kamar = KamarKosan::find($idkamar);
         $kosan = Kosan::find($kamar->idkosan);
+        if(Auth::check()){
+        $tersedia = (($kamar->keluarga && !Auth::user()->keluarga) ||
+                     ($kosan->kosanperempuan && Auth::user()->jenis_kelamin != 'P') ||
+                     !$kamar->tersedia) ? false : true;
+        }
+        else {
+            $tersedia = true;
+        }
         return view('public.kamar',[
             'kamar' => $kamar,
             'kosan' => $kosan,
+            'jumlahsewa' => KamarKosanController::GetJumlahSewa($idkamar)->jumlah,
             'foto' => KamarKosanController::GetFotoKamarKosan($idkamar),
             'pemilik' => User::find($kosan->idpemilik),
             'favorit' => Favorit::where('idkamarkosan',$idkamar)->count(),
+            'tersedia' => $tersedia,
             'favorited' => Auth::check() ? Favorit::where('iduser',Auth::user()->id)->where('idkamarkosan',$idkamar)->count() : false
         ]);
     }
@@ -56,6 +66,21 @@ class PublicPageController extends Controller
     public function sewa(Request $request){
         $kamar = KamarKosan::find($request->id);
         $kosan = Kosan::withAddress($kamar->idkosan)->first();
+        if(($kamar->keluarga && !Auth::user()->keluarga) ||
+            ($kosan->kosanperempuan && Auth::user()->jenis_kelamin != 'P')){
+            return view('public.message',[
+                'title' => 'Anda tidak bisa memesan kamar kosan ini !',
+                'message' => 'Jenis kosan yang akan anda pesan tidak sesuai dengan jenis kelamin atau jenis akun anda. Pastikan anda memilih kamar kosan yang sejenis dengan jenis akun anda !',
+                'back' => route('lihat.kamar',[ 'id' => $kamar->id])
+            ]);
+        }
+        else if(!$kamar->tersedia){
+            return view('public.message',[
+                'title' => 'Kosan tidak tersedia !',
+                'message' => 'Untuk saat ini kosan yang akan anda pesan sedang tidak tersedia. Hal ini mungkin karena kamar kosan sedang ditempati oleh orang lain.',
+                'back' => route('lihat.kamar',[ 'id' => $kamar->id])
+            ]);
+        }
         return view('public.sewa',[
             'kamar' => $kamar,
             'kosan' => $kosan,

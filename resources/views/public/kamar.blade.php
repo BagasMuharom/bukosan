@@ -29,8 +29,8 @@
                         <i class="fa fa-star fa-2x"></i>
                     </div>
                     <p>
-                        <span>Difavoritkan sebanyak</span>
-                        <span>{{ $favorit }}</span>
+                        <span>Difavoritkan oleh</span>
+                        <span>{{ $favorit }} pengguna</span>
                     </p>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     </div>
                     <p>
                         <span>Disewa sebanyak</span>
-                        <span>45</span>
+                        <span>{{ $jumlahsewa }} kali</span>
                     </p>
                 </div>
             </div>
@@ -95,9 +95,13 @@
                 @if(Auth::check() && Auth::user()->id != $kosan->idpemilik)
                 <div class="row">
                     @if($kamar->tersedia)
-                    <a class="btn btn-primary col-lg-8 col-lg-offset-2 btn-lg" href="{{ route('sewa.kamar') }}"
+                    <a class="btn btn-primary col-lg-8 col-lg-offset-2 btn-lg {{ !$tersedia ? 'disabled' : '' }}" href="{{ route('sewa.kamar') }}"
                     onclick="event.preventDefault();
                     document.getElementById('sewa-form').submit();"><i class="fa fa-home" {{ !$kamar->tersedia ? 'disabled' : '' }}></i> Sewa kamar ini</a>
+                    @if(!$tersedia)
+                    <div style="clear:both;margin-bottom:20px"></div>
+                    <p class="alert alert-danger">Kamar kosan ini tidak tersedia untuk jenis akun anda atau mungkin sedang ditempati oleh orang lain.</p>
+                    @endif
                     <form id="sewa-form" action="{{ route('sewa.kamar') }}" method="POST"
                     style="display: none;">
                     <input type="hidden" name="id" value="{{ $kamar->id }}">

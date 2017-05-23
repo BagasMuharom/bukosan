@@ -54,7 +54,7 @@ class RegisterController extends Controller
             'nama' => 'required|max:255',
             'username' => 'required|max:25|unique:user',
             'email' => 'required|unique:user|email|max:255',
-            'password' => 'required|min:8|confirmed'
+            'password' => 'required|min:6|confirmed'
         ]);
         return $validator;
     }
