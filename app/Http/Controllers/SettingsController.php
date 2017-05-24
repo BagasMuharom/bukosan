@@ -3,6 +3,7 @@
 namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Validator;
 use Bukosan\Model\KontakUser;
 use Bukosan\Model\Kontak;
@@ -25,6 +26,7 @@ class SettingsController extends Controller
             $user->nik = $request->nik;
             $user->tgl_lahir = $request->tanggallahir;
             $user->jenis_kelamin = $request->jeniskelamin;
+            $user->perorangan = ($request->jenisakun == 'perorangan');
 
             // Updating avatar
             $user->avatar = $request->ava;
@@ -34,7 +36,7 @@ class SettingsController extends Controller
             $user->save();
             return redirect()->back();
         }
-        return redirect()->back()->withError($this->Validator($request->toArray()))->withInput();
+        return redirect()->back()->withErrors($this->Validator($request->toArray()))->withInput();
     }
 
     /**
@@ -45,14 +47,13 @@ class SettingsController extends Controller
      */
     private function Validator(array $data){
         return Validator::make($data,[
-            'username' => 'required|min:8|max:20',
+            'username' => 'required|min:8|max:20|unique:user,username,'.Auth::user()->id,
             'displayname' => 'required|min:5',
-            'telp' => 'required',
+            'telp' => 'required|numeric|unique:user,telp,'.Auth::user()->id,
             'tanggallahir' => 'required',
             'jeniskelamin' => 'required|max:1',
             'nik' => 'required',
-            'email' => 'required|email',
-            'telp' => 'required|numeric',
+            'email' => 'required|email|unique:user,email,'.Auth::user()->id,
             'ava' => 'required'
         ]);
     }

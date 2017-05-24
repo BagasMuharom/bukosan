@@ -64,14 +64,19 @@
                             </ul>
                         </div>
                         <div class="alert alert-warning">
+                            @if($status != 'SL')
                             @if(Auth::user()->id == $penyewa->id)
                             <p>Tunjukkan tiket ini ke pemilik kosan untuk verifikasi</p>
                             @else
                             <p>Pastikan penyewa kosan menunjukkan tiket ini</p>
                             <p>Klik "Verifikasi" dibawah jika penyewa kosan telah datang ke kosan anda</p>
                             @endif
+                                @else
+                                <p>Transaksi penyewaan dengan tiket ini telah selesai.</p>
+                                @endif
+
                         </div>
-                        @if(Auth::user()->id == $pemilik->id)
+                        @if(Auth::user()->id == $pemilik->id && $status != 'SL')
                         <a href="{{ route('verifikasi.tiket')}}" class="btn btn-success" onclick="event.preventDefault();
                     document.getElementById('verifikasi-tiket').submit();">Verifikasi Kedatangan Penyewa Kosan</a>
                         <form id="verifikasi-tiket" action="{{ route('verifikasi.tiket') }}" method="post">

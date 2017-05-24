@@ -5,15 +5,34 @@
 @endsection
 
 @section('contents')
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h3 class="panel-title">Favorit Saya</h3>
-        </div>
 
-        <div class="panel-body">
-            @foreach($favorit as $kamar)
-                <p>{{ $kamar->nama }}</p>
-            @endforeach
-        </div>
+    <h3>Favorit Saya</h3>
+
+    <div class="row">
+        @foreach($favorit as $kamar)
+            <div class="col-lg-4">
+                <div class="thumbnail">
+                    <div class="header">
+                        <h3><a href="{{ route('lihat.kamar',['idkamar' => $kamar->id]) }}">{{ $kamar->nama }}</a> <a href="{{ route('lihat.kamar',['idkamar' => $kamar->id]) }}" target="_blank" title="lihat di tab baru"><sup><i class="fa fa-external-link"></i></sup></a></h3>
+                        <h4>{{ $kamar->namakosan }}</h4>
+                    </div>
+                    <div class="image">
+                        <img src="{{ asset('storage/'.$kamar->foto) }}"/>
+                    </div>
+                    <span class="price">Rp {{ $kamar->harga }}</span>
+                    <div class="info">
+                        <div>
+                            <span>Jenis Kosan</span>
+                            <span>{{ $kamar->keluarga ? 'Keluarga' : 'Perorangan' }}</span>
+                        </div>
+                        <div>
+                            <span>Status</span>
+                            <span>{{ $kamar->tersedia ? 'Tersedia' : 'Tidak Tersedia' }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @endforeach
     </div>
+
 @endsection

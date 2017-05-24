@@ -43,10 +43,10 @@ class FavoritController extends Controller
     }
 
     public static function GetDaftarFavorit(){
-        return DB::table(DB::raw('favorit as f, "user" as u, kamar_kosan as kk, foto, foto_kamar_kosan as fkk'))
-                ->select(DB::raw('kk.*, min(foto.nama)'))
-                ->whereRaw('f.iduser = u.id AND kk.id = fkk.idkamarkosan AND foto.id = fkk.idfoto AND u.id = ' . Auth::user()->id)
-                ->groupBy(DB::raw('kk.id'))
+        return DB::table(DB::raw('favorit as f, "user" as u, kamar_kosan as kk, foto, foto_kamar_kosan as fkk, kosan as k'))
+                ->select(DB::raw('kk.*, min(foto.nama) as foto, k.nama as namakosan, k.id as idkosan, k.keluarga as keluarga'))
+                ->whereRaw('k.id = kk.idkosan AND f.iduser = u.id AND kk.id = fkk.idkamarkosan AND foto.id = fkk.idfoto AND u.id = ' . Auth::user()->id)
+                ->groupBy(DB::raw('kk.id,k.id'))
                 ->get();
     }
 

@@ -34,8 +34,8 @@ Auth::routes();
 //
 //});
 
-Route::get('tes', function () {
-    return \Bukosan\Model\RiwayatSewa::where('idkamar',10)->where('status','<>','SL')->count();
+Route::get('tes', function (\Illuminate\Http\Request $request) {
+    return $request->get('nama');
 });
 
 Auth::routes();

@@ -43,7 +43,8 @@
 
                     <nav id="side-menu">
                         <ul>
-                            <li><a href="{{ route('daftar.favorit') }}"><i class="fa fa-star"></i>&nbsp;&nbsp;Favorit Saya</a></li>
+                            <li @if(Route::currentRouteName()=='daftar.favorit') class="active" @endif><a href="{{ route('daftar.favorit') }}"><i class="fa fa-star"></i>&nbsp;&nbsp;Favorit Saya</a></li>
+                            <li><a href="{{ route('daftar.favorit') }}"><i class="fa fa-list-alt"></i>&nbsp;&nbsp;Riwayat Kunjungan</a></li>
                             <li @if($isSettingsPage) class="active" @endif><a href="{{ route('settings') }}"><i class="fa fa-gear"></i>&nbsp;&nbsp;Pengaturan</a></li>
                         </ul>
                     </nav>

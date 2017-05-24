@@ -174,6 +174,7 @@ class KosanController extends Controller
     * @return mixed
     */
     public static function GetFavorit($id){
+
         return DB::select('SELECT k.id, sum(fav.jumlah) as jumlah FROM kosan k,(SELECT kk.idkosan, kk.id, count(f) as jumlah FROM kamar_kosan as kk, favorit as f where f.idkamarkosan = kk.id GROUP BY kk.id ) as fav WHERE fav.idkosan = ' . $id . ' GROUP BY k.id')[0];
     }
 

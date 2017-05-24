@@ -13,6 +13,7 @@ use Bukosan\Model\Foto;
 use Bukosan\Model\FotoKamarKosan;
 use Illuminate\Support\Facades\Auth;
 use Bukosan\Model\RiwayatSewa;
+use Bukosan\Http\Controllers\RiwayatKunjunganController;
 
 class PublicPageController extends Controller
 {
@@ -25,6 +26,9 @@ class PublicPageController extends Controller
     }
 
     public function LihatKosan($idkosan){
+        // Menambah ke daftar riwayat kunjungan jika user sedang login
+        RiwayatKunjunganController::tambah($idkosan);
+
         $kosan = Kosan::find($idkosan);
         $kamar = KamarKosan::fromKosanId($idkosan);
         return view('public.kosan',[
@@ -43,6 +47,9 @@ class PublicPageController extends Controller
     public function LihatKamar($idkamar){
         $kamar = KamarKosan::find($idkamar);
         $kosan = Kosan::find($kamar->idkosan);
+
+        // Menambah ke daftar riwayat kunjungan jika user sedang login
+        RiwayatKunjunganController::tambah($kosan->id);
         if(Auth::check()){
         $tersedia = (($kamar->keluarga && !Auth::user()->keluarga) ||
                      ($kosan->kosanperempuan && Auth::user()->jenis_kelamin != 'P') ||
@@ -123,6 +130,7 @@ class PublicPageController extends Controller
             'user' => Auth::user(),
             'pemilik' => User::where('id',$kosan->idpemilik)->first(),
             'kode' => $tiket->kode,
+            'status' => $tiket->status,
             'tanggal' => [
                 'tanggal' => $tanggal[2],
                 'bulan' => $tanggal[1],

@@ -492,20 +492,35 @@ button {
   display: block;
   visibility: hidden;
 }
+.panel-thumb-list > .panel-body {
+  padding: 0;
+}
 .panel-thumb-list .thumb-property {
   background-color: #fff;
 }
-.panel-thumb-list .thumb-property .thumb-title {
+.panel-thumb-list .thumb-property > .row {
+  margin-left: 0;
+  margin-right: 0;
+}
+.panel-thumb-list .thumb-property .thumb-heading:after {
+  content: "";
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+.panel-thumb-list .thumb-property .thumb-heading > .thumb-title {
   margin-left: 0;
   border-left: 4px solid #348fd6;
   padding-left: 20px;
   font-weight: bold;
+  float: left;
+}
+.panel-thumb-list .thumb-property .thumb-heading > .thumb-info {
+  float: right;
+  transform: translateY(10px) translateX(-10px);
 }
 .panel-thumb-list .thumb-property *[class*="col-"] {
   padding: 0;
-}
-.panel-thumb-list .thumb-property *[class*="col-"]:first-child {
-  padding-left: 15px;
 }
 
 .panel-body .panel-heading {
@@ -610,4 +625,63 @@ button {
   visibility: hidden;
 }
 
-/*# sourceMappingURL=general.css.map */
+.thumbnail {
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  border-radius: 0;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+  border: 0;
+  padding: 0;
+}
+.thumbnail > .header > h3 {
+  margin: 0;
+  padding: 20px 20px 10px;
+  font-weight: bold;
+  font-size: 20px;
+}
+.thumbnail > .header > h4 {
+  margin: 0;
+  padding: 0 20px 10px;
+  font-weight: 300;
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
+}
+.thumbnail > .image > img {
+  width: 100%;
+  height: 150px;
+}
+.thumbnail > .price {
+  background-color: #348fd6;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 3px;
+  padding: 7px;
+  color: #fff;
+  position: relative;
+  top: -15px;
+  left: 20px;
+}
+.thumbnail > .info {
+  margin: 0 10px;
+  border-bottom: 2px dashed rgba(0, 0, 0, 0.5);
+}
+.thumbnail > .info:after {
+  content: "";
+  clear: both;
+  display: block;
+  visibility: hidden;
+}
+.thumbnail > .info > div {
+  float: left;
+  width: 50%;
+  padding: 0 10px 10px;
+}
+.thumbnail > .info > div > span {
+  display: block;
+  text-align: center;
+}
+.thumbnail > .info > div > span:last-child {
+  font-weight: bold;
+}

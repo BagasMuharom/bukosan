@@ -21,7 +21,7 @@
                     </tr>
                     @foreach($sewa as $daftar)
                     <tr>
-                        <td>{{ $daftar->kode }}&nbsp;&nbsp;<a href="{{ route('lihat.tiket',['idtiket' => $daftar->kode]) }}" class="btn btn-success btn-sm"><i class="fa fa-ticket"></i> Lihat Tiket</a></td>
+                        <td>{{ $daftar->kode }}&nbsp;&nbsp;<a href="{{ route('lihat.tiket',['idtiket' => $daftar->kode]) }}" class="btn btn-success btn-sm"><i class="fa fa-ticket"></i> Lihat Tiket <i class="fa fa-external-link"></i> </a></td>
                         <td>{{ $daftar->namakamar }}, {{ $daftar->namakosan }}</td>
                         <td>{{ $daftar->tanggal }}</td>
                         <td>{{ $daftar->status == 'MP' ? 'Menunggu Pembayaran' : 'Selesai' }}</td>
@@ -38,20 +38,20 @@
         </div>
 
         <div class="panel-body">
-            <table class="table table-hover">
+            <table class="table table-hover table-riwayat-sewa">
                 <thead>
                     <tr>
-                        <td>Kode</td>
-                        <td>Nama Kosan</td>
-                        <td>Tanggal Sewa</td>
-                        <td>Status</td>
+                        <td><i class="fa fa-ticket"></i>&nbsp;&nbsp;&nbsp;&nbsp;Kode</td>
+                        <td><i class="fa fa-home"></i>&nbsp;&nbsp;&nbsp;&nbsp;Nama Kosan</td>
+                        <td><i class="fa fa-calendar"></i>&nbsp;&nbsp;&nbsp;&nbsp;Tanggal Sewa</td>
+                        <td><i class="fa fa-check"></i>&nbsp;&nbsp;&nbsp;&nbsp;Status</td>
                     </tr>
                     @foreach($disewakan as $daftar)
                     <tr>
-                        <td>{{ $daftar->kode }}&nbsp;&nbsp;<a href="{{ route('lihat.tiket',['idtiket' => $daftar->kode]) }}" class="btn btn-success btn-sm"><i class="fa fa-ticket"></i> Lihat Tiket</a></td>
+                        <td><a href="{{ route('lihat.tiket',['idtiket' => $daftar->kode]) }}" target="_blank"> {{ $daftar->kode }}&nbsp;&nbsp; <i class="fa fa-external-link"></i></a></td>
                         <td>{{ $daftar->namakamar }}, {{ $daftar->namakosan }}</td>
                         <td>{{ $daftar->tanggal }}</td>
-                        <td>{{ $daftar->status == 'MP' ? 'Menunggu Pembayaran' : 'Selesai' }}</td>
+                        <td>{{ $daftar->status == 'MK' ? 'Menunggu Pembayaran' : 'Selesai' }}</td>
                     </tr>
                     @endforeach
                 </thead>

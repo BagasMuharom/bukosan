@@ -10,6 +10,7 @@
 
         <div class="panel-body">
             @if (count($errors) > 0)
+                error
                 <div class="alert alert-danger">
                     <ul>
                         @foreach ($errors->all() as $error)
@@ -123,6 +124,33 @@
                                         <strong>{{ $errors->first('jenis_kelamin') }}</strong>
                                     </span>
                         @endif
+                    </div>
+                </div>
+
+                <div class="form-group{{ $errors->has('jenisakun') ? ' has-error' : '' }}">
+                    <label for="jeniskelamin" class="col-md-3 control-label">Jenis Akun</label>
+                    <div class="col-md-9">
+                        <input id="jenisakun" type="hidden" class="form-control" name="jenisakun"
+                               value="{{ count($errors) > 0 ? old('jenisakun') : Auth::user()->perorangan ? 'perorangan' : 'keluarga' }}"
+                               required>
+                        <div class="dropdown" target="#jenisakun" id="jeniskelamin-drop">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                {{ count($errors) > 0 ? old('jenisakun') : Auth::user()->perorangan ? 'perorangan' : 'keluarga' }}
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-value="perorangan">Perorangan/Pelajar</a></li>
+                                <li><a href="#" data-value="keluarga">Keluarga</a></li>
+                            </ul>
+                        </div>
+                        @if ($errors->has('jenisakun'))
+                            <span class="help-block">
+                                        <strong>{{ $errors->first('jenisakun') }}</strong>
+                                    </span>
+                        @endif
+                        <div class="alert alert-info">
+                            <p>Jenis akun akan memengaruhi proses penyewaan pada sebuah kosan yang akan anda sewa. Pilih opsi perorangan jika anda adalah penyewa kosan untuk pribadi, dan pilih opsi keluarga jika ada adalah penyewa kosan untuk anda dan keluarga anda.</p>
+                        </div>
                     </div>
                 </div>
 
