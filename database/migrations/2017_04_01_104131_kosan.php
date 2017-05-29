@@ -15,6 +15,7 @@ class Kosan extends Migration
     {
         Schema::create('kosan',function (Blueprint $table){
             $table->increments('id');
+            $table->integer('id_user');
             $table->string('nama',30);
             $table->string('alamat',100);
             $table->longText('keterangan');

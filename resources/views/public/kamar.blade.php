@@ -71,7 +71,8 @@
                     <div class="panel-heading">
                         <h3 class="panel-title">Fasilitas Kamar</h3>
                         @if(Auth::check() && Auth::user()->id != $kosan->idpemilik)
-                        <i class="fa  fa-2x favorit {{ $favorited > 0 ? 'fa-star favorited' : 'fa-star-o'}}" title="Favoritkan kamar ini" data-fav="{{ $kamar->id }}"></i>
+                            <i class="fa  fa-2x favorit {{ $favorited > 0 ? 'fa-star favorited' : 'fa-star-o'}}"
+                               title="Favoritkan kamar ini" data-fav="{{ $kamar->id }}"></i>
                         @endif
                     </div>
                     <div class="panel-body">
@@ -93,22 +94,29 @@
                 </div>
 
                 @if(Auth::check() && Auth::user()->id != $kosan->idpemilik)
-                <div class="row">
-                    @if($kamar->tersedia)
-                    <a class="btn btn-primary col-lg-8 col-lg-offset-2 btn-lg {{ !$tersedia ? 'disabled' : '' }}" href="{{ route('sewa.kamar') }}"
-                    onclick="event.preventDefault();
-                    document.getElementById('sewa-form').submit();"><i class="fa fa-home" {{ !$kamar->tersedia ? 'disabled' : '' }}></i> Sewa kamar ini</a>
-                    @if(!$tersedia)
-                    <div style="clear:both;margin-bottom:20px"></div>
-                    <p class="alert alert-danger">Kamar kosan ini tidak tersedia untuk jenis akun anda atau mungkin sedang ditempati oleh orang lain.</p>
-                    @endif
-                    <form id="sewa-form" action="{{ route('sewa.kamar') }}" method="POST"
-                    style="display: none;">
-                    <input type="hidden" name="id" value="{{ $kamar->id }}">
-                    {{ csrf_field() }}
-                </form>
-                @endif
-                </div>
+                    <div class="row">
+                        @if($kamar->tersedia)
+                            <a class="btn btn-primary col-lg-8 col-lg-offset-2 btn-lg {{ !$tersedia ? 'disabled' : '' }}"
+                               href="{{ route('sewa.kamar') }}"
+                               onclick="event.preventDefault();
+                    document.getElementById('sewa-form').submit();"><i
+                                        class="fa fa-home" {{ !$kamar->tersedia ? 'disabled' : '' }}></i> Sewa kamar ini</a>
+                            @if(!$tersedia)
+                                <div style="clear:both;margin-bottom:20px"></div>
+                                <p class="alert alert-danger">Kamar kosan ini tidak tersedia untuk jenis akun anda atau
+                                    mungkin sedang ditempati oleh orang lain.</p>
+                            @elseif(Auth::user()->ditangguhkan)
+                                <div style="clear:both;margin-bottom:20px"></div>
+                                <p class="alert alert-danger">Akun anda sedang ditangguhkan, sehingga anda tidak bisa
+                                    melakukan pemesanan.</p>
+                            @endif
+                            <form id="sewa-form" action="{{ route('sewa.kamar') }}" method="POST"
+                                  style="display: none;">
+                                <input type="hidden" name="id" value="{{ $kamar->id }}">
+                                {{ csrf_field() }}
+                            </form>
+                        @endif
+                    </div>
                 @endif
                 <br/>
                 <div class="panel panel-profile">
@@ -117,7 +125,8 @@
                     </div>
 
                     <div class="panel-body">
-                        <img src="{{ asset('storage/' . $pemilik->avatar) }}" class="img-circle" style="width:100px;height:100px;margin:20px auto;display:block"/>
+                        <img src="{{ asset('storage/' . $pemilik->avatar) }}" class="img-circle"
+                             style="width:100px;height:100px;margin:20px auto;display:block"/>
                         <h4 style="text-align:center">{{ $pemilik->displayname }}</h4>
                         <div class="row">
                             <div class="col-lg-4 col-lg-offset-4">

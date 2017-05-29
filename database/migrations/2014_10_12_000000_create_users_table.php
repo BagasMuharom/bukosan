@@ -25,6 +25,11 @@ class CreateUsersTable extends Migration
             $table->string('alamat',100);
             $table->boolean('perorangan')->default(0);
             $table->boolean('keluarga')->default(0);
+            <<<<
+            <<< Updated upstream
+=======
+            $table->boolean('suspended')->default(0);
+>>>>>>> Stashed changes
             $table->string('remember_token');
         });
     }

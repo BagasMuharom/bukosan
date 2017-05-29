@@ -18,10 +18,11 @@ use Bukosan\Http\Controllers\RiwayatKunjunganController;
 class PublicPageController extends Controller
 {
 
-    public function CariKosan($latitude, $longitude, $lokasi)
+    public function CariKosan(Request $request)
     {
+        $kosan = KosanController::cari($request);
         return view('public.cari',[
-            'kosan' => Kosan::fromLocation($latitude,$longitude),
+            'kosan' => $kosan
         ]);
     }
 
@@ -40,7 +41,7 @@ class PublicPageController extends Controller
             'foto' => KosanController::GetFotoKosan($idkosan),
             'kamar' => $kamar,
             'pemilik' => User::find($kosan->idpemilik),
-            'favorit' => KosanController::GetFavorit($idkosan)->jumlah
+            'favorit' => KosanController::GetFavorit($idkosan)
         ]);
     }
 

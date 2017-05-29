@@ -7,9 +7,9 @@ use Illuminate\Database\Eloquent\Model;
 class RiwayatKunjungan extends Model
 {
 
-    protected $table = 'riwayat_kunjungan';
-
     public $timestamps = false;
+    protected $table = 'riwayat_kunjungan';
+    protected $primaryKey = 'iduser';
 
     protected $fillable = [
         'iduser','idkosan'

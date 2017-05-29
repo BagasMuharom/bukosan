@@ -9,14 +9,13 @@
     }
 }
 
-@mixin AileronFont{
-    $name : "Aileron";
-    $path : "Aileron/Aileron-";
-    @include fontface($name,normal,$path + "Regular.otf");
-    @include fontface($name,Bold,$path + "Bold.otf");
-    @include fontface($name,300,$path + "Light.otf");
-    @include fontface($name,200,$path + "Thin.otf");
-    @include fontface($name,100,$path + "UltraLight.otf");
+@mixin HelveticaFont {
+    $name: "Helvetica Neue";
+    $path: "Helvetica/";
+    @include fontface($name, normal, $path + "HelveticaNeue Regular.ttf");
+    @include fontface($name, bold, $path + "HelveticaNeue Medium.ttf");
+    @include fontface($name, 300, $path + "HelveticaNeue Light.ttf");
+    @include fontface($name, 100, $path +  "HelveticaNeue Thin.ttf");
 }
 
 @mixin boxShadow($shadow){

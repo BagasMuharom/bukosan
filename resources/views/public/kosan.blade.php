@@ -6,9 +6,15 @@
 
 @section('css')
     <link rel="stylesheet" href="{{ asset('css/zoomove.min.css') }}">
-    @endsection
+@endsection
 @section('content')
-
+    <script>
+        var route = 'kosan';
+        var definedLocation = {
+            lat: {{ $kosan->latitude }},
+            lng: {{ $kosan->longitude  }}
+        };
+    </script>
     <div class="container">
         <h2>{{ $kosan->nama }}</h2>
 
@@ -68,6 +74,54 @@
                 <div id="foto-kosan">
                     <img class="img-responsive" src="{{ asset('storage/'.$foto[0]->nama) }}"/>
                 </div>
+
+                <div class="bigtron" id="searchresult">
+                    <div class="row">
+                        <h3 style="padding:0 10px 10px;">Daftar Kamar yang Tersedia</h3>
+                        @foreach($kamar as $hasil)
+                            <div class="col-lg-4">
+                                <div class="thumbnail">
+                                    <div class="image"
+                                         style="background-image:url({{ asset('storage/' . $hasil->foto) }})"></div>
+                                    <div class="name">
+                                        <h3>{{ $hasil->nama }}</h3>
+                                        <p class="price">Rp {{ $hasil->harga }}</p>
+                                    </div>
+                                    <div class="detail">
+                                        <div class="bottom">
+                                            <p class="detail-item">
+                                                <span>AC</span>
+                                                <span class="{{ $hasil->ac ? 'green' : 'red' }}">{{ $hasil->ac ? 'Ya' : 'Tidak' }}</span>
+                                            </p>
+                                            <p class="detail-item">
+                                                <span>Kipas Angin</span>
+                                                <span class="{{ $hasil->kipasangin ? 'green' : 'red' }}">{{ $hasil->kipasangin ? 'Ya' : 'Tidak' }}</span>
+                                            </p>
+                                            <p class="detail-item">
+                                                <span>Lemari</span>
+                                                <span class="{{ $hasil->lemari ? 'green' : 'red' }}">{{ $hasil->lemari ? 'Ya' : 'Tidak' }}</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="action">
+                                        <a href="{{ route('lihat.kamar',[ 'id' => $hasil->id ]) }}">Lihat <i
+                                                    class="fa fa-chevron-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
+                </div>
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Keterangan</h3>
+                    </div>
+
+                    <div class="panel-body">
+                        <?php echo $kosan->keterangan; ?>
+                    </div>
+                </div>
             </div>
 
             <div class="col-lg-4">
@@ -108,73 +162,12 @@
                         </ul>
                     </div>
                 </div>
-            </div>
-        </div>
 
-        <br/>
-
-        <div class="bigtron" id="searchresult">
-            <div class="row">
-                <h3 style="padding:0 10px 10px;">Daftar Kamar yang Tersedia</h3>
-                @foreach($kamar as $hasil)
-                <div class="col-lg-3">
-                    <div class="thumbnail">
-                        <div class="image" style="background-image:url({{ asset('storage/' . $hasil->foto) }})"></div>
-                        <div class="name">
-                            <h3>{{ $hasil->nama }}</h3>
-                            <p class="price">Rp {{ $hasil->harga }}</p>
-                        </div>
-                        <div class="detail">
-                            <div class="top">
-                                <p class="detail-item">
-                                    kosan<br/>
-                                    <b></b>
-                                </p>
-                                <p class="detail-item">
-                                    jumlah kamar<br/>
-                                    <b></b>
-                                </p>
-                            </div>
-                            <div class="bottom">
-                                <p class="detail-item">
-                                    <span>AC</span>
-                                    <span class="{{ $hasil->ac ? 'green' : 'red' }}">{{ $hasil->ac ? 'Ya' : 'Tidak' }}</span>
-                                </p>
-                            </div>
-                        </div>
-                        <div class="action">
-                            <div class="dropup">
-                                <button class="btn-circle" data-toggle="dropdown"><i class="fa fa-chevron-up"></i></button>
-                                <ul class="dropdown-menu" aria-labelledby="dropdownMenu2">
-                                    <li><a href="#">Action</a></li>
-                                    <li><a href="#">Another action</a></li>
-                                    <li><a href="#">Something else here</a></li>
-                                    <li role="separator" class="divider"></li>
-                                    <li><a href="#">Separated link</a></li>
-                                </ul>
-                            </div>
-                            <a href="{{ route('lihat.kamar',[ 'id' => $hasil->id ]) }}">Lihat <i class="fa fa-chevron-right"></i></a>
-                        </div>
-                    </div>
+                <h4>Lokasi Kosan</h4>
+                <div id="map" style="height:250px;width:100%">
                 </div>
-                @endforeach
-            </div>
-        </div>
 
-        <div class="row">
-            <div class="col-lg-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Keterangan</h3>
-                    </div>
-
-                    <div class="panel-body">
-                        <?php echo $kosan->keterangan; ?>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-lg-4">
+                <br/>
                 <div class="panel panel-profile">
                     <div class="panel-heading">
                         <h3 class="panel-title">Info Pemilik Kosan</h3>
@@ -201,6 +194,7 @@
                         </ul>
                     </div>
                 </div>
+
             </div>
         </div>
 

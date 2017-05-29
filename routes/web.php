@@ -89,3 +89,15 @@ Route::group(['prefix' => 'daftar'],function(){
     Route::get('kecamatan/{namakotakab}','LocationController@DaftarKecamatan');
     Route::get('kelurahan/{namakecamatan}','LocationController@DaftarKelurahan');
 });
+
+Route::get('tes', function () {
+    $a = new \Bukosan\Model\Kosan();
+    $a->nama = "Kosan Bu Rezky";
+    $a->alamat = "jl bla";
+    $a->keterangan = "sbasfafsf";
+    $a->longitude = 7574;
+    $a->latitude = 2342;
+    $a->jumlah_lantai = 2;
+    $a->terverifikasi = 0;
+    $a->save();
+});

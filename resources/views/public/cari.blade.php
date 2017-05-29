@@ -23,7 +23,13 @@ Cari Kosan
                         <div class="image" style="background-image:url({{ asset('storage/' . $hasil->foto) }})"></div>
                         <div class="name">
                             <h3>{{ $hasil->nama }}</h3>
-                            <p class="price">Rp {{ $hasil->hargamin }} - Rp {{ $hasil->hargamax }} / bln</p>
+                            <p class="price">
+                                @if( $hasil->hargamin == $hasil->hargamax)
+                                    {{ $hasil->hargamin }}
+                                @else
+                                    Rp {{ $hasil->hargamin }} - Rp {{ $hasil->hargamax }} / bln
+                                @endif
+                            </p>
                         </div>
                         <div class="detail">
                             <div class="top">

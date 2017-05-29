@@ -17,6 +17,39 @@ use Bukosan\Model\RiwayatSewa;
 class KamarKosanController extends Controller
 {
 
+    public static function GetFotoKamarKosan($id)
+    {
+        return DB::table('kamar_kosan')
+            ->join('foto_kamar_kosan', 'foto_kamar_kosan.idkamarkosan', '=', 'kamar_kosan.id')
+            ->join('foto', 'foto.id', '=', 'foto_kamar_kosan.idfoto')
+            ->where('kamar_kosan.id', $id)
+            ->where('kamar_kosan.id', $id);
+    }
+
+    public static function GetJumlahSewa($id)
+    {
+        return DB::table(DB::raw('kamar_kosan as kk, riwayat_Sewa as rs'))
+            ->select(DB::raw('count(rs.kode) as jumlah'))
+            ->whereRaw('kk.id = rs.idkamar')
+            ->groupBy(DB::raw('rs.kode'))
+            ->first();
+    }
+
+    public static function sewa(Request $request)
+    {
+        $kamar = KamarKosan::find($request->id);
+        $kosan = Kosan::withAddress($kamar->idkosan)->first();
+        return RiwayatSewa::create([
+            'tanggal' => date('Y-m-d'),
+            'idkamar' => $kamar->id,
+            'harga' => $kamar->harga,
+            'idpenyewa' => Auth::user()->id,
+            'status' => 'MP',
+            'tersedia' => false,
+            'kode' => str_random(8)
+        ]);
+    }
+
     /**
     * Store a newly created resource in storage.
     *
@@ -34,24 +67,16 @@ class KamarKosanController extends Controller
         }
     }
 
-    /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function update(Request $request, $id)
+    private function ValidasiKamarKosan(Request $request)
     {
-        if(!$this->ValidasiKamarKosan($request)->fails()){
-            $kamar = KamarKosan::find($id);
-            ImageController::HapusFotoKamarKosan($id,false);
-            $this->manage($request,$kamar);
-            return redirect()->route('daftar.kamar',['idkosan' => $request->idkosan]);
-        }
-        else{
-            return redirect()->back()->withInput()->withError();
-        }
+        $validate = '';
+        return Validator::make($request->toArray(), [
+            'nama' => 'required',
+            'harga' => 'required|numeric',
+            'lantai' => 'required',
+            'image' => 'required',
+            'deskripsi' => 'required'
+        ]);
     }
 
     private function manage(Request $request,KamarKosan $kamar){
@@ -72,15 +97,23 @@ class KamarKosanController extends Controller
         ImageController::SaveKamarKosanImage($kamar->id,explode(',',$request->image));
     }
 
-    private function ValidasiKamarKosan(Request $request){
-        $validate = '';
-        return Validator::make($request->toArray(),[
-            'nama' => 'required',
-            'harga' => 'required|numeric',
-            'lantai' => 'required',
-            'image' => 'required',
-            'deskripsi' => 'required'
-        ]);
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+        if (!$this->ValidasiKamarKosan($request)->fails()) {
+            $kamar = KamarKosan::find($id);
+            ImageController::HapusFotoKamarKosan($id, false);
+            $this->manage($request, $kamar);
+            return redirect()->route('daftar.kamar', ['idkosan' => $request->idkosan]);
+        } else {
+            return redirect()->back()->withInput()->withError();
+        }
     }
 
     /**
@@ -110,34 +143,13 @@ class KamarKosanController extends Controller
         return json_encode(['status' => 0]);
     }
 
-    public static function GetFotoKamarKosan($id){
-        return DB::table('kamar_kosan')
-        ->join('foto_kamar_kosan','foto_kamar_kosan.idkamarkosan','=','kamar_kosan.id')
-        ->join('foto','foto.id','=','foto_kamar_kosan.idfoto')
-        ->where('kamar_kosan.id',$id)
-        ->where('kamar_kosan.id',$id);
-    }
+    public function tangguhkan($id)
+    {
+        $kamar = KamarKosan::find($id);
+        $kamar->ditangguhkan = !$kamar->ditangguhkan;
+        $kamar->save();
 
-    public static function GetJumlahSewa($id){
-        return DB::table(DB::raw('kamar_kosan as kk, riwayat_Sewa as rs'))
-                ->select(DB::raw('count(rs.kode) as jumlah'))
-                ->whereRaw('kk.id = rs.idkamar')
-                ->groupBy(DB::raw('rs.kode'))
-                ->first();
-    }
-
-    public static function sewa(Request $request){
-        $kamar = KamarKosan::find($request->id);
-        $kosan = Kosan::withAddress($kamar->idkosan)->first();
-        return RiwayatSewa::create([
-            'tanggal' => date('Y-m-d'),
-            'idkamar' => $kamar->id,
-            'harga' => $kamar->harga,
-            'idpenyewa' => Auth::user()->id,
-            'status' => 'MP',
-            'tersedia' => false,
-            'kode' => str_random(8)
-        ]);
+        return redirect()->back();
     }
 
 }

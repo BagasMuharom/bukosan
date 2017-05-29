@@ -3,6 +3,7 @@
 namespace Bukosan\Http\Controllers;
 
 use Bukosan\Model\FotoKosan;
+use Bukosan\Model\RiwayatKunjungan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Bukosan\Model\Kosan;
@@ -92,6 +93,14 @@ class UserPageController extends Controller
         return view('user.riwayatsewa',[
             'sewa' => RiwayatSewa::whereIDPenyewa(Auth::user()->id)->get(),
             'disewakan' => RiwayatSewa::whereIDPemilik(Auth::user()->id)->get()
+        ]);
+    }
+
+    public function RiwayatKunjunganPage()
+    {
+        $daftarKosan = RiwayatKunjungan::where('iduser', Auth::user()->id)->get();
+        return view('user.riwayatkunjungan', [
+            'kosan' => RiwayatKunjunganController::daftarRiwayat()->get()
         ]);
     }
 

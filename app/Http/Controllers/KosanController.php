@@ -3,12 +3,11 @@
 namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Bukosan\Http\Controllers\ImageController;
 use Bukosan\Model\Kosan;
+use Bukosan\Model\FotoKosan;
 use Bukosan\Model\KamarKosan;
 use Bukosan\Model\RiwayatSewa;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Bukosan\Model\Lokasi\Kelurahan;
 
@@ -16,10 +15,60 @@ class KosanController extends Controller
 {
 
     /**
+     * Mendapatkan foto dari sebuah kosan
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function GetFotoKosan($id)
+    {
+        return FotoKosan::get($id);
+    }
+
+    /**
+     * Mendapatkan jumlah dari kamar kosan yang difavoritkan
+     *
+     * @param $id
+     * @return mixed
+     */
+    public static function GetFavorit($id)
+    {
+        return Kosan::getJumlahFavorit($id);
+    }
+
+    public static function GetJumlahSewa($id)
+    {
+
+    }
+
+    public static function cari(Request $request)
+    {
+        $kosan = Kosan::refind();
+        $kosan->whereRaw('k.alamat LIKE \'%' . $request->get('location') . '%\'');
+//        if(!empty($request->get('latitude'))) {
+//            $kosan = Kosan::fromLocation(
+//                $request->get('latitude'),
+//                $request->get('longitude'));
+//        }
+//        if(!empty($request->get('hargamin')) && !is_null($request->get('hargamax'))){
+//            $kosan = $kosan->where('hargamin','>=',$request->get('hargamin'))
+//                            ->where('hargamax','<=',$request->get('hargamax'));
+//        }
+        foreach (['tempatparkir', 'dapur', 'jammalam', 'wifi', 'kmdalam', 'lemaries', 'televisi'] as $fasilitas) {
+            if (!empty($request->get($fasilitas))) {
+                $kosan = $kosan->where('k.' . $fasilitas, true);
+            }
+        }
+
+        // Mencari kosan
+        return Kosan::render($kosan)->get();
+    }
+
+    /**
     * Menyimpan kosan ke dalam database
     *
     * @param  \Illuminate\Http\Request  $request
-    * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
     */
     public function store(Request $request)
     {
@@ -61,38 +110,6 @@ class KosanController extends Controller
         return $validate;
     }
 
-    /**
-    * Mengambil data kosan dari database
-    *
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function show($id)
-    {
-        // $kosan = DB::table('kosan')->query('SELECT * FROM "public"."kosan" as kosan, "public"."foto"');
-    }
-
-    /**
-    * Update the specified resource in storage.
-    *
-    * @param  \Illuminate\Http\Request  $request
-    * @param  int  $id
-    * @return \Illuminate\Http\Response
-    */
-    public function update(Request $request, $id)
-    {
-        if(!$this->ValidasiKosan($request)->fails()){
-            $kosan = Kosan::where('id',$id)->first();
-            # Menghapus dulu gambar yang ada
-            ImageController::HapusFotoKosan($id,false);
-            $this->manage($request, $kosan);
-            return redirect()->route('kosansaya');
-        }
-        else{
-            return redirect()->back()->withErrors($this->ValidasiKosan($request))->withInput();
-        }
-    }
-
     public function manage(Request $request, Kosan $kosan){
         if(is_null($kosan->id))
         $kosan->idpemilik = Auth::user()->id;
@@ -130,6 +147,26 @@ class KosanController extends Controller
     }
 
     /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @param  int $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function update(Request $request, $id)
+    {
+        if (!$this->ValidasiKosan($request)->fails()) {
+            $kosan = Kosan::where('id', $id)->first();
+            # Menghapus dulu gambar yang ada
+            ImageController::HapusFotoKosan($id, false);
+            $this->manage($request, $kosan);
+            return redirect()->route('kosansaya');
+        } else {
+            return redirect()->back()->withErrors($this->ValidasiKosan($request))->withInput();
+        }
+    }
+
+    /**
     * Menghapus kosan dari database
     *
     * @param  int  $id
@@ -158,36 +195,27 @@ class KosanController extends Controller
     }
 
     /**
-    * Mendapatkan foto dari sebuah kosan
-    *
-    * @param $id
-    * @return mixed
-    */
-    public static function GetFotoKosan($id){
-        return DB::select('SELECT foto.nama FROM foto, foto_kosan WHERE foto.id = foto_kosan.idfoto AND foto_kosan.idkosan = ' . $id);
+     * Melakukan penangguhan terhadap sebuah kosan
+     *
+     * @param $id
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function tangguhkan($id)
+    {
+        $kosan = Kosan::find($id);
+        $kosan->ditangguhkan = !$kosan->ditangguhkan;
+        $kosan->save();
+
+        return redirect()->back();
     }
 
-    /**
-    * Mendapatkan jumlah dari kamar kosan yang difavoritkan
-    *
-    * @param $id
-    * @return mixed
-    */
-    public static function GetFavorit($id){
+    public function verifikasi($id)
+    {
+        $kosan = Kosan::find($id);
+        $kosan->terverifikasi = true;
+        $kosan->save();
 
-        return DB::select('SELECT k.id, sum(fav.jumlah) as jumlah FROM kosan k,(SELECT kk.idkosan, kk.id, count(f) as jumlah FROM kamar_kosan as kk, favorit as f where f.idkamarkosan = kk.id GROUP BY kk.id ) as fav WHERE fav.idkosan = ' . $id . ' GROUP BY k.id')[0];
-    }
-
-    public static function GetJumlahSewa($id){
-        
-    }
-
-    /**
-    * Melakukan penangguhan terhadap sebuah kosan
-    * @param $id
-    */
-    public function suspend($id){
-
+        return redirect()->back();
     }
 
 }

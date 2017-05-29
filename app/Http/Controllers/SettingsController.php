@@ -27,6 +27,7 @@ class SettingsController extends Controller
             $user->tgl_lahir = $request->tanggallahir;
             $user->jenis_kelamin = $request->jeniskelamin;
             $user->perorangan = ($request->jenisakun == 'perorangan');
+            $user->alamat = $request->alamat;
 
             // Updating avatar
             $user->avatar = $request->ava;
