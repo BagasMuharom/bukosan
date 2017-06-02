@@ -24,11 +24,7 @@ Cari Kosan
                         <div class="name">
                             <h3>{{ $hasil->nama }}</h3>
                             <p class="price">
-                                @if( $hasil->hargamin == $hasil->hargamax)
-                                    {{ $hasil->hargamin }}
-                                @else
-                                    Rp {{ $hasil->hargamin }} - Rp {{ $hasil->hargamax }} / bln
-                                @endif
+							{{ Currency::pricing($hasil->hargamin, $hasil->hargamax) }}
                             </p>
                         </div>
                         <div class="detail">
@@ -74,6 +70,8 @@ Cari Kosan
                 </div>
                 @endforeach
             </div>
+			
+			{{ $kosan->links() }}
         </div>
     </div>
     </section>

@@ -4,6 +4,8 @@ namespace Bukosan\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Bukosan\Model\Foto;
+use Illuminate\Support\Facades\Storage;
 
 class FotoKosan extends Model
 {
@@ -26,5 +28,19 @@ class FotoKosan extends Model
             ->select(DB::raw('f.nama as nama'));
         return $foto->get();
     }
+	
+	public static function destroyFromSpecifiedKosan($id){
+		$daftarfotokosan = static::where('idkamarkosan',$id);
+		foreach($daftarfotokosan as $fotokosan){
+			// Mendapatkan foto dari tabel Foto
+			$foto = Foto::where('id',$fotokosan->idfoto);
+			// Menghapus dari tabel foto_kamar_kosan
+			$fotokosan->delete();
+			// Menghapus file foto
+			Storage::delete('public/' . $foto->nama);
+			// Menghapus dari tabel Foto
+			$foto->delete();
+		}
+	}
 
 }

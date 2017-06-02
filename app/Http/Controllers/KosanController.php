@@ -43,25 +43,7 @@ class KosanController extends Controller
 
     public static function cari(Request $request)
     {
-        $kosan = Kosan::refind();
-        $kosan->whereRaw('k.alamat LIKE \'%' . $request->get('location') . '%\'');
-//        if(!empty($request->get('latitude'))) {
-//            $kosan = Kosan::fromLocation(
-//                $request->get('latitude'),
-//                $request->get('longitude'));
-//        }
-//        if(!empty($request->get('hargamin')) && !is_null($request->get('hargamax'))){
-//            $kosan = $kosan->where('hargamin','>=',$request->get('hargamin'))
-//                            ->where('hargamax','<=',$request->get('hargamax'));
-//        }
-        foreach (['tempatparkir', 'dapur', 'jammalam', 'wifi', 'kmdalam', 'lemaries', 'televisi'] as $fasilitas) {
-            if (!empty($request->get($fasilitas))) {
-                $kosan = $kosan->where('k.' . $fasilitas, true);
-            }
-        }
-
-        // Mencari kosan
-        return Kosan::render($kosan)->get();
+        return Kosan::cari($request);
     }
 
     /**

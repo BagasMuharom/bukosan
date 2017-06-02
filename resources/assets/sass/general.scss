@@ -11,6 +11,10 @@ body {
     }
 }
 
+h1,h2,h3,h4,h5,h6{
+	margin-top:0;
+}
+
 h1, h2, h3 {
     font: {
         family: $fontfamily;
@@ -171,6 +175,8 @@ p {
     }
 }
 
+@import "message";
+
 @import "searchbox";
 
 @import "input";
@@ -182,3 +188,7 @@ p {
 @import "notif";
 
 @import "panel";
+
+@import "image";
+
+@import "table";

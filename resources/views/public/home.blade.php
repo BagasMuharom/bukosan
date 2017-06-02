@@ -10,7 +10,7 @@
             <div class="col-lg-8 col-lg-offset-2">
                 <form id="search-tron" action="{{ route('cari') }}" method="get">
                     <div class="input-group" id="main-search">
-                        <input type="text" name="location" id="location" placeholder="Ketikkan sebuah lokasi ..."
+                        <input type="text" name="location" id="location-field" placeholder="Ketikkan sebuah lokasi ..."
                                required autocomplete="off" autofocus/>
                         <span class="input-group-btn">
                             <button type="submit" class="btn-submit">
@@ -35,13 +35,30 @@
                         <div class="filter-btn"><i class="fa fa-chevron-circle-up fa-2x"></i></div>
                     </div>
                     <div class="filter-tron">
-                        <h4>Sesuaikan dengan keinginan anda</h4>
+					<div class="row">
+						<div class="col-lg-4">
+							<h3>Filter Pencarian</h3>
+						</div>
+						<div class="col-lg-4"></div>
+						<div class="col-lg-4">
+                                <div class="form-group">
+                                    <label class="control-label col-lg-8">Aktifkan Filter</label>
+                                    <div class="col-lg-4">
+                                        <input type="hidden" class="check-input" value="0" id="filter"
+                                               name="filter"/>
+                                    </div>
+                                </div>
+                            </div>
+					</div>
+					
+					<h4>Fasilitas</h4>
+					
                         <div class="row">
                             <div class="col-lg-4">
                                 <div class="form-group">
                                     <label class="control-label col-lg-8">Tempat Parkir</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" class="check-input" value="0" id="tempatparkir"
+                                        <input type="hidden" class="check-input" value="2" id="tempatparkir"
                                                name="tempatparkir"/>
                                     </div>
                                 </div>
@@ -50,7 +67,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-8">Wifi</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" class="check-input" name="wifi" id="wifi"/>
+                                        <input type="hidden" class="check-input" name="wifi" id="wifi" value="2"/>
                                     </div>
                                 </div>
                             </div>
@@ -58,7 +75,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-8">Dapur</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" class="check-input" name="dapur" id="dapur"/>
+                                        <input type="hidden" class="check-input" value="2" name="dapur" id="dapur"/>
                                     </div>
                                 </div>
                             </div>
@@ -69,7 +86,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-8">Kamar Mandi Dalam</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" class="check-input" name="kmdalam" id="kmdalam"/>
+                                        <input type="hidden" class="check-input" value="2" name="kmdalam" id="kmdalam"/>
                                     </div>
                                 </div>
                             </div>
@@ -77,7 +94,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-8">Televisi</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" class="check-input" name="televisi" id="televisi"/>
+                                        <input type="hidden" class="check-input" value="2" name="televisi" id="televisi"/>
                                     </div>
                                 </div>
                             </div>
@@ -85,7 +102,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-8">Akses 24 Jam</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" class="check-input" name="jammalam" id="jammalam"/>
+                                        <input type="hidden" class="check-input" value="2" name="jammalam" id="jammalam"/>
                                     </div>
                                 </div>
                             </div>
@@ -95,11 +112,14 @@
                                 <div class="form-group">
                                     <label class="control-label col-lg-8">Lemari Es</label>
                                     <div class="col-lg-4">
-                                        <input type="hidden" class="check-input" name="lemaries" id="lemaries"/>
+                                        <input type="hidden" class="check-input" value="2" name="lemaries" id="lemaries"/>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-3">
+                        </div>
+						<h4>Harga dan Jenis Kosan</h4>
+						<div class="row">
+							<div class="col-lg-3">
                                 <input type="number" min="0" class="bukosan input-ui ui-primary" name="hargamin"
                                        placeholder="Harga Minimal"/>
                             </div>
@@ -107,10 +127,27 @@
                                 <input type="number" min="0" class="bukosan input-ui ui-primary" name="hargamax"
                                        placeholder="Harga Maksimal"/>
                             </div>
-                            <div class="col-lg-2">
-                                <button type="submit" class="btn btn-success"><i class="fa fa-search"></i> Cari</button>
-                            </div>
+                            <div class="col-lg-3">
+								<input id="jeniskosan" type="hidden" class="form-control" name="jeniskosan"
+                               value="0"
+                               required autofocus>
+                        <div class="dropdown" target="#jeniskosan" id="jeniskelamin-drop">
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
+                                Jenis Kosan
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li><a href="#" data-value="0">Semua</a></li>
+                                <li><a href="#" data-value="1">Kosan Laki-Laki</a></li>
+                                <li><a href="#" data-value="2">Kosan Perempuan</a></li>
+                                <li><a href="#" data-value="3">Kosan Keluarga</a></li>
+                            </ul>
                         </div>
+                            </div>
+							<button class="col-lg-3 btn btn-success" type="submit">
+								<i class="fa fa-search"></i> Cari
+							</button>
+						</div>
                     </div>
                 </form>
             </div>

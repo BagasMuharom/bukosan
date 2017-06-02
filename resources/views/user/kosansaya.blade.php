@@ -5,7 +5,7 @@
 @endsection
 
 @section('contents')
-    @if($KosanCount == 0)
+    @if(count($DaftarKosan) == 0)
         <div class="panel panel-notif notif-lg row">
             <div class="notif-body col-lg-9 col-md-9 col-sm-9 col-xs-12">
                 <h3 class="notif-heading">Tampaknya anda belum mendaftarkan kosan</h3>

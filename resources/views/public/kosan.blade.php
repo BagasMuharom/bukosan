@@ -37,11 +37,7 @@
                     </div>
                     <p>
                         <span>{{ $hargamax - $hargamin > 0 ? 'Kisaran' : '' }} Harga</span>
-                        @if($hargamax - $hargamin > 0)
-                        <span>Rp {{ $hargamin }} - Rp {{ $hargamax }}</span>
-                        @else
-                        <span>Rp {{ $hargamax }}</span>
-                        @endif
+						<span>{{ Currency::pricing($hargamin,$hargamax) }}</span>
                     </p>
                 </div>
             </div>
@@ -72,7 +68,16 @@
         <div class="row">
             <div class="col-lg-8">
                 <div id="foto-kosan">
-                    <img class="img-responsive" src="{{ asset('storage/'.$foto[0]->nama) }}"/>
+                    <div class="image-viewer">
+                            <div class="image-main" style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')">
+                                <div class="image-zoomer"></div>
+                            </div>
+                            <div class="image-list">
+                            @foreach($foto as $counter => $detail)
+                                <img {{ $counter == 0  ? 'class=active' : ''}} src="{{ asset('storage/' . $detail->nama) }}"/>
+                            @endforeach
+                            </div>
+                        </div>
                 </div>
 
                 <div class="bigtron" id="searchresult">
@@ -82,7 +87,7 @@
                             <div class="col-lg-4">
                                 <div class="thumbnail">
                                     <div class="image"
-                                         style="background-image:url({{ asset('storage/' . $hasil->foto) }})"></div>
+                                         style="background-image:url('{{ asset('storage/' . $hasil->foto) }}')"></div>
                                     <div class="name">
                                         <h3>{{ $hasil->nama }}</h3>
                                         <p class="price">Rp {{ $hasil->harga }}</p>
@@ -119,12 +124,16 @@
                     </div>
 
                     <div class="panel-body">
-                        <?php echo $kosan->keterangan; ?>
+					{!! $kosan->keterangan !!}
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4">
+			
+			<div class="image-zoom-area" style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')">
+                </div>
+				
                 <div class="panel panel-default panel-fasilitas">
                     <div class="panel-heading">
                         <h3 class="panel-title">Fasilitas Kosan</h3>
@@ -192,6 +201,9 @@
                                 <span>{{ $pemilik->telp }}</span>
                             </li>
                         </ul>
+						<div style="padding:10px">
+							<a href="{{ route('pesan',['id' => $pemilik->id]) }}" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Kirim Pesan</a>
+						</div>
                     </div>
                 </div>
 

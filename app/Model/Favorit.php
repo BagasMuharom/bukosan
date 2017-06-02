@@ -16,5 +16,9 @@ class Favorit extends Model
     protected $fillable = [
         'iduser','idkamarkosan'
     ];
+	
+	public static function destroyFromSpecifiedUser($id){
+		static::where('iduser',$id)->delete();
+	}
 
 }

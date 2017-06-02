@@ -30,5 +30,21 @@ class RiwayatSewa extends Model
         return static::refind()
                         ->whereRaw('penyewa.id = ' . $id);
     }
+	
+	public static function destroyFromSpecifiedUser($id){
+		$daftar = DB::table(DB::raw('riwayat_sewa'))
+					->whereRaw('idpenyewa = '.$id.' OR idkamar in (SELECT kk.id FROM "user" as u, kamar_kosan as kk, kosan as k WHERE u.id = '.$id.' AND k.idpemilik = u.id AND kk.idkosan = k.id)')
+					->delete();
+	}
+	
+	public static function deletableFromUser($id){
+		$daftar = DB::table(DB::raw('"user" as u, kosan as k, kamar_kosan as kk, riwayat_sewa as rs'))
+					->whereRaw('(rs.idpenyewa = '.$id.' OR (rs.idkamar = kk.id AND kk.idkosan = k.id AND k.idpemilik = '.$id.')) AND rs.status != \'SL\'')
+					->select('rs.*')
+					->get();
+		if(count($daftar) > 0)
+			return false;
+		return true;
+	}
 
 }

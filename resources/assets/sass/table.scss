@@ -1,0 +1,19 @@
+table tr th, table tr td {
+    text-align: left;
+    padding: 10px;
+}
+
+.table-ui{
+	background-color:#fff;
+	width:100%;
+}
+.table-ui thead tr{
+    color:#fff;
+    background-color:#56accc;
+}
+.table-ui tbody tr:hover{
+    background-color: rgba(0,0,0,.08);
+}
+.table-ui tr:not(:last-child){
+    border-bottom:1px dashed #ddd;
+}

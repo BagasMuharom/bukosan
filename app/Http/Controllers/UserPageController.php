@@ -15,6 +15,8 @@ use Bukosan\Model\Lokasi\Kecamatan;
 use Bukosan\Model\Lokasi\Kelurahan;
 use Bukosan\Model\RiwayatSewa;
 use Bukosan\Http\Controllers\FavoritController;
+use Bukosan\User;
+use Bukosan\Model\Pesan;
 
 class UserPageController extends Controller
 {
@@ -26,10 +28,8 @@ class UserPageController extends Controller
 
     public function KosanSayaPage(){
         $DaftarKosan = Kosan::render(Kosan::refind()->where('idpemilik',Auth::user()->id))->get();
-        $KosanCount = count($DaftarKosan);
         return view('user.kosansaya',[
-            'DaftarKosan' => $DaftarKosan,
-            'KosanCount' => $KosanCount
+            'DaftarKosan' => $DaftarKosan
         ]);
     }
 
@@ -98,7 +98,6 @@ class UserPageController extends Controller
 
     public function RiwayatKunjunganPage()
     {
-        $daftarKosan = RiwayatKunjungan::where('iduser', Auth::user()->id)->get();
         return view('user.riwayatkunjungan', [
             'kosan' => RiwayatKunjunganController::daftarRiwayat()->get()
         ]);
@@ -109,5 +108,19 @@ class UserPageController extends Controller
             'favorit' => FavoritController::GetDaftarFavorit()
         ]);
     }
+	
+	public function halamanPesan(Request $request){
+		$view = view('user.pesan',[
+			'chat' => Pesan::getDaftarPercakapan()
+		]);
+		if(!is_null($request->get('id'))){
+			$view->with('new',User::find($request->get('id')));
+		}
+		return $view;
+	}
+	
+	public function ditangguhkan(){
+		return view('user.ditangguhkan');
+	}
 
 }

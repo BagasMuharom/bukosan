@@ -33,6 +33,7 @@ class SettingsController extends Controller
             $user->avatar = $request->ava;
             $user->email = $request->email;
             $user->telp = $request->telp;
+            $user->alamat = $request->alamat;
 
             $user->save();
             return redirect()->back();

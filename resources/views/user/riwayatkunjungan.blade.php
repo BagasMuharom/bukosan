@@ -21,12 +21,7 @@
                         <img src="{{ asset('storage/'.$item->foto) }}"/>
                     </div>
                     <span class="price">
-                        @if($item->hargamin == $item->hargamax)
-                            {{ \NumberFormatter::create('id-ID',2)->format($item->hargamin) }}
-                        @else
-                            Rp {{ \NumberFormatter::create('id-ID',2)->format($item->hargamin) }}
-                            - {{ \NumberFormatter::create('id-ID',2)->format($item->hargamax) }}
-                        @endif
+					{{ Currency::pricing($item->hargamin, $item->hargamax) }}
                     </span>
                     <div class="info">
                         <div>

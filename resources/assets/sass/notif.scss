@@ -30,5 +30,10 @@
             border-color:$warningColor;
             color:darken($warningColor,10%);
         }
+		&-danger{
+			background-color: lighten($dangerColor, 40%);
+            border-color:$dangerColor;
+            color:darken($dangerColor,10%);
+		}
     }
 }

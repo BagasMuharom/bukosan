@@ -11,6 +11,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/general.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"/>
+	<link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet"/>
     @yield('css')
 
     <!-- Scripts -->
@@ -45,7 +46,7 @@
             @if(Route::currentRouteName() != 'homepage' || Auth::check())
             <form class="navbar-form navbar-left form-search">
                 <div class="input-group">
-                    <input type="text" placeholder="Cari Kosan ..." id="searchbox">
+                    <input type="text" placeholder="Cari Kosan ..." id="location-field">
                     <span class="input-group-btn">
                         <button type="submit" class="btn btn-default">
                             <svg focusable="false" width="20" height="20" viewBox="0 0 10 10" data-reactid="13">
@@ -112,8 +113,9 @@
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/form.js') }}"></script>
 <script src="{{ asset('js/map.js') }}"></script>
-    @yield('js')
 <script src="{{ asset('js/main.js') }}"></script>
+<script src="{{ asset('js/sweetalert.min.js') }}"></script>
+    @yield('js')
 
 </body>
 </html>

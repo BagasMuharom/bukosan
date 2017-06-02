@@ -16,11 +16,9 @@ class UserController extends Controller
         return redirect()->back();
     }
 
-    public function hapus($id)
+    public function destroy($id)
     {
-
-
-        return redirect()->back();
+		return User::destroy($id);	
     }
 
 }

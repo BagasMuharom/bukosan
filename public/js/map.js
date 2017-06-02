@@ -25,21 +25,23 @@ function MapInit() {
             Map.setCenter(definedLocation);
         }
 
-        google.maps.event.addListener(Map, 'click', function (event) {
-            for (var i = 0; i < markers.length; i++)
-                markers[i].setMap(null);
-            marker = new google.maps.Marker({
-                position: event.latLng,
-                map: Map
-            });
-            document.getElementById('latitude').value = marker.position.lat();
-            document.getElementById('longitude').value = marker.position.lng();
-            markers.push(marker);
-        });
+		if(route == 'kosanform'){
+			google.maps.event.addListener(Map, 'click', function (event) {
+				for (var i = 0; i < markers.length; i++)
+					markers[i].setMap(null);
+				marker = new google.maps.Marker({
+					position: event.latLng,
+					map: Map
+				});
+				document.getElementById('latitude').value = marker.position.lat();
+				document.getElementById('longitude').value = marker.position.lng();
+				markers.push(marker);
+			});
+		}
     }
 
     // Autocomplete
-    var input = (document.getElementById('searchbox'));
+    var input = (document.getElementById('location-field'));
     var autocomplete = new google.maps.places.Autocomplete(input);
     autocomplete.setTypes([]);
     autocomplete.addListener('place_changed', function() {

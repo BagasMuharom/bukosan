@@ -33,7 +33,7 @@ function AjaxHapusFoto(elem){
         success : function(result){
             response = JSON.parse(result);
             if(typeof response != 'undefined'){
-                if(response.status = 1){
+                if(response.status == 1){
                     // alert('Berhasil menghapus !');
                     parent.slideUp(150,function(){
                         $(this).remove();

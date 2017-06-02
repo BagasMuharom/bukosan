@@ -43,5 +43,33 @@ class KamarKosan extends Model
     public static function render($kamar){
         return $kamar->select(DB::raw('kk.*, f.nama as foto'));
     }
+	
+	public static function destroyFromSpecifiedUser($id){
+		$daftarkosan = Kosan::where('idpemilik',$id)->pluck('id');
+		$daftarkamar = static::whereIn('idkosan',$daftarkosan);
+		// Menghapus daftar foto
+		foreach($daftarkamar as $kamar){
+			static::destroy($kamar->id);
+		}
+	}
+	
+	public static function destroyFromSpecifiedKosan($id){
+		$daftarkamar = static::whereIn('idkosan',$id);
+		// Menghapus daftar foto
+		foreach($daftarkamar as $kamar){
+			static::destroy($kamar->id);
+		}
+	}
+	
+	public static function destroy($id){
+		FotoKamarKosan::destroyFromSpecifiedKamar($id);
+		static::where('id',$id)->delete();
+	}
+	
+	public static function deletable($id){
+		if(RiwayatSewa::where('idkamar',$id)->where('status','!=','SL') > 0)
+			return false;
+		return true;
+	}
 
 }

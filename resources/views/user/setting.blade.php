@@ -9,16 +9,7 @@
         <div class="panel-heading">Pengaturan</div>
 
         <div class="panel-body">
-            @if (count($errors) > 0)
-                error
-                <div class="alert alert-danger">
-                    <ul>
-                        @foreach ($errors->all() as $error)
-                            <li>{{ $error }}</li>
-                        @endforeach
-                    </ul>
-                </div>
-            @endif
+		
             <form id="settings-form" class="form-horizontal" action="{{ route('settings.process') }}" method="post">
 
                 {{ csrf_field() }}

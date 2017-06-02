@@ -142,6 +142,7 @@ class PublicPageController extends Controller
 
     public function createTiket(Request $request){
         $tiket = KamarKosanController::sewa($request);
+		
         return redirect()->route('lihat.tiket',['kodetiket' => $tiket->kode]);
     }
 

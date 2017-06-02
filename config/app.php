@@ -176,6 +176,9 @@ return [
         // Bukosan\Providers\BroadcastServiceProvider::class,
         Bukosan\Providers\EventServiceProvider::class,
         Bukosan\Providers\RouteServiceProvider::class,
+		
+		// Tambahan
+		Bukosan\Providers\CurrencyServiceProvider::class
 
     ],
 
@@ -225,7 +228,8 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+		// Tambahan
+		'Currency' => Bukosan\Support\Facades\Currency::class
     ],
 
 ];

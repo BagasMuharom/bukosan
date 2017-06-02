@@ -4,11 +4,13 @@ namespace Bukosan\Model;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class Kosan extends Model
 {
 
     public $timestamps = false;
+	
     protected $table = 'kosan';
 
     public static function fromLocation($latitude, $longitude)
@@ -24,8 +26,7 @@ class Kosan extends Model
     }
 
     public static function refind(){
-        $kosan = DB::table(DB::raw('"kosan" as "k",
-                                    "kamar_kosan" as "kk",( '.
+        $kosan = DB::table(DB::raw('"kosan" as "k", ( '.
                                     DB::table('kamar_kosan')
                                         ->select(DB::raw('max(harga) as max,min(harga) as min, idkosan'))
                                         ->groupBy('idkosan')->toSql() .') as harga , (' .
@@ -35,19 +36,25 @@ class Kosan extends Model
                                         ->select(DB::raw('min(foto.nama) as nama, kosan.id as idkosan'))
                                         ->groupBy(DB::raw('kosan.id'))
                                         ->toSql()
-                                    . ') as foto'
+                                    . ') as foto, ('.
+									DB::table('kamar_kosan')
+										->select(DB::raw('count(*) as jumlah, idkosan'))
+										->groupBy('idkosan')
+										->toSql()
+									.') as kamar , kelurahan as kl, kecamatan as kc, kotakab as kt, provinsi as pv'
         ))
-            ->whereRaw('kk.idkosan = k.id')
             ->whereRaw('k.id = foto.idkosan')
-            ->whereRaw('harga.idkosan = k.id');
+            ->whereRaw('harga.idkosan = k.id')
+			->whereRaw('kamar.idkosan = k.id')
+			->whereRaw('k.kelurahan = kl.id AND kl.idkecamatan = kc.id AND kc.idkotakab = kt.id AND kt.idprovinsi = pv.id');
         return $kosan;
     }
 
     public static function render($kosan){
         return $kosan
-                ->select('k.*',DB::raw('count("kk"."id") as "jumlahkamar", harga.min as hargamin, harga.max as hargamax, foto.nama as foto'))
-                ->distinct()
-                ->groupBy(DB::raw('k.id, harga.max, harga.min, foto.nama'));
+                ->select('k.*',DB::raw('kamar.jumlah as jumlahkamar, harga.min as hargamin, harga.max as hargamax, foto.nama as foto, kl.nama as kelurahan, kc.nama as kecamatan, kt.nama as kotakab, pv.nama as provinsi'))
+                ->distinct();
+                //->groupBy(DB::raw('kamar.jumlah, k.id, harga.max, harga.min, foto.nama'));
     }
 
     public static function whereId($id)
@@ -91,7 +98,55 @@ class Kosan extends Model
 
     public static function getJumlahSewa($id)
     {
-
+		//
     }
+	
+	public static function cari(Request $request)
+	{
+		$kosan = static::refind();
+        $kosan->whereRaw('(lower(k.alamat) LIKE \'%' . strtolower($request->get('location')) . '%\' OR lower(kl.nama) LIKE \'%'.strtolower($request->location).'%\' OR lower(kc.nama) LIKE \'%'.strtolower($request->location).'%\' OR lower(kt.nama) LIKE \'%'.strtolower($request->location).'%\' OR lower(pv.nama) LIKE \'%'.strtolower($request->location).'%\')');
+		$kosan->whereRaw('k.terverifikasi = false');
+        if(!empty($request->get('latitude'))) {
+            $kosan = Kosan::fromLocation(
+						$request->get('latitude'),
+						$request->get('longitude'));
+		}
+		if($request->get('filter') == 1){
+			if(!empty($request->jeniskosan)){
+				switch($request->jeniskosan){
+					case 1:
+						$kosan = $kosan->where('k.keluarga',false)->where('k.kosanperempuan',false);
+						break;
+					case 2:
+						$kosan = $kosan->where('k.keluarga',false)->where('k.kosanperempuan',true);
+						break;
+					case 3:
+						$kosan = $kosan->where('k.keluarga',true);
+						break;
+				}
+			}
+			if(!empty($request->get('hargamin')) && !is_null($request->get('hargamax'))){
+				$kosan = $kosan->where('harga.min','>=',$request->get('hargamin'))
+								->where('harga.max','<=',$request->get('hargamax'));
+			}
+			foreach (['tempatparkir', 'dapur', 'jammalam', 'wifi', 'kmdalam', 'lemaries', 'televisi'] as $fasilitas) {
+				if (!is_null($request->get($fasilitas)) && $request->get($fasilitas) != 2) {
+					$kosan = $kosan->whereRaw('k.' . $fasilitas . ' = ' . ($request->get($fasilitas) == 1 ? 'true' : 'false'));
+				}
+			}
+		}
+
+        // Mencari kosan
+        return static::render($kosan)->paginate(12);
+	}
+	
+	public static function destroyFromSpecifiedUser($id){
+		$daftarkosan = Kosan::where('idpemilik',$id);
+		// Menghapus kamar kosan terlebih dahulu
+		foreach($daftarkosan as $kosan){
+			KamarKosan::destroyFromSpecifiedKosan($kosan->id);
+		}
+		$daftarkosan->delete();
+	}
 
 }

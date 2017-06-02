@@ -57,6 +57,7 @@ class Kernel extends HttpKernel
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \Bukosan\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
-        'user' => \Bukosan\Http\Middleware\UserProfileMiddleware::class
+        'user' => \Bukosan\Http\Middleware\UserProfileMiddleware::class,
+		'ditangguhkan' => \Bukosan\Http\Middleware\SuspendMiddleware::class
     ];
 }
