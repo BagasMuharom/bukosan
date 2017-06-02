@@ -194,40 +194,40 @@ $('.btn-check').click(function () {
     $(this).toggleClass('checked');
 });
 
-$(".image-zoom-area").each(function(){
-        $(this).height($(this).parent().width());
-        $(this).css("background-size",$(".image-main").width()+"%");
-    });
-	
-	$(".image-main").on("mousemove",function(ev){
-        var top = (ev.pageY-$(this).offset().top)-50,
-            left = (ev.pageX-$(this).offset().left)-50;
-        if(top<=0){
-            top = 0;
-        }
-        else if(top>=$(this).height()-100){
-            top = $(this).height()-100;
-        }
-        if(left<=0){
-            left = 0;
-        }
-        else if(left>=$(this).width()-100){
-            left = $(this).width()-100;
-        }
-        $(this).find(".image-zoomer").css({"top":top+"px","left":left+"px"});
-        $(".image-zoom-area").css({"background-position" : (left)/($(".image-main").width()-100)*100 + "% " + (top)/($(".image-main").height()-100)*100 + "%"});
-    }).hover(function(){
-            $(".image-zoom-area").slideDown(150);
-        },
-        function(){
-            $(".image-zoom-area").slideUp(150);
-        });
+$(".image-zoom-area").each(function () {
+    $(this).height($(this).parent().width());
+    $(this).css("background-size", $(".image-main").width() + "%");
+});
 
-    $(".image-list").find("img").click(function(){
-		console.log('tes');
-        $(this).addClass("active");
-        $(this).prevUntil().removeClass("active");
-        $(this).nextUntil().removeClass("active");
-        $(".image-main").css("background-image","url('"+$(this).attr("src")+"')");
-        $(".image-zoom-area").css("background-image","url('"+$(this).attr("src")+"')");
+$(".image-main").on("mousemove", function (ev) {
+    var top = (ev.pageY - $(this).offset().top) - 50,
+        left = (ev.pageX - $(this).offset().left) - 50;
+    if (top <= 0) {
+        top = 0;
+    }
+    else if (top >= $(this).height() - 100) {
+        top = $(this).height() - 100;
+    }
+    if (left <= 0) {
+        left = 0;
+    }
+    else if (left >= $(this).width() - 100) {
+        left = $(this).width() - 100;
+    }
+    $(this).find(".image-zoomer").css({"top": top + "px", "left": left + "px"});
+    $(".image-zoom-area").css({"background-position": (left) / ($(".image-main").width() - 100) * 100 + "% " + (top) / ($(".image-main").height() - 100) * 100 + "%"});
+}).hover(function () {
+        $(".image-zoom-area").slideDown(150);
+    },
+    function () {
+        $(".image-zoom-area").slideUp(150);
     });
+
+$(".image-list").find("img").click(function () {
+    console.log('tes');
+    $(this).addClass("active");
+    $(this).prevUntil().removeClass("active");
+    $(this).nextUntil().removeClass("active");
+    $(".image-main").css("background-image", "url('" + $(this).attr("src") + "')");
+    $(".image-zoom-area").css("background-image", "url('" + $(this).attr("src") + "')");
+});

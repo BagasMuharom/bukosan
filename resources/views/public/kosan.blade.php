@@ -37,7 +37,7 @@
                     </div>
                     <p>
                         <span>{{ $hargamax - $hargamin > 0 ? 'Kisaran' : '' }} Harga</span>
-						<span>{{ Currency::pricing($hargamin,$hargamax) }}</span>
+                        <span>{{ Currency::pricing($hargamin,$hargamax) }}</span>
                     </p>
                 </div>
             </div>
@@ -69,15 +69,16 @@
             <div class="col-lg-8">
                 <div id="foto-kosan">
                     <div class="image-viewer">
-                            <div class="image-main" style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')">
-                                <div class="image-zoomer"></div>
-                            </div>
-                            <div class="image-list">
+                        <div class="image-main"
+                             style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')">
+                            <div class="image-zoomer"></div>
+                        </div>
+                        <div class="image-list">
                             @foreach($foto as $counter => $detail)
                                 <img {{ $counter == 0  ? 'class=active' : ''}} src="{{ asset('storage/' . $detail->nama) }}"/>
                             @endforeach
-                            </div>
                         </div>
+                    </div>
                 </div>
 
                 <div class="bigtron" id="searchresult">
@@ -124,16 +125,16 @@
                     </div>
 
                     <div class="panel-body">
-					{!! $kosan->keterangan !!}
+                        {!! $kosan->keterangan !!}
                     </div>
                 </div>
             </div>
 
             <div class="col-lg-4">
-			
-			<div class="image-zoom-area" style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')">
+
+                <div class="image-zoom-area" style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')">
                 </div>
-				
+
                 <div class="panel panel-default panel-fasilitas">
                     <div class="panel-heading">
                         <h3 class="panel-title">Fasilitas Kosan</h3>
@@ -183,7 +184,8 @@
                     </div>
 
                     <div class="panel-body">
-                        <img src="{{ asset('storage/' . $pemilik->avatar) }}" class="img-circle" style="width:100px;height:100px;margin:20px auto;display:block"/>
+                        <img src="{{ asset('storage/' . $pemilik->avatar) }}" class="img-circle"
+                             style="width:100px;height:100px;margin:20px auto;display:block"/>
                         <h4 style="text-align:center">{{ $pemilik->displayname }}</h4>
                         <div class="row">
                             <div class="col-lg-4 col-lg-offset-4">
@@ -200,10 +202,13 @@
                                 <span>No. Telp</span>
                                 <span>{{ $pemilik->telp }}</span>
                             </li>
-                        </ul>
-						<div style="padding:10px">
-							<a href="{{ route('pesan',['id' => $pemilik->id]) }}" class="btn btn-success"><i class="fa fa-paper-plane"></i>&nbsp;&nbsp;Kirim Pesan</a>
-						</div>
+                        </ul>@if(Auth::check() && Auth::user()->id != $pemilik->id)
+                            <div style="padding:10px">
+                                <a href="{{ route('pesan',['id' => $pemilik->id]) }}" class="btn btn-success"><i
+                                            class="fa fa-paper-plane"></i>&nbsp;&nbsp;Kirim Pesan</a>
+                            </div>
+                        @endif
+
                     </div>
                 </div>
 

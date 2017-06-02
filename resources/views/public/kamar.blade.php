@@ -50,7 +50,17 @@
         <div class="row">
             <div class="col-lg-8">
                 <div id="foto-kosan">
-                    <img class="img-responsive" src="{{ asset('storage/'.$foto->first()->nama) }}"/>
+                    <div class="image-viewer">
+                        <div class="image-main"
+                             style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')">
+                            <div class="image-zoomer"></div>
+                        </div>
+                        <div class="image-list">
+                            @foreach($foto as $counter => $detail)
+                                <img {{ $counter == 0  ? 'class=active' : ''}} src="{{ asset('storage/' . $detail->nama) }}"/>
+                            @endforeach
+                        </div>
+                    </div>
                 </div>
 
                 <br/>
@@ -67,6 +77,7 @@
             </div>
 
             <div class="col-lg-4">
+                <div class="image-zoom-area" style="background-image:url('{{ asset('storage/' . $foto[0]->nama) }}')"></div>
                 <div class="panel panel-default panel-fasilitas">
                     <div class="panel-heading">
                         <h3 class="panel-title">Fasilitas Kamar</h3>

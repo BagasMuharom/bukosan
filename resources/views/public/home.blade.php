@@ -9,6 +9,8 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2">
                 <form id="search-tron" action="{{ route('cari') }}" method="get">
+                    <input type="hidden" id="lat-search" name="latitude"/>
+                    <input type="hidden" id="lng-search" name="longitude"/>
                     <div class="input-group" id="main-search">
                         <input type="text" name="location" id="location-field" placeholder="Ketikkan sebuah lokasi ..."
                                required autocomplete="off" autofocus/>

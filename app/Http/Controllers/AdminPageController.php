@@ -47,10 +47,10 @@ class AdminPageController extends Controller
     }
 
     public function kelolaUser()
-    {
-        return view('admin.kelolauser', [
-            'users' => User::where('admin', false)->paginate(3)
-        ]);
-    }
+{
+    return view('admin.kelolauser', [
+        'users' => User::where('admin', false)->paginate(3)
+    ]);
+}
 
 }

@@ -46,14 +46,10 @@ function MapInit() {
     autocomplete.setTypes([]);
     autocomplete.addListener('place_changed', function() {
         var place = autocomplete.getPlace();
-        if (!place.geometry) {
-            // User entered the name of a Place that was not suggested and
-            // pressed the Enter key, or the Place Details request failed.
-            window.alert("No details available for input: '" + place.name + "'");
-            return;
-        }
-        else{
-            window.location.replace(url('cari/' + place.geometry.location.lat() + '/' + place.geometry.location.lng() + '/' + input.value));
+        if (place.geometry) {
+            document.getElementById('lat-search').value = place.geometry.location.lat();
+            document.getElementById('lng-search').value = place.geometry.location.lng();
+            document.getElementById('location-field').value = input.value;
         }
     });
 

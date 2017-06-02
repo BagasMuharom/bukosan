@@ -1,7 +1,7 @@
 <?php
 
 Route::get('test',function(){
-	return \Bukosan\Model\Kosan::cari(new Illuminate\Http\Request());
+	return \Bukosan\Model\Kosan::render(\Bukosan\Model\Kosan::refind()->where('idpemilik',24))->toSql();
 });
 
 Route::get('/', 'HomePageController@HomePage')->name('homepage');

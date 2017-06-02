@@ -20,7 +20,7 @@ class PublicPageController extends Controller
 
     public function CariKosan(Request $request)
     {
-        $kosan = KosanController::cari($request);
+        $kosan = Kosan::cari($request);
         return view('public.cari',[
             'kosan' => $kosan
         ]);
@@ -63,7 +63,7 @@ class PublicPageController extends Controller
             'kamar' => $kamar,
             'kosan' => $kosan,
             'jumlahsewa' => KamarKosanController::GetJumlahSewa($idkamar)->jumlah,
-            'foto' => KamarKosanController::GetFotoKamarKosan($idkamar),
+            'foto' => KamarKosanController::GetFotoKamarKosan($idkamar)->get(),
             'pemilik' => User::find($kosan->idpemilik),
             'favorit' => Favorit::where('idkamarkosan',$idkamar)->count(),
             'tersedia' => $tersedia,

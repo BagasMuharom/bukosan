@@ -377,9 +377,12 @@ if($editPage){
     </div>
 </div>
 
+<script>
+    var route = 'kosanform';
+</script>
+
 @if(Route::current()->getname() == 'edit.kosan')
     <script>
-		var route = 'kosanform';
         var definedLocation = {
             lat : {{ $kosan->latitude }},
             lng : {{ $kosan->longitude  }}

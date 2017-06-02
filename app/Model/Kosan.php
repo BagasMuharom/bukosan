@@ -16,13 +16,11 @@ class Kosan extends Model
     public static function fromLocation($latitude, $longitude)
     {
         $kosan = static::refind()
-            ->where('k.terverifikasi', false)
-            ->whereRaw('"kk"."idkosan" = "k"."id"')
             ->where('k.latitude', '<=', $latitude + 5)
             ->where('k.latitude', '>=', $latitude - 5)
             ->where('k.longitude', '<=', $longitude + 5)
             ->where('k.longitude', '>=', $longitude - 5);
-        return static::render($kosan);
+        return $kosan;
     }
 
     public static function refind(){
@@ -105,12 +103,12 @@ class Kosan extends Model
 	{
 		$kosan = static::refind();
         $kosan->whereRaw('(lower(k.alamat) LIKE \'%' . strtolower($request->get('location')) . '%\' OR lower(kl.nama) LIKE \'%'.strtolower($request->location).'%\' OR lower(kc.nama) LIKE \'%'.strtolower($request->location).'%\' OR lower(kt.nama) LIKE \'%'.strtolower($request->location).'%\' OR lower(pv.nama) LIKE \'%'.strtolower($request->location).'%\')');
-		$kosan->whereRaw('k.terverifikasi = false');
         if(!empty($request->get('latitude'))) {
             $kosan = Kosan::fromLocation(
 						$request->get('latitude'),
 						$request->get('longitude'));
 		}
+        $kosan->whereRaw('k.terverifikasi = true');
 		if($request->get('filter') == 1){
 			if(!empty($request->jeniskosan)){
 				switch($request->jeniskosan){

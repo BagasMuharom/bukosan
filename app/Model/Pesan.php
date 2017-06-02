@@ -38,6 +38,7 @@ class Pesan extends Model
 					->orderBy('waktu')
 					->distinct()
 					->get();
+		static::readPercakapan($id);
 		$response = '<ul>';
 		foreach($pesan as $detail){
 			if(Auth::user()->id == $detail->idfrom)

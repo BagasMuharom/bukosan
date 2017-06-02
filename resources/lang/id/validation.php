@@ -29,6 +29,9 @@ return [
         ],
         'ava' => [
             'required' => 'Foto tidak boleh kosong !'
+        ],
+        'lantai' => [
+            'required' => 'Pilih lokasi lantai kamar !'
         ]
     ]
 

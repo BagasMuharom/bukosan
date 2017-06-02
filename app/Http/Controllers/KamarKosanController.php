@@ -63,7 +63,7 @@ class KamarKosanController extends Controller
             return redirect()->route('daftar.kamar',['idkosan' => $request->idkosan]);
         }
         else{
-            return redirect()->back()->withInput()->withError();
+            return redirect()->back()->withInput()->withErrors($this->ValidasiKamarKosan($request));
         }
     }
 

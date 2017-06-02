@@ -102,56 +102,79 @@ $('a.delete-kosan').click(function(e){
     e.preventDefault();
     var action = $(this).attr('href');
     var elem = $('.kosan-'+$(this).attr('data-id'));
-    $.ajax({
-        url : action,
-        type : 'get',
-        success : function(result){
-            response = JSON.parse(result);
-            if(typeof response != 'undefined'){
-                if(response.status == 1){
-                    alert('Berhasil menghapus !');
-                    elem.slideUp(150,function(){
-                        $(this).remove();
-                    })
+    swal({
+            title: "Apa anda yakin ?",
+            text: "Kosan akan dihapus secara permanen !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false
+        },
+        function(){
+            $.ajax({
+                url : action,
+                type : 'get',
+                success : function(result){
+                    response = JSON.parse(result);
+                    if(typeof response != 'undefined'){
+                        if(response.status == 1){
+                            swal('Berhasil !','Berhasil Menghapus Kosan !','success');
+                            elem.slideUp(150,function(){
+                                $(this).remove();
+                            })
+                        }
+                        else {
+                           swal('Gagal !','Gagal menghapus kosan !','error');
+                        }
+                    }
+                    else {
+                        swal('Gagal !','Gagal menghapus kosan !','error');
+                    }
                 }
-                else {
-                    alert('Gagal menghapus !')
-                }
-            }
-            else {
-                alert('Gagal menghapus !');
-            }
-        }
-    });
+            });
+        });
 });
 
-/*
 $('a.delete-kamar').click(function(e){
     e.preventDefault();
     var action = $(this).attr('href');
     var elem = $('.kamar-'+$(this).attr('data-id'));
-    $.ajax({
-        url : action,
-        type : 'get',
-        success : function(result){
-            response = JSON.parse(result);
-            if(typeof response != 'undefined'){
-                if(response.status == 1){
-                    alert('Berhasil menghapus !');
-                    elem.slideUp(150,function(){
-                        $(this).remove();
-                    })
+    swal({
+            title: "Apa anda yakin ?",
+            text: "Kamar Kosan akan dihapus secara permanen !",
+            type: "warning",
+            showCancelButton: true,
+            confirmButtonClass: "btn-danger",
+            confirmButtonText: "Ya, hapus!",
+            cancelButtonText: "Batal",
+            closeOnConfirm: false
+        },
+        function(){
+            $.ajax({
+                url : action,
+                type : 'get',
+                success : function(result){
+                    response = JSON.parse(result);
+                    if(typeof response != 'undefined'){
+                        if(response.status == 1){
+                            swal('Berhasil !','Berhasil menghapus kamar kosan !','success');
+                            elem.slideUp(150,function(){
+                                $(this).remove();
+                            })
+                        }
+                        else {
+                           swal('Gagal !','Gagal menghapus kamar kosan !','error');
+                        }
+                    }
+                    else {
+                        swal('Gagal !','Gagal menghapus kamar kosan !','error');
+                    }
                 }
-                else {
-                    alert('Gagal menghapus !')
-                }
-            }
-            else {
-                alert('Gagal menghapus !');
-            }
-        }
-    });
-});*/
+            });
+        });
+});
 
 $('a.delete-foto').click(function(e){
     e.preventDefault();
