@@ -27,8 +27,11 @@ class Pesan extends Model
 		return $pesan->get();
 	}
 	
-	private static function readPercakapan($idto){
-		
+	private static function readPercakapan($idfrom){
+		foreach (Pesan::where('idfrom',$idfrom)->where('idto',Auth::user()->id)->cursor() as $pesan){
+		    $pesan->toread = true;
+		    $pesan->save();
+        }
 	}
 	
 	public static function getPercakapan($id){
@@ -54,7 +57,8 @@ class Pesan extends Model
 	}
 	
 	public static function destroyFromSpecifiedUser($id){
-		static::where('idfrom',$id)->whereOr('idto',$id)->delete();
+		static::where('idfrom',$id)->delete();
+		static::where('idto',$id)->delete();
 	}
 	
 }

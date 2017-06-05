@@ -26,6 +26,9 @@
         > .filter-btn {
             background-color: #fff;
             position: absolute;
+            height:40px;
+            width:38px;
+            color:$warningColor;
             @include borderRadius(50%);
             left: 47%;
             cursor: pointer;

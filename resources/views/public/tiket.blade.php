@@ -59,7 +59,7 @@
                                 </li>
                                 <li>
                                     <span>Harga Sewa Kamar</span>
-                                    <span>Rp {{ $kamar->harga }}</span>
+                                    <span>{{ Currency::format($kamar->harga) }}</span>
                                 </li>
                             </ul>
                         </div>

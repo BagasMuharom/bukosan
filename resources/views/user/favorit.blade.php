@@ -19,7 +19,7 @@
                     <div class="image">
                         <img src="{{ asset('storage/'.$kamar->foto) }}"/>
                     </div>
-                    <span class="price">Rp {{ $kamar->harga }}</span>
+                    <span class="price">{{ Currency::format($kamar->harga) }}</span>
                     <div class="info">
                         <div>
                             <span>Jenis Kosan</span>

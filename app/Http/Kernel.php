@@ -50,7 +50,6 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'admin' => \Bukosan\Http\Middleware\AdminMiddleware::class,
         'auth' => \Illuminate\Auth\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'bindings' => \Illuminate\Routing\Middleware\SubstituteBindings::class,
@@ -58,6 +57,7 @@ class Kernel extends HttpKernel
         'guest' => \Bukosan\Http\Middleware\RedirectIfAuthenticated::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'user' => \Bukosan\Http\Middleware\UserProfileMiddleware::class,
-		'ditangguhkan' => \Bukosan\Http\Middleware\SuspendMiddleware::class
+		'ditangguhkan' => \Bukosan\Http\Middleware\SuspendMiddleware::class,
+        'admin' => \Bukosan\Http\Middleware\AdminMiddleware::class,
     ];
 }

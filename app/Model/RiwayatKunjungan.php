@@ -21,4 +21,8 @@ class RiwayatKunjungan extends Model
 		static::where('iduser',$id)->delete();
 	}
 
+	public static function destroyFromSpecifiedKosan($id){
+	    static::where('idkosan',$id)->delete();
+    }
+
 }

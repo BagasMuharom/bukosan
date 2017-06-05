@@ -6,6 +6,11 @@
 
 @section('contents')
 	<h3>Pesan</h3>
+	@if(count($chat) == 0 && !isset($new))
+		<div class="alert alert-info">
+			<p>Anda belum memiliki pesan apapun</p>
+		</div>
+	@else
 	<div class="row">
 		<div class="col-lg-4" id="message-user">
 			<ul>
@@ -49,4 +54,5 @@
 			</div>
 		</div>
 	</div>
+	@endif
 @endsection

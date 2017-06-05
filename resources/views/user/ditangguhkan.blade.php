@@ -5,5 +5,9 @@
 @endsection
 
 @section('contents')
-	<p>Akun anda sedang ditangguhkan.<p>
+	<div class="alert alert-warning" style="text-align: center">
+		<i class="fa fa-warning fa-5x"></i>
+		<p>Akun anda sedang <b>ditangguhkan.</b><p>
+		<p>Silahkan hubungi customer service untuk bantuan selengkapnya.</p>
+	</div>
 @endsection

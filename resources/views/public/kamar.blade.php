@@ -19,7 +19,7 @@
                     </div>
                     <p>
                         <span>Harga</span>
-                        <span>Rp {{ $kamar->harga }}/bln</span>
+                        <span>{{ Currency::format($kamar->harga) }}/bln</span>
                     </p>
                 </div>
             </div>
@@ -41,7 +41,7 @@
                     </div>
                     <p>
                         <span>Disewa sebanyak</span>
-                        <span>{{ $jumlahsewa }} kali</span>
+                        <span>{{ $jumlahsewa or 0 }} kali</span>
                     </p>
                 </div>
             </div>
@@ -71,7 +71,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <?php echo $kamar->keterangan; ?>
+                        {!! $kamar->keterangan !!}
                     </div>
                 </div>
             </div>
@@ -107,11 +107,11 @@
                 @if(Auth::check() && Auth::user()->id != $kosan->idpemilik)
                     <div class="row">
                         @if($kamar->tersedia)
-                            <a class="btn btn-primary col-lg-8 col-lg-offset-2 btn-lg {{ !$tersedia ? 'disabled' : '' }}"
+                            <a class="btn btn-primary col-lg-8 col-lg-offset-2 btn-lg {{ !$tersedia || Auth::user()->ditangguhkan ? 'disabled' : '' }}"
                                href="{{ route('sewa.kamar') }}"
                                onclick="event.preventDefault();
                     document.getElementById('sewa-form').submit();"><i
-                                        class="fa fa-home" {{ !$kamar->tersedia ? 'disabled' : '' }}></i> Sewa kamar ini</a>
+                                        class="fa fa-home"></i> Sewa kamar ini</a>
                             @if(!$tersedia)
                                 <div style="clear:both;margin-bottom:20px"></div>
                                 <p class="alert alert-danger">Kamar kosan ini tidak tersedia untuk jenis akun anda atau

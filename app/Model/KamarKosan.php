@@ -54,22 +54,32 @@ class KamarKosan extends Model
 	}
 	
 	public static function destroyFromSpecifiedKosan($id){
-		$daftarkamar = static::whereIn('idkosan',$id);
+		$daftarkamar = static::where('idkosan',$id)->pluck('id');
 		// Menghapus daftar foto
-		foreach($daftarkamar as $kamar){
-			static::destroy($kamar->id);
+		foreach($daftarkamar as $idkamar){
+			static::destroy($idkamar);
 		}
 	}
 	
 	public static function destroy($id){
 		FotoKamarKosan::destroyFromSpecifiedKamar($id);
-		static::where('id',$id)->delete();
+		RiwayatSewa::where('idkamar',$id)->delete();
+		Favorit::where('idkamarkosan',$id)->delete();
+		static::find($id)->delete();
 	}
 	
 	public static function deletable($id){
-		if(RiwayatSewa::where('idkamar',$id)->where('status','!=','SL') > 0)
+		if(RiwayatSewa::where('idkamar',$id)->where('status','!=','SL')->count() > 0)
 			return false;
 		return true;
 	}
+
+    public static function GetJumlahSewa($id)
+    {
+        return DB::table(DB::raw('kamar_kosan as kk LEFT JOIN (SELECT count(riwayat_sewa.kode) as jumlah, idkamar FROM riwayat_sewa GROUP BY riwayat_sewa.idkamar) as rs ON kk.id = rs.idkamar'))
+            ->whereRaw('kk.id = ' . $id)
+            ->select(DB::raw('rs.jumlah as jumlah'))
+            ->first();
+    }
 
 }

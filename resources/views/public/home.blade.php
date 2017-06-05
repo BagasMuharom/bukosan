@@ -5,8 +5,10 @@
 @endsection
 
 @section('content')
-    <section class="container">
+    <section class="container-fluid" id="landing-wrapper">
         <div class="row">
+            <h1>Butuh Rumah Kedua ?</h1>
+            <h4>Cari sekarang, dan nikmati kenyamanannya</h4>
             <div class="col-lg-8 col-lg-offset-2">
                 <form id="search-tron" action="{{ route('cari') }}" method="get">
                     <input type="hidden" id="lat-search" name="latitude"/>
@@ -34,7 +36,7 @@
                         </span>
                     </div>
                     <div class="separator">
-                        <div class="filter-btn"><i class="fa fa-chevron-circle-up fa-2x"></i></div>
+                        <div class="filter-btn"><i class="fa fa-chevron-circle-up fa-3x"></i></div>
                     </div>
                     <div class="filter-tron">
 					<div class="row">

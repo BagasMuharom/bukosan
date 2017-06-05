@@ -20,4 +20,5 @@ class UserProfileMiddleware
             return redirect()->route('settings');
         return $next($request);
     }
+
 }

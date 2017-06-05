@@ -26,15 +26,6 @@ class KamarKosanController extends Controller
             ->where('kamar_kosan.id', $id);
     }
 
-    public static function GetJumlahSewa($id)
-    {
-        return DB::table(DB::raw('kamar_kosan as kk, riwayat_Sewa as rs'))
-            ->select(DB::raw('count(rs.kode) as jumlah'))
-            ->whereRaw('kk.id = rs.idkamar')
-            ->groupBy(DB::raw('rs.kode'))
-            ->first();
-    }
-
     public static function sewa(Request $request)
     {
         $kamar = KamarKosan::find($request->id);
@@ -124,23 +115,13 @@ class KamarKosanController extends Controller
     */
     public function hapus($id)
     {
-        $kamarkosan = KamarKosan::find($id);
-        if(!is_null($kamarkosan)){
-            $kosan = Kosan::where('id',$kamarkosan->idkosan)->first();
-            if($kosan->idpemilik == Auth::user()->id){
-                # Menghapus
-                if(RiwayatSewa::where('idkamar',$id)->where('status','<>','SL')->count() > 0)
-                    return json_encode(['status' => 0]);
-                else{
-                    ImageController::HapusFotoKamarKosan($id);
-                    $kamarkosan->delete();
-                    # Mengirim status bahwa berhasil dihapus
-                    return json_encode(['status' => 1]);
-                }
-            }
+        if(KamarKosan::deletable($id)){
+            KamarKosan::destroy($id);
+            return json_encode(['status' => true]);
         }
-        # Mengirim status bahwa gagal dihapus
-        return json_encode(['status' => 0]);
+        else{
+            return json_encode(['status' => false]);
+        }
     }
 
     public function tangguhkan($id)

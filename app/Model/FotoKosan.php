@@ -30,12 +30,12 @@ class FotoKosan extends Model
     }
 	
 	public static function destroyFromSpecifiedKosan($id){
-		$daftarfotokosan = static::where('idkamarkosan',$id);
+		$daftarfotokosan = static::where('idkosan',$id)->pluck('idfoto');
 		foreach($daftarfotokosan as $fotokosan){
 			// Mendapatkan foto dari tabel Foto
-			$foto = Foto::where('id',$fotokosan->idfoto);
+			$foto = Foto::find($fotokosan);
 			// Menghapus dari tabel foto_kamar_kosan
-			$fotokosan->delete();
+			static::where('idfoto',$fotokosan)->delete();
 			// Menghapus file foto
 			Storage::delete('public/' . $foto->nama);
 			// Menghapus dari tabel Foto

@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">Daftar</div>
+                <div class="panel-heading"><h3 class="panel-title">Daftar</h3></div>
                 <div class="panel-body">
                     <form class="form-horizontal" role="form" method="POST" action="{{ route('register') }}">
                         {{ csrf_field() }}
@@ -14,7 +14,7 @@
                             <label for="username" class="col-md-4 control-label">Username</label>
 
                             <div class="col-md-6">
-                                <input id="username" type="text" class="form-control" name="username" value="{{ old('username') }}" required autofocus>
+                                <input id="username" type="text" class="bukosan input-ui ui-primary" name="username" value="{{ old('username') }}" required autofocus>
 
                                 @if ($errors->has('username'))
                                     <span class="help-block">
@@ -28,7 +28,7 @@
                             <label for="nama" class="col-md-4 control-label">Nama Lengkap</label>
 
                             <div class="col-md-6">
-                                <input id="nama" type="text" class="form-control" name="nama" value="{{ old('nama') }}" required autofocus>
+                                <input id="nama" type="text" class="bukosan input-ui ui-primary" name="nama" value="{{ old('nama') }}" required autofocus>
 
                                 @if ($errors->has('nama'))
                                     <span class="help-block">
@@ -42,7 +42,7 @@
                             <label for="email" class="col-md-4 control-label">E-Mail</label>
 
                             <div class="col-md-6">
-                                <input id="email" type="email" class="form-control" name="email" value="{{ old('isi') }}" required>
+                                <input id="email" type="email" class="bukosan input-ui ui-primary" name="email" value="{{ old('isi') }}" required>
 
                                 @if ($errors->has('email'))
                                     <span class="help-block">
@@ -56,7 +56,7 @@
                             <label for="password" class="col-md-4 control-label">Password</label>
 
                             <div class="col-md-6">
-                                <input id="password" type="password" class="form-control" name="password" required>
+                                <input id="password" type="password" class="bukosan input-ui ui-primary" name="password" required>
 
                                 @if ($errors->has('password'))
                                     <span class="help-block">
@@ -70,7 +70,7 @@
                             <label for="password-confirm" class="col-md-4 control-label">Konfirmasi Password</label>
 
                             <div class="col-md-6">
-                                <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
+                                <input id="password-confirm" type="password" class="bukosan input-ui ui-primary" name="password_confirmation" required>
                             </div>
                         </div>
 

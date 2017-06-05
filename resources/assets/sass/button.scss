@@ -4,15 +4,14 @@
 .btn{
     @include borderRadius(2px);
     @include boxShadow(0 1px 1px rgba(0,0,0,.05));
+    border:none;
     outline: none !important;
     &.btn-primary{
         background-color: $primaryColor;
-        border: none;
         @include getFontColor($primaryColor);
     }
     &.btn-danger{
         background-color: $dangerColor;
-        border: none;
         @include getFontColor($dangerColor);
     }
     &.btn-boolean{

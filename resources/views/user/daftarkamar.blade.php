@@ -29,27 +29,37 @@
             </div>
         </div>
 
-        @foreach($kamar as $kamardetail)
-        <?php
-            $foto = \Bukosan\Http\Controllers\KamarKosanController::GetFotoKamarKosan($kamardetail->id)->first();
-        ?>
-        <div class="panel-body row kamar-{{ $kamardetail->id }}">
-            <div class="thumb-property">
-                <div class="row">
-                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                        <img src="{{ asset('storage/' . $foto->nama) }}" class="img-responsive" alt=""/>
-                    </div>
-                    <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                        <div class="thumb-heading">
-                            <h3 class="thumb-title">{{ $kamardetail->nama }}</h3>
-                            <a href="{{ route('edit.kamar',['idkamar' => $kamardetail->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                            <a href="{{ route('hapus.kamar',['idkamar' => $kamardetail->id]) }}" class="btn btn-danger delete-kamar" data-id="{{ $kamardetail->id }}"><i class="fa fa-pencil"></i> Hapus</a>
+        <div class="row">
+            @foreach($kamar as $detail)
+                <div class="col-lg-4 kamar-{{ $detail->id }}">
+                    <div class="thumbnail">
+                        <div class="header">
+                            <h3><a href="{{ route('lihat.kamar',['idkamar' => $detail->id]) }}">{{ $detail->nama }}</a> <a href="{{ route('lihat.kamar',['idkamar' => $detail->id]) }}" target="_blank" title="lihat di tab baru"><sup><i class="fa fa-external-link"></i></sup></a></h3>
+                        </div>
+                        <div class="image">
+                            <img src="{{ asset('storage/'.$detail->foto) }}"/>
+                        </div>
+                        <span class="price">{{ Currency::format($detail->harga) }}</span>
+                        <div class="info">
+                            <div>
+                                <span>Ditangguhkan</span>
+                                <span>{{ $detail->ditangguhkan ? 'Ya' : 'Tidak' }}</span>
+                            </div>
+                            <div>
+                                <span>Status</span>
+                                <span>{{ $detail->tersedia ? 'Tersedia' : 'Tidak Tersedia' }}</span>
+                            </div>
+                        </div>
+                        <div class="action">
+                            <div class="btn btn-group">
+                                <a href="{{ route('edit.kamar',['idkamar' => $detail->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit Kamar</a>
+                                <a href="{{ route('hapus.kamar',['idkamar' => $detail->id]) }}" class="btn btn-danger"><i class="fa fa-trash"></i> Hapus Kamar</a>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            @endforeach
         </div>
-        @endforeach
     </div>
     @endif
 @endsection

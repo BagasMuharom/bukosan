@@ -111,6 +111,9 @@ if($editPage){
                 <div class="col-md-6">
                     <input type="hidden" name="image" id="image" value="{{ $errorPage ? old('image') : $image }}"/>
                     <button class="btn btn-primary btn-chooser" data-input="#foto" type="button">Pilih Foto</button> Maksimal 4 Foto
+                    <div class="progress" style="margin-top: 10px;display: none">
+                        <div class="progress-bar progress-bar-striped" style="width:0%" id="progress"></div>
+                    </div>
                     <div id="image-show" class="row">
                         @if(Route::currentRouteName() == 'edit.kamar' || ((count($errors) > 0 && !$errors->has('image'))))
                             @foreach($foto as $gambar)

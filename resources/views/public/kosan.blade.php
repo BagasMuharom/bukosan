@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Kosan ...
+    {{ $kosan->nama }}
 @endsection
 
 @section('css')
@@ -59,7 +59,7 @@
                     </div>
                     <p>
                         <span>Disewa sebanyak</span>
-                        <span>45</span>
+                        <span>{{ $sewa }}</span>
                     </p>
                 </div>
             </div>
@@ -83,7 +83,12 @@
 
                 <div class="bigtron" id="searchresult">
                     <div class="row">
-                        <h3 style="padding:0 10px 10px;">Daftar Kamar yang Tersedia</h3>
+                        <h3 style="padding:10px;">Daftar Kamar yang Tersedia</h3>
+                        @if(count($kamar) == 0)
+                            <div class="alert alert-info">
+                                <p>Untuk saat ini, tidak ada kamar yang tersedia</p>
+                            </div>
+                            @endif
                         @foreach($kamar as $hasil)
                             <div class="col-lg-4">
                                 <div class="thumbnail">
@@ -91,7 +96,7 @@
                                          style="background-image:url('{{ asset('storage/' . $hasil->foto) }}')"></div>
                                     <div class="name">
                                         <h3>{{ $hasil->nama }}</h3>
-                                        <p class="price">Rp {{ $hasil->harga }}</p>
+                                        <p class="price">{{ Currency::format($hasil->harga) }}</p>
                                     </div>
                                     <div class="detail">
                                         <div class="bottom">

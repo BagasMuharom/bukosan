@@ -48,11 +48,11 @@ class User extends Authenticatable
 			// Menghapus favorit user
 			Favorit::destroyFromSpecifiedUser($id);
 			// Menghapus kosan user
-			Kosan::destroyFromSpecifiedUser($id);
+            Kosan::destroyFromSpecifiedUser($id);
 			// Menghapus pesan user
 			Pesan::destroyFromSpecifiedUser($id);
 			// Menghapus user
-			User::find($id)->delete();
+			static::find($id)->delete();
 			$response = [
 				'status' => true
 			];

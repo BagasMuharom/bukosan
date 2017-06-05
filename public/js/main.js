@@ -47,8 +47,10 @@ function dropdownAction(elem) {
 }
 
 $('.dropdown-menu').find('a').click(function (e) {
-    e.preventDefault();
-    dropdownAction($(this));
+    if($(this).parent().parent().attr('role') != 'menu') {
+        e.preventDefault();
+        dropdownAction($(this));
+    }
 });
 
 $('.dropdown-menu').find('.autocomplete').on('keyup', function (e) {
@@ -78,7 +80,7 @@ function AjaxKelurahan(elem) {
                 var li = $('<li></li>');
                 var a = $('<a href="#"></a>');
                 a.text(response[x].nama);
-                a.attr('data-value', response[x].nama);
+                a.attr('data-value', response[x].id);
                 a.click(function (e) {
                     e.preventDefault();
                     dropdownAction($(this));
@@ -104,7 +106,7 @@ function AjaxKecamatan(elem) {
                 var li = $('<li></li>');
                 var a = $('<a href="#"></a>');
                 a.text(response[x].nama);
-                a.attr('data-value', response[x].nama);
+                a.attr('data-value', response[x].id);
                 a.click(function (e) {
                     e.preventDefault();
                     AjaxKelurahan($(this));
@@ -131,7 +133,7 @@ $('#provinsi-drop').find('a').click(function (e) {
                 var li = $('<li></li>');
                 var a = $('<a href="#"></a>');
                 a.text(response[x].nama);
-                a.attr('data-value', response[x].nama);
+                a.attr('data-value', response[x].id);
                 a.click(function (e) {
                     e.preventDefault();
                     AjaxKecamatan($(this));
@@ -142,11 +144,6 @@ $('#provinsi-drop').find('a').click(function (e) {
             }
         }
     });
-});
-
-
-$('.form-search').submit(function (e) {
-    e.preventDefault();
 });
 
 $('.favorit').click(function () {

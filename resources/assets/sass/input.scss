@@ -74,6 +74,13 @@ button{
         padding:10px;
         color:rgba(0,0,0,.5);
     }
+    + .input-group-btn{
+        > button{
+            height:46px;
+            padding-left:15px;
+            padding-right: 15px;
+        }
+    }
 }
 
 .btn-check {
@@ -99,6 +106,29 @@ button{
             font-size: 18px;
             text-align: center;
             color: #3f6706;
+        }
+    }
+}
+
+.dropdown{
+    &.dropdown-border {
+        button {
+            border-bottom: 2px solid $primaryColor;
+            @include boxShadow(none);
+            padding:10px;
+            &:hover,&:focus{
+                background-color: transparent;
+            }
+            > .caret{
+                margin-left:10px;
+                color: $primaryColor;
+            }
+        }
+        &.open{
+            button{
+                background-color: transparent !important;
+                border-bottom: 2px solid $primaryColor;
+            }
         }
     }
 }

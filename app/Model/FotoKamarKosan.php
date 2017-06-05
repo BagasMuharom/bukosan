@@ -14,12 +14,12 @@ class FotoKamarKosan extends Model
     public $timestamps = false;
 	
 	public static function destroyFromSpecifiedKamar($id){
-		$daftarfotokamar = static::where('idkamarkosan',$id);
+		$daftarfotokamar = static::where('idkamarkosan',$id)->pluck('idfoto');
 		foreach($daftarfotokamar as $fotokamar){
 			// Mendapatkan foto dari tabel Foto
-			$foto = Foto::where('id',$fotokamar->idfoto);
+			$foto = Foto::find($fotokamar);
 			// Menghapus dari tabel foto_kamar_kosan
-			$fotokamar->delete();
+			static::where('idfoto',$fotokamar)->delete();
 			// Menghapus file foto
 			Storage::delete('public/' . $foto->nama);
 			// Menghapus dari tabel Foto

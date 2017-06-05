@@ -17,7 +17,7 @@
                 <div class="form-group{{ $errors->has('displayname') ? ' has-error' : '' }}">
                     <label for="displayname" class="col-md-3 control-label">Nama Lengkap</label>
                     <div class="col-md-6">
-                        <input id="displayname" type="text" class="form-control" name="displayname"
+                        <input id="displayname" type="text" class="bukosan input-ui ui-primary" name="displayname"
                                value="{{ count($errors) > 0 ? old('displayname') : Auth::user()->displayname }}"
                                required autofocus>
 
@@ -32,7 +32,7 @@
                 <div class="form-group{{ $errors->has('nik') ? ' has-error' : '' }}">
                     <label for="nik" class="col-md-3 control-label">NIK</label>
                     <div class="col-md-6">
-                        <input id="nik" type="text" class="form-control" name="nik"
+                        <input id="nik" type="text" class="bukosan input-ui ui-primary" name="nik"
                                value="{{ count($errors) > 0 ? old('nik') : Auth::user()->nik }}" required>
 
                         @if ($errors->has('nik'))
@@ -46,7 +46,7 @@
                 <div class="form-group{{ $errors->has('alamat') ? ' has-error' : '' }}">
                     <label for="alamat" class="col-md-3 control-label">Alamat</label>
                     <div class="col-md-6">
-                        <input id="alamat" type="text" class="form-control" name="alamat"
+                        <input id="alamat" type="text" class="bukosan input-ui ui-primary" name="alamat"
                                value="{{ count($errors) > 0 ? old('alamat') : Auth::user()->alamat }}" required>
 
                         @if ($errors->has('alamat'))
@@ -60,7 +60,7 @@
                 <div class="form-group{{ $errors->has('username') ? ' has-error' : '' }}">
                     <label for="username" class="col-md-3 control-label">Username</label>
                     <div class="col-md-6">
-                        <input id="username" type="text" class="form-control" name="username"
+                        <input id="username" type="text" class="bukosan input-ui ui-primary" name="username"
                                value="{{ count($errors) > 0 ? old('username') : Auth::user()->username }}" required>
 
                         @if ($errors->has('username'))
@@ -74,7 +74,7 @@
                 <div class="form-group{{ $errors->has('tanggallahir') ? ' has-error' : '' }}">
                     <label for="tanggallahir" class="col-md-3 control-label">Tanggal Lahir</label>
                     <div class="col-md-6">
-                        <input id="tanggallahir" type="date" class="form-control" name="tanggallahir"
+                        <input id="tanggallahir" type="date" class="bukosan input-ui ui-primary" name="tanggallahir"
                                value="{{ count($errors) > 0 ? old('tanggallahir') :  Auth::user()->tgl_lahir }}"
                                required autofocus>
 
@@ -89,10 +89,10 @@
                 <div class="form-group{{ $errors->has('jenis_kelamin') ? ' has-error' : '' }}">
                     <label for="jeniskelamin" class="col-md-3 control-label">Jenis Kelamin</label>
                     <div class="col-md-6">
-                        <input id="jeniskelamin" type="hidden" class="form-control" name="jeniskelamin"
+                        <input id="jeniskelamin" type="hidden" class="bukosan input-ui ui-primary" name="jeniskelamin"
                                value="{{ count($errors) > 0 ? old('jeniskelamin') :  Auth::user()->jenis_kelamin }}"
                                required autofocus>
-                        <div class="dropdown" target="#jeniskelamin" id="jeniskelamin-drop">
+                        <div class="dropdown dropdown-border" target="#jeniskelamin" id="jeniskelamin-drop">
                             <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                                 @if((count($errors) > 0 && old('jeniskelamin') == 'L') ||
                                      Auth::user()->jenis_kelamin == 'L')
@@ -121,7 +121,7 @@
                 <div class="form-group{{ $errors->has('jenisakun') ? ' has-error' : '' }}">
                     <label for="jeniskelamin" class="col-md-3 control-label">Jenis Akun</label>
                     <div class="col-md-9">
-                        <input id="jenisakun" type="hidden" class="form-control" name="jenisakun"
+                        <input id="jenisakun" type="hidden" class="bukosan input-ui ui-primary" name="jenisakun"
                                value="{{ count($errors) > 0 ? old('jenisakun') : Auth::user()->perorangan ? 'perorangan' : 'keluarga' }}"
                                required>
                         <div class="dropdown" target="#jenisakun" id="jeniskelamin-drop">
@@ -162,7 +162,7 @@
                 <div class="form-group{{ $errors->has('email') ? ' has-error' : '' }}">
                     <label for="email" class="col-md-3 control-label">E-mail</label>
                     <div class="col-md-6">
-                        <input id="email" type="email" class="form-control" name="email"
+                        <input id="email" type="email" class="bukosan input-ui ui-primary" name="email"
                                value="{{ count($errors) > 0 ? old('email') : Auth::user()->email }}" required>
 
                         @if ($errors->has('email'))
@@ -176,7 +176,7 @@
                 <div class="form-group{{ $errors->has('telp') ? ' has-error' : '' }}">
                     <label for="telp" class="col-md-3 control-label">No. Telp</label>
                     <div class="col-md-6">
-                        <input id="telp" type="text" class="form-control" name="telp"
+                        <input id="telp" type="text" class="bukosan input-ui ui-primary" name="telp"
                                value="{{ count($errors) > 0 ? old('telp') : Auth::user()->telp }}" required>
 
                         @if ($errors->has('telp'))
@@ -198,6 +198,40 @@
             <form action="{{ route('upload.image') }}" method="post" id="form-ava" style="display:none"
                   enctype="multipart/form-data">
                 <input type="file" name="image" id="file-ava"/>
+            </form>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">Ubah Password</div>
+
+        <div class="panel-body">
+            <form id="change-passwords" class="form-horizontal" action="{{ route('ubah.password') }}" method="post">
+                {{ csrf_field() }}
+                <div class="form-group">
+                    <label class="col-lg-4 col-md-4 control-label">Password lama</label>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="password" class="bukosan input-ui ui-primary" placeholder="Password lama" name="plama"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 col-md-4 control-label">Password baru</label>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="password" class="bukosan input-ui ui-primary" placeholder="Password baru" name="pbaru"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-lg-4 col-md-4 control-label">Konfirmasi Password baru</label>
+                    <div class="col-lg-6 col-md-6">
+                        <input type="password" class="bukosan input-ui ui-primary" placeholder="Konfirmasi password" name="konfirmasipbaru"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-md-4"></div>
+                    <div class="col-md-6">
+                        <button class="btn btn-primary">Ubah Password</button>
+                    </div>
+                </div>
             </form>
         </div>
     </div>

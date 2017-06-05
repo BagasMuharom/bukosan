@@ -28,43 +28,39 @@
                     <a href="{{ route('tambah.kosan') }}" class="btn btn-primary">Daftarkan Kosan Baru</a>
                 </div>
             </div>
-
+            <div class="row">
             @foreach($DaftarKosan as $kosan)
-                <div class="panel-body kosan-{{ $kosan->id }}">
-                    <div class="thumb-property">
-                        <div class="row">
-                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
-                                <img src="{{ asset('storage/' . $kosan->foto) }}" class="img-responsive" alt=""
-                                     style="max-height:150px"/>
+                <div class="col-lg-4 kosan-{{ $kosan->id }}">
+                    <div class="thumbnail">
+                        <div class="header">
+                            <h3><a href="{{ route('lihat.kosan',['idkosan' => $kosan->id]) }}">{{ $kosan->nama }}</a> <a href="{{ route('lihat.kosan',['idkosan' => $kosan->id]) }}" target="_blank" title="lihat di tab baru"><sup><i class="fa fa-external-link"></i></sup></a></h3>
+                            <h4>{{ $kosan->alamat }}</h4>
+                        </div>
+                        <div class="image">
+                            <img src="{{ asset('storage/'.$kosan->foto) }}"/>
+                        </div>
+                        <span class="price">{{ Currency::pricing($kosan->hargamin,$kosan->hargamax) }}</span>
+                        <div class="info">
+                            <div>
+                                <span>Jenis Kosan</span>
+                                <span>{{ $kosan->keluarga ? 'Keluarga' : 'Perorangan' }}</span>
                             </div>
-                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
-                                <div class="thumb-heading">
-                                    <h3 class="thumb-title">{{ $kosan->nama }} <span class="badge">{{ $kosan->jumlahkamar }} kamar</span>
-                                    </h3>
-                                    <div class="thumb-info">
-                                    @if($kosan->terverifikasi)
-                                        <span class="label label-success">Terverifikasi</span>
-                                    @else
-                                        <span class="label label-danger">Belum Terverifikasi</span>
-                                    @endif
-                                    </div>
-                                </div>
-                                    <div style="padding:0 25px 0;">
-                                        <a href="{{ route('daftar.kamar',['idkosan' => $kosan->id]) }}">Lihat daftar kamar</a>
-                                            <div class="btn btn-group">
-                                                <a href="{{ route('edit.kosan',['idkosan' => $kosan->id]) }}"
-                                                   class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
-                                                <a href="{{ url('hapus/kosan') }}/{{ $kosan->id }}"
-                                                   class="btn btn-danger delete-kosan" data-id="{{ $kosan->id }}"><i
-                                                            class="fa fa-trash"></i> Hapus</a>
-                                            </div>
-
-                                    </div>
+                            <div>
+                                <span>Kamar Tersedia</span>
+                                <span>{{ $kosan->jumlahkamar or 0 }}</span>
+                            </div>
+                        </div>
+                        <div class="action">
+                            <div class="btn-group">
+                                <a href="{{ route('edit.kosan',['idkosan' => $kosan->id]) }}" class="btn btn-primary"><i class="fa fa-pencil"></i> Edit</a>
+                                <a href="{{ route('daftar.kamar',['idkosan' => $kosan->id]) }}" class="btn btn-primary"><i class="fa fa-list"></i> Daftar Kamar</a>
+                                <a href="{{ route('hapus.kosan',['idkosan' => $kosan->id]) }}" class="btn btn-danger delete-kosan"><i class="fa fa-trash"></i> Hapus</a>
                             </div>
                         </div>
                     </div>
                 </div>
             @endforeach
+            </div>
         </div>
     @endif
 @endsection

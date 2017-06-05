@@ -87,6 +87,9 @@ if($editPage){
                 <div class="col-md-9">
                     <input type="hidden" name="image" id="image" value="{{ $errorPage ? old('image') : $image }}"/>
                     <button class="btn btn-primary btn-chooser" data-input="#foto" type="button">Pilih Foto</button> Maksimal 4 Foto
+                    <div class="progress" style="margin-top: 10px;display: none">
+                        <div class="progress-bar progress-bar-striped" style="width:0%" id="progress"></div>
+                    </div>
                     @if ($errors->has('image'))
                     <span class="help-block">
                         <strong>{{ $errors->first('image') }}</strong>
@@ -140,7 +143,7 @@ if($editPage){
                         <ul class="dropdown-menu">
                             <input type="text" class="autocomplete form-control"/>
                             @foreach($provinsi as $value)
-                            <li><a href="#" data-value="{{ $value->nama }}">{{ $value->nama }}</a></li>
+                            <li><a href="#" data-value="{{ $value->id }}">{{ $value->nama }}</a></li>
                             @endforeach
                         </ul>
                     </div>
@@ -163,7 +166,7 @@ if($editPage){
                             <input type="text" class="autocomplete form-control"/>
                             @if($editPage)
                                 @foreach($kotakab as $datum)
-                                <li><a href="#" data-value="{{ $datum->nama }}">{{ $datum->nama }}</a></li>
+                                <li><a href="#" data-value="{{ $datum->id }}">{{ $datum->nama }}</a></li>
                                 @endforeach
                             @endif
                         </ul>
@@ -187,7 +190,7 @@ if($editPage){
                             <input type="text" class="autocomplete form-control"/>
                             @if($editPage)
                                 @foreach($kecamatan as $datum)
-                                <li><a href="#" data-value="{{ $datum->nama }}">{{ $datum->nama }}</a></li>
+                                <li><a href="#" data-value="{{ $datum->id }}">{{ $datum->nama }}</a></li>
                                 @endforeach
                             @endif
                         </ul>
@@ -195,7 +198,7 @@ if($editPage){
                 </div>
                 <div class="col-lg-3">
                     <h4>Kelurahan</h4>
-                    <input type="hidden" name="kelurahan" id="kelurahan" value="{{ $errorPage ? old('kelurahan') : $kosan->kelurahan }}"/>
+                    <input type="hidden" name="kelurahan" id="kelurahan" value="{{ $errorPage ? old('kelurahan') : $kosan->idkelurahan }}"/>
                     <div class="dropdown" target="#kelurahan" id="kelurahan-drop">
                         <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown">
                             @if(!$errorPage && !$editPage)
@@ -211,7 +214,7 @@ if($editPage){
                             <input type="text" class="autocomplete form-control"/>
                             @if($editPage)
                                 @foreach($kelurahan as $datum)
-                                <li><a href="#" data-value="{{ $datum->nama }}">{{ $datum->nama }}</a></li>
+                                <li><a href="#" data-value="{{ $datum->id }}">{{ $datum->nama }}</a></li>
                                 @endforeach
                             @endif
                         </ul>

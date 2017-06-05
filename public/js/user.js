@@ -55,12 +55,14 @@ function AjaxHapusFoto(elem){
  */
 $('.file-upload').ajaxForm({
     beforeSend: function () {
-        console.log('Mulai mengunggah');
+        $('#progress').parent().slideDown();
     },
     uploadProgress: function (event, position, total, percentComplete) {
-        console.log(percentComplete);
+        $('#progress').width(percentComplete+'%')
     },
     success: function (response) {
+        $('#progress').width('0%');
+        $('#progress').parent().slideUp();
         var result = JSON.parse(response);
         var fullurl = result.fullurl;
         var name = result.name;
@@ -90,7 +92,7 @@ $('.file-upload').ajaxForm({
 
 $('#jeniskosan-drop').find('a').click(function(e){
     e.preventDefault();
-    if($(this).attr('data-value') == 'keluarga'){
+    if($(this).attr('data-value') === 'keluarga'){
         $('#jeniskelamin-form').hide();
     }
     else{
@@ -118,8 +120,8 @@ $('a.delete-kosan').click(function(e){
                 type : 'get',
                 success : function(result){
                     response = JSON.parse(result);
-                    if(typeof response != 'undefined'){
-                        if(response.status == 1){
+                    if(typeof response !== 'undefined'){
+                        if(response.status){
                             swal('Berhasil !','Berhasil Menghapus Kosan !','success');
                             elem.slideUp(150,function(){
                                 $(this).remove();
@@ -157,8 +159,8 @@ $('a.delete-kamar').click(function(e){
                 type : 'get',
                 success : function(result){
                     response = JSON.parse(result);
-                    if(typeof response != 'undefined'){
-                        if(response.status == 1){
+                    if(typeof response !== 'undefined'){
+                        if(response.status){
                             swal('Berhasil !','Berhasil menghapus kamar kosan !','success');
                             elem.slideUp(150,function(){
                                 $(this).remove();
@@ -204,5 +206,23 @@ $('#form-ava').ajaxForm({
         var val = result.name;
         $('#ava').val(val);
         $('#avatar').attr('src',url);
+    }
+});
+
+$('#change-password').ajaxForm({
+    success : function (result) {
+        response = JSON.parse(result);
+        if(response.error === 0){
+            swal('Berhasil !','Berhasil mengganti password !','success');
+        }
+        else if(response.error === 1){
+            swal('Gagal !','Password lama tidak sesuai !','error');
+        }
+        else{
+            swal('Gagal !','Konfirmasi password tidak sesuai !','error');
+        }
+        $('input[name="plama"]').val('');
+        $('input[name="pbaru"]').val('');
+        $('input[name="konfirmasipbaru"]').val('');
     }
 });

@@ -46,11 +46,17 @@ class AdminPageController extends Controller
 					->with('kamar',$kamar);
     }
 
-    public function kelolaUser()
+    public function kelolaUser(Request $request)
 {
-    return view('admin.kelolauser', [
-        'users' => User::where('admin', false)->paginate(3)
-    ]);
+    $view = view('admin.kelolauser');
+    $users = User::where('admin',false)->paginate(10);
+    if(!is_null($request->get('nama'))){
+        $users = DB::table('user')
+            ->whereRaw('lower(displayname) LIKE \'%'.strtolower($request->get('nama')).'%\'')
+            ->paginate(10);
+        $view->with('cari',$request->get('nama'));
+    }
+    return $view->with('users',$users);
 }
 
 }

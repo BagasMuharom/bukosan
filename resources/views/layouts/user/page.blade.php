@@ -32,12 +32,19 @@
 					</li>
                     <li @if($isKosanPage) class="active" @endif>
 						<a href="{{ route('kosansaya') }}">
-						<i class="fa fa-list"></i>
+						<i class="fa fa-hotel"></i>
 							<span class="hidden-sm hidden-xs">Kosan Saya</span>
 						</a>
 					</li>
-                    <li {{ Route::currentRouteName() == 'riwayat.sewa' ? 'class=active' : '' }}><a href="{{ route('riwayat.sewa') }}">Riwayat Sewa</a></li>
-                    <li {{ Route::currentRouteName() == 'pesan' ? 'class=active' : '' }}><a href="{{ route('pesan') }}">Pesan</a></li>
+                    <li {{ Route::currentRouteName() == 'riwayat.sewa' ? 'class=active' : '' }}><a href="{{ route('riwayat.sewa') }}">
+                            <i class="fa fa-table"></i>
+                            <span class="hidden-sm hidden-xs">Riwayat Sewa</span>
+                        </a></li>
+                    <li {{ Route::currentRouteName() == 'pesan' ? 'class=active' : '' }}><a href="{{ route('pesan') }}">
+                            <i class="fa fa-comment"></i>
+                            <span class="hidden-sm hidden-xs">Pesan</span>
+                        </a>
+                        </a></li>
                 </ul>
             </div>
         </nav>

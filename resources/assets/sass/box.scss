@@ -54,4 +54,17 @@
             display: block;
         }
     }
+
+    &.box-lg{
+        > p{
+            > span{
+                &:first-child{
+                    font-size:25px;
+                }
+                &:last-child{
+                    font-size: 18px;
+                }
+            }
+        }
+    }
 }

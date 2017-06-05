@@ -35,7 +35,7 @@ class UserPageController extends Controller
 
     public function DaftarKamarKosan($idkosan){
         return view('user.daftarkamar',[
-            'kamar' => KamarKosan::where('idkosan',$idkosan)->get(),
+            'kamar' => KamarKosan::fromKosanId($idkosan),
             'kosan' => Kosan::where('id',$idkosan)->first()
         ]);
     }
@@ -75,7 +75,7 @@ class UserPageController extends Controller
                         ->join('kotakab','kecamatan.idkotakab','=','kotakab.id')
                         ->join('provinsi','kotakab.idprovinsi','=','provinsi.id')
                         ->where('kosan.id',$idkosan)
-                        ->select('kosan.*','kelurahan.nama as kelurahan','kecamatan.nama as kecamatan','provinsi.nama as provinsi','kotakab.nama as kotakab','provinsi.id as idprovinsi','kotakab.id as idkotakab','kecamatan.id as idkecamatan')
+                        ->select('kosan.*','kelurahan.nama as kelurahan','kecamatan.nama as kecamatan','provinsi.nama as provinsi','kotakab.nama as kotakab','provinsi.id as idprovinsi','kotakab.id as idkotakab','kecamatan.id as idkecamatan','kelurahan.id as idkelurahan')
                         ->first();
         return view('user.addkosan',[
             'kosan' => $kosan ,

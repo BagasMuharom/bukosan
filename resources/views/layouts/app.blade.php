@@ -11,26 +11,26 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/general.css') }}" rel="stylesheet"/>
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet"/>
-	<link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet"/>
-    @yield('css')
+    <link href="{{ asset('css/sweetalert.css') }}" rel="stylesheet"/>
+@yield('css')
 
-    <!-- Scripts -->
+<!-- Scripts -->
     <script>
-    window.Bukosan = {!! json_encode([
+        window.Bukosan = {!! json_encode([
         'csrfToken' => csrf_token(),
         'baseUrl' => url('')
     ]) !!};
     </script>
 </head>
 <body>
-    <div id="app">
-        <nav class="navbar navbar-default navbar-static-top navbar-main">
-            <div class="container">
-                <div class="navbar-header">
+<div id="app">
+    <nav class="navbar navbar-default navbar-static-top navbar-main">
+        <div class="container">
+            <div class="navbar-header">
 
-                    <!-- Collapsed Hamburger -->
-                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
-                    data-target="#app-navbar-collapse">
+                <!-- Collapsed Hamburger -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#app-navbar-collapse">
                     <span class="sr-only">Toggle Navigation</span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
@@ -39,15 +39,15 @@
 
                 <!-- Branding Image -->
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                    <img height="30" src="{{ asset('images/logo-white.svg') }}"/>
                 </a>
             </div>
 
-            @if(Route::currentRouteName() != 'homepage' || Auth::check())
-            <form class="navbar-form navbar-left form-search">
-                <div class="input-group">
-                    <input type="text" placeholder="Cari Kosan ..." id="location-field">
-                    <span class="input-group-btn">
+            @if((Route::currentRouteName() != 'homepage' || Auth::check()) && Route::currentRouteName() != 'cari')
+                <form class="navbar-form navbar-left form-search" action="{{ route('cari') }}">
+                    <div class="input-group">
+                        <input type="text" placeholder="Cari Kosan ..." id="location-field" name="location" required>
+                        <span class="input-group-btn">
                         <button type="submit" class="btn btn-default">
                             <svg focusable="false" width="20" height="20" viewBox="0 0 10 10" data-reactid="13">
                                 <path fill="#ffffff" d="M7.73732912,6.67985439 C7.75204857,6.69246326 7.76639529,
@@ -65,8 +65,8 @@
                             </svg>
                         </button>
                     </span>
-                </div><!-- /input-group -->
-            </form>
+                    </div><!-- /input-group -->
+                </form>
             @endif
 
             <div class="collapse navbar-collapse" id="app-navbar-collapse">
@@ -75,47 +75,66 @@
                 <ul class="nav navbar-nav navbar-right">
                     <!-- Authentication Links -->
                     @if (Auth::guest())
-                    <li><a href="{{ route('login') }}">Login</a></li>
-                    <li><a href="{{ route('register') }}">Register</a></li>
+                        <li><a href="{{ route('login') }}">Masuk</a></li>
+                        <li><a href="{{ route('register') }}">Daftar</a></li>
                     @else
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                        aria-expanded="false">
-                        {{ Auth::user()->username }} <span class="caret"></span>
-                    </a>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false">
+                                {{ Auth::user()->username }} <span class="caret"></span>
+                            </a>
 
-                    <ul class="dropdown-menu" role="menu">
-                        <li>
-                            <a href="{{ route('logout') }}"
-                            onclick="event.preventDefault();
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="{{ route('daftar.favorit') }}"><i class="fa fa-star"></i> Favorit saya</a></li>
+                                <li><a href="{{ route('riwayat.kunjungan') }}"><i class="fa fa-table"></i> Riwayat Kunjungan</a></li>
+                                <li><a href="{{ route('settings') }}"><i class="fa fa-gear"></i> Pengaturan</a></li>
+                                @if(Auth::user()->admin)
+                                <li class="separator"></li>
+                                <li><a href="{{ route('kelola.user') }}"><i class="fa fa-user"></i> Kelola User</a></li>
+                                <li><a href="{{ route('kelola.kosan') }}"><i class="fa fa-hotel"></i> Kelola Kosan</a></li>
+                                @endif
+                                <li>
+                                    <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
                             document.getElementById('logout-form').submit();">
-                            Logout
-                        </a>
+                                        <i class="fa fa-sign-out"></i> Logout
+                                    </a>
 
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                        style="display: none;">
-                        {{ csrf_field() }}
-                    </form>
-                </li>
-            </ul>
-        </li>
-        @endif
-    </ul>
-</div>
-</div>
-</nav>
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST"
+                                          style="display: none;">
+                                        {{ csrf_field() }}
+                                    </form>
+                                </li>
+                            </ul>
+                        </li>
+                    @endif
+                </ul>
+            </div>
+        </div>
+    </nav>
 
-@yield('content')
+    @yield('content')
+    <footer>
+        <div class="row">
+            <div class="col-lg-4 col-lg-offset-4">
+                <div class="logo">
+                    <img src="{{ asset('images/logo-small.png') }}"/>
+                </div>
+                <p style="text-align: center">bukosan.com<br/>&copy; Copyright 2017</p>
+            </div>
+        </div>
+    </footer>
 </div>
 
 <!-- Scripts -->
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&libraries=places&callback=MapInit"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCffoJarkvErxQ-kwrfkctqy2GgFrT-h1M&libraries=places&callback=MapInit"></script>
 <script src="{{ asset('js/app.js') }}"></script>
 <script src="{{ asset('js/form.js') }}"></script>
 <script src="{{ asset('js/map.js') }}"></script>
 <script src="{{ asset('js/main.js') }}"></script>
 <script src="{{ asset('js/sweetalert.min.js') }}"></script>
-    @yield('js')
+@yield('js')
 
 </body>
 </html>

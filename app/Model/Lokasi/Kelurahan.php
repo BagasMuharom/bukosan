@@ -9,4 +9,6 @@ class Kelurahan extends Model
 
     protected $table = 'kelurahan';
 
+    protected $keyType = 'bigint';
+
 }

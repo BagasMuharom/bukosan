@@ -8,6 +8,7 @@ use Bukosan\Model\FotoKosan;
 use Bukosan\Model\KamarKosan;
 use Bukosan\Model\RiwayatSewa;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Bukosan\Model\Lokasi\Kelurahan;
 
@@ -71,7 +72,7 @@ class KosanController extends Controller
                 'lantai' => 'required|numeric',
                 'longitude' => 'required|numeric',
                 'latitude' => 'required|numeric',
-                'deskripsi' => 'required|min:100',
+                'deskripsi' => 'required|min:50',
                 'kelurahan' => 'required',
                 'image' => 'required',
             ]);
@@ -83,7 +84,7 @@ class KosanController extends Controller
                 'lantai' => 'required|numeric',
                 'longitude' => 'required|numeric',
                 'latitude' => 'required|numeric',
-                'deskripsi' => 'required|min:100',
+                'deskripsi' => 'required|min:50',
                 'jeniskelamin' => 'required',
                 'kelurahan' => 'required',
                 'image' => 'required',
@@ -101,8 +102,8 @@ class KosanController extends Controller
         $kosan->latitude = $request->latitude;
         $kosan->longitude = $request->longitude;
         $kosan->keterangan = $request->deskripsi;
-        $kosan->kelurahan = Kelurahan::where('nama',$request->kelurahan)->first()->id;
-        $kosan->terverifikasi = 0;
+        $kosan->kelurahan = Kelurahan::find($request->kelurahan)->id;
+        $kosan->terverifikasi = false;
 
         # Fasilitas
         $kosan->wifi = $request->wifi;
@@ -115,7 +116,7 @@ class KosanController extends Controller
 
         # Jenis kosan
         if($request->jeniskosan == 'keluarga')
-        $kosan->keluarga = true;
+            $kosan->keluarga = true;
         else {
             $kosan->keluarga = false;
             $kosan->kosanperempuan = ($request->jeniskelamin == 'L') ? false : true;
@@ -156,24 +157,13 @@ class KosanController extends Controller
     */
     public function destroy($id)
     {
-        if(count(Kosan::where('id',$id)->get()) > 0){
-            $kosan = Kosan::where('id',$id)->first();
-            if($kosan->idpemilik == Auth::user()->id){
-                # Menghapus
-                $daftarKamar = KamarKosan::where('idkosan',$id)->pluck('id');
-                if(count(RiwayatSewa::whereIn('idkamar',$daftarKamar)->where('status','<>','SL')) > 0)
-                return json_encode(['status' => 0]);
-                else
-                $kosan->delete();
-                if(count(Kosan::where('id',$id)->get()) == 0){
-                    ImageController::HapusFotoKosan($id);
-                    # Mengirim status bahwa berhasil dihapus
-                    return json_encode(['status' => 1]);
-                }
-            }
+        if(Kosan::deletable($id)) {
+            Kosan::destroy($id);
+            return json_encode(['status' => true]);
         }
-        # Mengirim status bahwa gagal dihapus
-        return json_encode(['status' => 0]);
+        else{
+            return json_encode(['status' => false]);
+        }
     }
 
     /**

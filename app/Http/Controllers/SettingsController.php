@@ -4,9 +4,11 @@ namespace Bukosan\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Bukosan\Model\KontakUser;
 use Bukosan\Model\Kontak;
+use Bukosan\User;
 
 class SettingsController extends Controller
 {
@@ -58,6 +60,25 @@ class SettingsController extends Controller
             'email' => 'required|email|unique:user,email,'.Auth::user()->id,
             'ava' => 'required'
         ]);
+    }
+
+    public function changePassword(Request $request){
+        if(!Hash::check($request->plama,Auth::user()->password)){
+            $response = ['error' => 1];
+        }
+        else{
+            if($request->pbaru != $request->konfirmasipbaru){
+                $response = ['error' => 2];
+            }
+            else{
+                $user = User::find(Auth::user()->id);
+                $user->password = Hash::make($request->pbaru);
+                $user->save();
+                $response = ['error' => 0];
+            }
+        }
+
+        return json_encode($response);
     }
 
 }

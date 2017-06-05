@@ -1,7 +1,7 @@
 <?php
 
 Route::get('test',function(){
-	return \Bukosan\Model\Kosan::render(\Bukosan\Model\Kosan::refind()->where('idpemilik',24))->toSql();
+	return (new \Bukosan\Http\Controllers\LocationController())->DaftarKelurahan(3578200);
 });
 
 Route::get('/', 'HomePageController@HomePage')->name('homepage');
@@ -12,11 +12,7 @@ Route::get('kosan/{id}','PublicPageController@LihatKosan')->name('lihat.kosan');
 
 Route::get('kamar/{id}','PublicPageController@LihatKamar')->name('lihat.kamar');
 
-Route::post('sewa/kamar','PublicPageController@sewa')->name('sewa.kamar')->middleware(['auth','user']);
-
 Route::post('sewa/tiket','PublicPageController@createTiket')->name('sewa.tiket');
-
-Route::get('tiket/{kodetiket}','PublicPageController@lihatTiket')->name('lihat.tiket')->middleware('auth');
 
 Route::post('verifikasi','RiwayatSewaController@verifikasi')->name('verifikasi.tiket');
 
@@ -39,14 +35,20 @@ Route::group(['prefix' => 'upload'],function () {
 Route::get('ditangguhkan','UserPageController@ditangguhkan')->name('ditangguhkan');
 
 Route::group(['middleware' => ['auth' , 'ditangguhkan']], function () {
+
+    Route::get('tiket/{kodetiket}','PublicPageController@lihatTiket')->name('lihat.tiket');
 	
     Route::get('pengaturan','UserPageController@SettingsPage')->name('settings');
 	
     Route::post('pengaturan','SettingsController@process')->name('settings.process');
 	
     Route::get('favorit','UserPageController@FavoritPage')->name('daftar.favorit');
+
+    Route::post('ubahpassword','SettingsController@changePassword')->name('ubah.password');
 	
     Route::group(['middleware' => 'user'], function(){
+
+        Route::post('sewa/kamar','PublicPageController@sewa')->name('sewa.kamar');
 		
 		Route::post('kirim/pesan','PesanController@kirim')->name('kirim.pesan');
 		
@@ -123,10 +125,6 @@ Route::group(['middleware' => ['auth' , 'ditangguhkan']], function () {
 			Route::group(['prefix' => 'hapus'],function(){
 			
 				Route::get('user/{id}','UserController@destroy')->name('hapus.user');
-				
-				Route::get('kosan/{id}','KosanController@hapus')->name('hapus.kosan');
-				
-				Route::delete('kamar/{id}','KamarKosanController@hapus')->name('hapus.kamar');
 			
 			});
 			
@@ -138,10 +136,10 @@ Route::group(['middleware' => ['auth' , 'ditangguhkan']], function () {
 
 Route::group(['prefix' => 'daftar'],function(){
 	
-    Route::get('kotakab/{namaprovinsi}','LocationController@DaftarKotaKab');
+    Route::get('kotakab/{idprovinsi}','LocationController@DaftarKotaKab');
 	
-    Route::get('kecamatan/{namakotakab}','LocationController@DaftarKecamatan');
+    Route::get('kecamatan/{idkotakab}','LocationController@DaftarKecamatan');
 	
-    Route::get('kelurahan/{namakecamatan}','LocationController@DaftarKelurahan');
+    Route::get('kelurahan/{idkecamatan}','LocationController@DaftarKelurahan');
 	
 });

@@ -11,18 +11,18 @@ use Bukosan\Model\Lokasi\Kelurahan;
 class LocationController extends Controller
 {
 
-    public function DaftarKotaKab($namaprovinsi){
-        $provinsi = Provinsi::where('nama',$namaprovinsi)->first();
+    public function DaftarKotaKab($idprovinsi){
+        $provinsi = Provinsi::find($idprovinsi);
         return KotaKab::where('idprovinsi',$provinsi->id)->get()->toJson();
     }
 
-    public function DaftarKecamatan($namaKotaKab){
-        $kotakab = KotaKab::where('nama',$namaKotaKab)->first();
+    public function DaftarKecamatan($idkotakab){
+        $kotakab = KotaKab::find($idkotakab);
         return Kecamatan::where('idkotakab',$kotakab->id)->get()->toJson();
     }
 
-    public function DaftarKelurahan($namaKecamatan){
-        $kecamatan = Kecamatan::where('nama',$namaKecamatan)->first();
+    public function DaftarKelurahan($idkecamatan){
+        $kecamatan = Kecamatan::find($idkecamatan);
         return Kelurahan::where('idkecamatan',$kecamatan->id)->get()->toJson();
     }
 
