@@ -7,3 +7,5 @@ Homestead.json
 Homestead.yaml
 /.sass-cache
 /.resources/assets/sass/.sass-cache
+/vendor
+composer.lock
